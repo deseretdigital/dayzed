@@ -1,0 +1,32 @@
+{
+  "name": "dateshift",
+  "version": "0.0.0",
+  "description": "Primitives to build simple, flexible, WAI-ARIA compliant React datepicker components.",
+  "main": "dist/dateshift.cjs.js",
+  "jsnext:main": "dist/dateshift.esm.js",
+  "module": "dist/dateshift.esm.js",
+  "author": "Morgan Kartchner",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "kcd-scripts build --bundle --p-react",
+    "storybook": "start-storybook -p 9001 -c stories"
+  },
+  "files": [
+    "dist",
+    "preact"
+  ],
+  "peerDependencies": {
+    "prop-types": ">=15",
+    "react": ">=15"
+  },
+  "devDependencies": {
+    "@storybook/react": "^3.2.12",
+    "kcd-scripts": "^0.24.0",
+    "preact": "^8.2.5",
+    "prop-types": "^15.6.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  },
+  "dependencies": {}
+}
