@@ -35,8 +35,7 @@ let Month = glamorous.div({
 const dayOfMonthStyle = {
   display: "inline-block",
   width: "calc(100% / 7)",
-  border: "none",
-  outline: "none"
+  border: "none"
 };
 
 let DayOfMonth = glamorous.button(
