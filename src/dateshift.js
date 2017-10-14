@@ -44,6 +44,7 @@ class Dateshift extends React.Component {
         );
       }),
       disabled: isBackDisabled({ calendars, offset, minDate }),
+      "aria-label": `Go back ${offset} month${offset === 1 ? "" : "s"}`,
       ...rest
     };
   };
@@ -62,6 +63,7 @@ class Dateshift extends React.Component {
         onOffsetChanged(offsetMonth + addMonth({ calendars, offset, maxDate }));
       }),
       disabled: isForwardDisabled({ calendars, offset, maxDate }),
+      "aria-label": `Go forward ${offset} month${offset === 1 ? "" : "s"}`,
       ...rest
     };
   };
@@ -78,6 +80,9 @@ class Dateshift extends React.Component {
       onClick: composeEventHandlers(onClick, () => {
         this.props.onDateSelected(dateObj);
       }),
+      disabled: !dateObj.selectable,
+      "aria-label": dateObj.date.toDateString(),
+      "aria-selected": dateObj.selected,
       // Looking to do something for range selection in the futre.
       // Range selection can still work, this would just make
       // styling dates in between those ranges easier.
