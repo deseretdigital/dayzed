@@ -52,8 +52,7 @@ class Multi extends React.Component {
         <div style={{ paddingTop: 20, textAlign: "center" }}>
           {selectedDates.length ? <p>Selected:</p> : null}
           {selectedDates.map(date => (
-            <p>{`${date.getMonth() +
-              1}/${date.getDate()}/${date.getFullYear()}`}</p>
+            <p key={date.getTime()}>{`${date.toLocaleDateString()}`}</p>
           ))}
         </div>
       </div>

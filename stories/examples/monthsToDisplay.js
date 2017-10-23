@@ -46,8 +46,7 @@ class MonthsToDisplay extends React.Component {
         {this.state.selectedDate && (
           <div style={{ paddingTop: 20 }}>
             <p>Selected:</p>
-            <p>{`${selectedDate.getMonth() +
-              1}/${selectedDate.getDate()}/${selectedDate.getFullYear()}`}</p>
+            <p>{`${selectedDate.toLocaleDateString()}`}</p>
           </div>
         )}
       </div>

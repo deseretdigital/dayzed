@@ -39,8 +39,7 @@ class MinMax extends React.Component {
         {this.state.selectedDate && (
           <div style={{ paddingTop: 20, textAlign: "center" }}>
             <p>Selected:</p>
-            <p>{`${selectedDate.getMonth() +
-              1}/${selectedDate.getDate()}/${selectedDate.getFullYear()}`}</p>
+            <p>{`${selectedDate.toLocaleDateString()}`}</p>
           </div>
         )}
       </div>
