@@ -12,7 +12,7 @@ import {
   getCalendars
 } from "./utils";
 
-class Dateshift extends React.Component {
+class Dayzed extends React.Component {
   /*------------------------- React Component Lifecycle Methods ---*/
 
   render() {
@@ -94,12 +94,12 @@ class Dateshift extends React.Component {
   };
 }
 
-Dateshift.defaultProps = {
+Dayzed.defaultProps = {
   date: new Date(),
   monthsToDisplay: 1
 };
 
-Dateshift.propTypes = {
+Dayzed.propTypes = {
   date: PropTypes.instanceOf(Date),
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
@@ -114,4 +114,4 @@ Dateshift.propTypes = {
   ]).isRequired
 };
 
-export default Dateshift;
+export default Dayzed;

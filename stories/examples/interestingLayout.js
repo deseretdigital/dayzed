@@ -1,6 +1,6 @@
 import React from "react";
 import glamorous, { Div } from "glamorous";
-import Dateshift from "../../src/index";
+import Dayzed from "../../src/index";
 
 const monthNamesShort = [
   "Jan",
@@ -122,7 +122,7 @@ class Datepicker extends React.Component {
     let offset = this.props.offset || this.state.offset;
     let onOffsetChanged = this.props.onOffsetChanged || this.onOffsetChanged;
     return (
-      <Dateshift
+      <Dayzed
         date={this.props.date}
         offset={offset}
         onDateSelected={this.props.onDateSelected}
@@ -199,7 +199,7 @@ class Datepicker extends React.Component {
           }
           return null;
         }}
-      </Dateshift>
+      </Dayzed>
     );
   }
 }

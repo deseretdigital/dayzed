@@ -1,10 +1,10 @@
 {
-  "name": "dateshift",
+  "name": "dayzed",
   "version": "0.0.0",
   "description": "Primitives to build simple, flexible, WAI-ARIA compliant React datepicker components.",
-  "main": "dist/dateshift.cjs.js",
-  "jsnext:main": "dist/dateshift.esm.js",
-  "module": "dist/dateshift.esm.js",
+  "main": "dist/dayzed.cjs.js",
+  "jsnext:main": "dist/dayzed.esm.js",
+  "module": "dist/dayzed.esm.js",
   "author": "Morgan Kartchner",
   "license": "MIT",
   "scripts": {
