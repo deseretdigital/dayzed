@@ -38,12 +38,15 @@ const dayOfMonthStyle = {
   border: "none"
 };
 
-let DayOfMonth = glamorous.button(dayOfMonthStyle, ({ selected, unavailable, today }) => {
-  let background = today ? "cornflowerblue" : "";
-  background = selected ? "purple" : background;
-  background = unavailable ? "teal" : background;
-  return { background };
-});
+let DayOfMonth = glamorous.button(
+  dayOfMonthStyle,
+  ({ selected, unavailable, today }) => {
+    let background = today ? "cornflowerblue" : "";
+    background = selected ? "purple" : background;
+    background = unavailable ? "teal" : background;
+    return { background };
+  }
+);
 
 let DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
   background: "transparent"
@@ -69,7 +72,8 @@ class Datepicker extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (
       this.props.date &&
-      this.normalizeDate(nextProps.date).getTime() !== this.normalizeDate(this.props.date).getTime()
+      this.normalizeDate(nextProps.date).getTime() !==
+        this.normalizeDate(this.props.date).getTime()
     ) {
       this.setState(state => ({ offset: 0 }));
     }
@@ -119,7 +123,9 @@ class Datepicker extends React.Component {
                       {monthNamesFull[calendar.month]} {calendar.year}
                     </div>
                     {weekdayNamesShort.map(weekday => (
-                      <DayOfMonthEmpty key={`${calendar.month}${calendar.year}${weekday}`}>
+                      <DayOfMonthEmpty
+                        key={`${calendar.month}${calendar.year}${weekday}`}
+                      >
                         {weekday}
                       </DayOfMonthEmpty>
                     ))}
@@ -127,7 +133,9 @@ class Datepicker extends React.Component {
                       week.map((dateObj, index) => {
                         if (!dateObj) {
                           return (
-                            <DayOfMonthEmpty key={`${calendar.year}${calendar.month}${index}`} />
+                            <DayOfMonthEmpty
+                              key={`${calendar.year}${calendar.month}${index}`}
+                            />
                           );
                         }
                         let { date, selected, selectable, today } = dateObj;
