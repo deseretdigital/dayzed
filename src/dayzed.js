@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 import {
 	composeEventHandlers,
@@ -10,7 +10,7 @@ import {
 	isBackDisabled,
 	isForwardDisabled,
 	getCalendars,
-} from './utils';
+} from "./utils";
 
 class Dayzed extends React.Component {
 	/*------------------------- React Component Lifecycle Methods ---*/
@@ -32,7 +32,7 @@ class Dayzed extends React.Component {
 		{
 			onClick,
 			offset = 1,
-			calendars = requiredProp('getBackProps', 'calendars'),
+			calendars = requiredProp("getBackProps", "calendars"),
 			...rest
 		} = {}
 	) => {
@@ -44,7 +44,7 @@ class Dayzed extends React.Component {
 				);
 			}),
 			disabled: isBackDisabled({ calendars, offset, minDate }),
-			'aria-label': `Go back ${offset} month${offset === 1 ? '' : 's'}`,
+			"aria-label": `Go back ${offset} month${offset === 1 ? "" : "s"}`,
 			...rest,
 		};
 	};
@@ -53,7 +53,7 @@ class Dayzed extends React.Component {
 		{
 			onClick,
 			offset = 1,
-			calendars = requiredProp('getForwardProps', 'calendars'),
+			calendars = requiredProp("getForwardProps", "calendars"),
 			...rest
 		} = {}
 	) => {
@@ -63,7 +63,7 @@ class Dayzed extends React.Component {
 				onOffsetChanged(offsetMonth + addMonth({ calendars, offset, maxDate }));
 			}),
 			disabled: isForwardDisabled({ calendars, offset, maxDate }),
-			'aria-label': `Go forward ${offset} month${offset === 1 ? '' : 's'}`,
+			"aria-label": `Go forward ${offset} month${offset === 1 ? "" : "s"}`,
 			...rest,
 		};
 	};
@@ -71,7 +71,7 @@ class Dayzed extends React.Component {
 	getDateProps = (
 		{
 			onClick,
-			dateObj = requiredProp('getDateProps', 'dateObj'),
+			dateObj = requiredProp("getDateProps", "dateObj"),
 			...rest
 			// onMouseEnter
 		} = {}
@@ -81,9 +81,9 @@ class Dayzed extends React.Component {
 				this.props.onDateSelected(dateObj);
 			}),
 			disabled: !dateObj.selectable,
-			'aria-label': dateObj.date.toDateString(),
-			'aria-pressed': dateObj.selected,
-			role: 'button',
+			"aria-label": dateObj.date.toDateString(),
+			"aria-pressed": dateObj.selected,
+			role: "button",
 			// Looking to do something for range selection in the futre.
 			// Range selection can still work, this would just make
 			// styling dates in between those ranges easier.
@@ -112,7 +112,7 @@ Dayzed.propTypes = {
 	selected: PropTypes.oneOfType([
 		PropTypes.arrayOf(Date),
 		PropTypes.instanceOf(Date),
-		PropTypes.oneOf([null, undefined, '']),
+		PropTypes.oneOf([null, undefined, ""]),
 	]),
 };
 
