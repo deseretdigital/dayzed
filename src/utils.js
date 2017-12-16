@@ -138,7 +138,7 @@ export function getCalendars({
   monthsToDisplay,
   offset,
   minDate,
-  maxDate,
+  maxDate
 }) {
   let months = [];
   let startDate = normalizeDate(date);
@@ -206,7 +206,7 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
     9: 30,
     10: 31,
     11: 30,
-    12: 31,
+    12: 31
   };
   let thisMonthDays = daysInMonth[month];
   let dates = [];
@@ -223,7 +223,7 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
       date,
       selected: isSelected(selectedDates, date),
       selectable: isSelectable(minDate, maxDate, date),
-      today: isEqual(date, today),
+      today: isEqual(date, today)
     };
     dates.push(dateObj);
   }
@@ -261,7 +261,7 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
     lastDayOfMonth: lastDate,
     month: month - 1, // normalize month value (0-based)
     year: year,
-    weeks: weeks,
+    weeks: weeks
   };
 }
 

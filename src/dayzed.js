@@ -9,7 +9,7 @@ import {
   addMonth,
   isBackDisabled,
   isForwardDisabled,
-  getCalendars,
+  getCalendars
 } from "./utils";
 
 class Dayzed extends React.Component {
@@ -22,7 +22,7 @@ class Dayzed extends React.Component {
       calendars,
       getDateProps: this.getDateProps,
       getBackProps: this.getBackProps,
-      getForwardProps: this.getForwardProps,
+      getForwardProps: this.getForwardProps
     });
   }
 
@@ -45,7 +45,7 @@ class Dayzed extends React.Component {
       }),
       disabled: isBackDisabled({ calendars, offset, minDate }),
       "aria-label": `Go back ${offset} month${offset === 1 ? "" : "s"}`,
-      ...rest,
+      ...rest
     };
   };
 
@@ -64,7 +64,7 @@ class Dayzed extends React.Component {
       }),
       disabled: isForwardDisabled({ calendars, offset, maxDate }),
       "aria-label": `Go forward ${offset} month${offset === 1 ? "" : "s"}`,
-      ...rest,
+      ...rest
     };
   };
 
@@ -90,7 +90,7 @@ class Dayzed extends React.Component {
       // onMouseEnter: composeEventHandlers(onMouseEnter, () => {
       //   // For date range selection
       // }),
-      ...rest,
+      ...rest
     };
   };
 }
@@ -98,7 +98,7 @@ class Dayzed extends React.Component {
 Dayzed.defaultProps = {
   date: new Date(),
   monthsToDisplay: 1,
-  selected: null,
+  selected: null
 };
 
 Dayzed.propTypes = {
@@ -112,8 +112,8 @@ Dayzed.propTypes = {
   selected: PropTypes.oneOfType([
     PropTypes.arrayOf(Date),
     PropTypes.instanceOf(Date),
-    PropTypes.oneOf([null, undefined, ""]),
-  ]),
+    PropTypes.oneOf([null, undefined, ""])
+  ])
 };
 
 export default Dayzed;

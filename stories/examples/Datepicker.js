@@ -14,7 +14,7 @@ const monthNamesFull = [
   "September",
   "October",
   "November",
-  "December",
+  "December"
 ];
 
 const weekdayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -22,20 +22,20 @@ const weekdayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 let Calendar = glamorous.div({
   maxWidth: 800,
   margin: "0 auto",
-  textAlign: "center",
+  textAlign: "center"
 });
 
 let Month = glamorous.div({
   display: "inline-block",
   width: "50%",
   padding: "0 10px 30px",
-  boxSizing: "border-box",
+  boxSizing: "border-box"
 });
 
 const dayOfMonthStyle = {
   display: "inline-block",
   width: "calc(100% / 7)",
-  border: "none",
+  border: "none"
 };
 
 let DayOfMonth = glamorous.button(
@@ -49,17 +49,17 @@ let DayOfMonth = glamorous.button(
 );
 
 let DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
-  background: "transparent",
+  background: "transparent"
 });
 
 class Datepicker extends React.Component {
   state = {
-    offset: 0,
+    offset: 0
   };
 
   onOffsetChanged = offset => {
     this.setState(state => ({
-      offset,
+      offset
     }));
   };
 
@@ -101,7 +101,7 @@ class Datepicker extends React.Component {
                   <button
                     {...getBackProps({
                       calendars,
-                      offset: 12,
+                      offset: 12
                     })}
                   >
                     {"<<"}
@@ -111,7 +111,7 @@ class Datepicker extends React.Component {
                   <button
                     {...getForwardProps({
                       calendars,
-                      offset: 12,
+                      offset: 12
                     })}
                   >
                     {">>"}
@@ -143,7 +143,7 @@ class Datepicker extends React.Component {
                           <DayOfMonth
                             key={`${calendar.year}${calendar.month}${index}`}
                             {...getDateProps({
-                              dateObj,
+                              dateObj
                             })}
                             selected={selected}
                             unavailable={!selectable}
