@@ -73,7 +73,7 @@ class Datepicker extends React.Component {
     if (
       this.props.date &&
       this.normalizeDate(nextProps.date).getTime() !==
-      this.normalizeDate(this.props.date).getTime()
+        this.normalizeDate(this.props.date).getTime()
     ) {
       this.setState(state => ({ offset: 0 }));
     }
@@ -98,12 +98,22 @@ class Datepicker extends React.Component {
             return (
               <Calendar>
                 <div>
-                  <button {...getBackProps({ calendars, offset: 12 })}>
+                  <button
+                    {...getBackProps({
+                      calendars,
+                      offset: 12
+                    })}
+                  >
                     {"<<"}
                   </button>
                   <button {...getBackProps({ calendars })}>Back</button>
                   <button {...getForwardProps({ calendars })}>Next</button>
-                  <button {...getForwardProps({ calendars, offset: 12 })}>
+                  <button
+                    {...getForwardProps({
+                      calendars,
+                      offset: 12
+                    })}
+                  >
                     {">>"}
                   </button>
                 </div>
@@ -132,7 +142,9 @@ class Datepicker extends React.Component {
                         return (
                           <DayOfMonth
                             key={`${calendar.year}${calendar.month}${index}`}
-                            {...getDateProps({ dateObj })}
+                            {...getDateProps({
+                              dateObj
+                            })}
                             selected={selected}
                             unavailable={!selectable}
                             today={today}

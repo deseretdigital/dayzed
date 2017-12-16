@@ -82,7 +82,8 @@ class Dayzed extends React.Component {
       }),
       disabled: !dateObj.selectable,
       "aria-label": dateObj.date.toDateString(),
-      "aria-selected": dateObj.selected,
+      "aria-pressed": dateObj.selected,
+      role: "button",
       // Looking to do something for range selection in the futre.
       // Range selection can still work, this would just make
       // styling dates in between those ranges easier.
@@ -96,7 +97,8 @@ class Dayzed extends React.Component {
 
 Dayzed.defaultProps = {
   date: new Date(),
-  monthsToDisplay: 1
+  monthsToDisplay: 1,
+  selected: null
 };
 
 Dayzed.propTypes = {
@@ -111,7 +113,7 @@ Dayzed.propTypes = {
     PropTypes.arrayOf(Date),
     PropTypes.instanceOf(Date),
     PropTypes.oneOf([null, undefined, ""])
-  ]).isRequired
+  ])
 };
 
 export default Dayzed;

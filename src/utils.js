@@ -31,11 +31,11 @@ export function requiredProp(fnName, propName) {
  * @return {*} the arg or it's first item
  */
 export function unwrapChildrenForPreact(arg) {
-  arg = Array.isArray(arg) ? /* istanbul ignore next (preact) */ arg[0] : arg
+  arg = Array.isArray(arg) ? /* istanbul ignore next (preact) */ arg[0] : arg;
   if (!arg) {
     return noop;
   } else {
-    return arg
+    return arg;
   }
 }
 function noop() {}
@@ -323,7 +323,7 @@ function isSelectable(minDate, maxDate, date) {
  * equal to the dateToCompare.
  * @param {Date} date The date to compare with
  * @param {Date} dateToCompare The date to compare against
- * @returns 
+ * @returns
  */
 function isEqual(date, dateToCompare) {
   return (
@@ -361,7 +361,7 @@ function monthDiff(date, dateToDiff) {
 /**
  * Takes a date and creates a
  * new date with the hours, minutes,
- * seconds, and milliseconds set to 0 
+ * seconds, and milliseconds set to 0
  * (Beginning of day).
  * @param {Date} date The Date to normalize
  * @returns {Date} The normalized date
