@@ -60,14 +60,10 @@ class Dayzed extends React.Component {
 		let { maxDate, offset: offsetMonth, onOffsetChanged } = this.props;
 		return {
 			onClick: composeEventHandlers(onClick, () => {
-				onOffsetChanged(
-					offsetMonth + addMonth({ calendars, offset, maxDate })
-				);
+				onOffsetChanged(offsetMonth + addMonth({ calendars, offset, maxDate }));
 			}),
 			disabled: isForwardDisabled({ calendars, offset, maxDate }),
-			'aria-label': `Go forward ${offset} month${
-				offset === 1 ? '' : 's'
-			}`,
+			'aria-label': `Go forward ${offset} month${offset === 1 ? '' : 's'}`,
 			...rest,
 		};
 	};

@@ -81,8 +81,7 @@ class Datepicker extends React.Component {
 
 	render() {
 		let offset = this.props.offset || this.state.offset;
-		let onOffsetChanged =
-			this.props.onOffsetChanged || this.onOffsetChanged;
+		let onOffsetChanged = this.props.onOffsetChanged || this.onOffsetChanged;
 		return (
 			<Dayzed
 				date={this.props.date}
@@ -94,12 +93,7 @@ class Datepicker extends React.Component {
 				selected={this.props.selected}
 				monthsToDisplay={this.props.monthsToDisplay}
 			>
-				{({
-					calendars,
-					getDateProps,
-					getBackProps,
-					getForwardProps,
-				}) => {
+				{({ calendars, getDateProps, getBackProps, getForwardProps }) => {
 					if (calendars.length) {
 						return (
 							<Calendar>
@@ -112,12 +106,8 @@ class Datepicker extends React.Component {
 									>
 										{'<<'}
 									</button>
-									<button {...getBackProps({ calendars })}>
-										Back
-									</button>
-									<button {...getForwardProps({ calendars })}>
-										Next
-									</button>
+									<button {...getBackProps({ calendars })}>Back</button>
+									<button {...getForwardProps({ calendars })}>Next</button>
 									<button
 										{...getForwardProps({
 											calendars,
@@ -128,20 +118,13 @@ class Datepicker extends React.Component {
 									</button>
 								</div>
 								{calendars.map(calendar => (
-									<Month
-										key={`${calendar.month}${
-											calendar.year
-										}`}
-									>
+									<Month key={`${calendar.month}${calendar.year}`}>
 										<div>
-											{monthNamesFull[calendar.month]}{' '}
-											{calendar.year}
+											{monthNamesFull[calendar.month]} {calendar.year}
 										</div>
 										{weekdayNamesShort.map(weekday => (
 											<DayOfMonthEmpty
-												key={`${calendar.month}${
-													calendar.year
-												}${weekday}`}
+												key={`${calendar.month}${calendar.year}${weekday}`}
 											>
 												{weekday}
 											</DayOfMonthEmpty>
@@ -151,37 +134,22 @@ class Datepicker extends React.Component {
 												if (!dateObj) {
 													return (
 														<DayOfMonthEmpty
-															key={`${
-																calendar.year
-															}${
-																calendar.month
-															}${index}`}
+															key={`${calendar.year}${calendar.month}${index}`}
 														/>
 													);
 												}
-												let {
-													date,
-													selected,
-													selectable,
-													today,
-												} = dateObj;
+												let { date, selected, selectable, today } = dateObj;
 												return (
 													<DayOfMonth
-														key={`${calendar.year}${
-															calendar.month
-														}${index}`}
+														key={`${calendar.year}${calendar.month}${index}`}
 														{...getDateProps({
 															dateObj,
 														})}
 														selected={selected}
-														unavailable={
-															!selectable
-														}
+														unavailable={!selectable}
 														today={today}
 													>
-														{selectable
-															? date.getDate()
-															: 'X'}
+														{selectable ? date.getDate() : 'X'}
 													</DayOfMonth>
 												);
 											})
