@@ -10,6 +10,7 @@
   "author": "Morgan Kartchner",
   "license": "MIT",
   "dependencies": {
+    "arrow-keys-react": "^1.0.6",
     "glamor": "^2.20.40",
     "glamorous": "^4.9.7",
     "react": "^16.0.0",

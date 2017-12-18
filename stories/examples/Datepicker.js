@@ -1,6 +1,7 @@
 import React from "react";
 import glamorous from "glamorous";
 import Dayzed from "../../src/index";
+import ArrowKeysReact from "arrow-keys-react";
 
 const monthNamesFull = [
   "January",
@@ -57,6 +58,39 @@ class Datepicker extends React.Component {
   state = {
     offset: 0
   };
+  
+  constructor(props) {
+    super(props);
+    ArrowKeysReact.config({
+      left: () => {
+        this.getKeyOffset(-1);
+      },
+      right: () => {
+        this.getKeyOffset(1);
+      },
+      up: () => {
+        this.getKeyOffset(-7);
+      },
+      down: () => {
+        this.getKeyOffset(7);
+      }
+    });
+  }
+
+  getKeyOffset(number) {
+    const e = document.activeElement;
+    let buttons = document.querySelectorAll("button");
+    buttons.forEach((el, i) => {
+      const newNodeKey = i + number;
+      if (el == e) {
+        if (newNodeKey <= buttons.length - 1 && newNodeKey >= 0) {
+          buttons[newNodeKey].focus();
+        } else {
+          buttons[0].focus();
+        }
+      }
+    });
+  }
 
   onOffsetChanged = offset => {
     this.setState(state => ({
@@ -97,7 +131,7 @@ class Datepicker extends React.Component {
         {({ calendars, getDateProps, getBackProps, getForwardProps }) => {
           if (calendars.length) {
             return (
-              <Calendar>
+              <Calendar {...ArrowKeysReact.events}>
                 <div>
                   <button
                     {...getBackProps({
