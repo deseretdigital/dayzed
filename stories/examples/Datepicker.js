@@ -54,6 +54,10 @@ let DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
 });
 
 class Datepicker extends React.Component {
+  state = {
+    offset: 0
+  };
+  
   constructor(props) {
     super(props);
     ArrowKeysReact.config({
@@ -72,10 +76,6 @@ class Datepicker extends React.Component {
     });
   }
 
-  state = {
-    offset: 0
-  };
-
   getKeyOffset(number) {
     const e = document.activeElement;
     let buttons = document.querySelectorAll("button");
@@ -83,7 +83,6 @@ class Datepicker extends React.Component {
       const newNodeKey = i + number;
       if (el == e) {
         if (newNodeKey <= buttons.length - 1 && newNodeKey >= 0) {
-          console.log(buttons.length, newNodeKey);
           buttons[newNodeKey].focus();
         } else {
           buttons[0].focus();
