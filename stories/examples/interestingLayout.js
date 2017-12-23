@@ -201,19 +201,20 @@ class Datepicker extends React.Component {
                             {weekday}
                           </WeekdayName>
                         ))}
-                      {calendar.weeks.map(week =>
+                      {calendar.weeks.map((week, windex) =>
                         week.map((dateObj, index) => {
+                          let key = `${calendar.month}${calendar.year}${windex}${index}`;
                           if (!dateObj) {
                             return (
                               <DayOfMonthEmpty
-                                key={`${calendar.year}${calendar.month}${index}`}
+                                key={key}
                               />
                             );
                           }
                           let { date, selected, selectable, today } = dateObj;
                           return (
                             <DayOfMonth
-                              key={`${calendar.year}${calendar.month}${index}`}
+                              key={key}
                               {...getDateProps({ dateObj })}
                               selected={selected}
                               unavailable={!selectable}
