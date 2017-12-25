@@ -93,10 +93,6 @@ let WeekdayName = (DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
 }));
 
 class Datepicker extends React.Component {
-  state = {
-    offset: 0
-  };
-  
   constructor(props) {
     super(props);
     ArrowKeysReact.config({
@@ -130,37 +126,11 @@ class Datepicker extends React.Component {
     });
   }
 
-  onOffsetChanged = offset => {
-    this.setState(state => ({
-      offset
-    }));
-  };
-
-  normalizeDate(date) {
-    let normalizeDate = new Date(date.getTime());
-    normalizeDate.setHours(0, 0, 0, 0);
-    return normalizeDate;
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (
-      this.props.date &&
-      this.normalizeDate(nextProps.date).getTime() !==
-        this.normalizeDate(this.props.date).getTime()
-    ) {
-      this.setState(state => ({ offset: 0 }));
-    }
-  }
-
   render() {
-    let offset = this.props.offset || this.state.offset;
-    let onOffsetChanged = this.props.onOffsetChanged || this.onOffsetChanged;
     return (
       <Dayzed
         date={this.props.date}
-        offset={offset}
         onDateSelected={this.props.onDateSelected}
-        onOffsetChanged={onOffsetChanged}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
         selected={this.props.selected}
