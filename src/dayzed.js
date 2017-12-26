@@ -13,10 +13,15 @@ import {
 } from "./utils";
 
 class Dayzed extends React.Component {
+  state = { offset: 0 }
+
   /*------------------------- React Component Lifecycle Methods ---*/
 
   render() {
-    let calendars = getCalendars(this.props);
+    let calendars = getCalendars({
+      ...this.props,
+      offset: this.getOffset()
+    });
     let children = unwrapChildrenForPreact(this.props.children);
     return children({
       calendars,
@@ -36,10 +41,11 @@ class Dayzed extends React.Component {
       ...rest
     } = {}
   ) => {
-    let { minDate, offset: offsetMonth, onOffsetChanged } = this.props;
+    let { minDate } = this.props;
+    let offsetMonth = this.getOffset();
     return {
       onClick: composeEventHandlers(onClick, () => {
-        onOffsetChanged(
+        this.onOffsetChanged(
           offsetMonth - subtractMonth({ calendars, offset, minDate })
         );
       }),
@@ -57,10 +63,11 @@ class Dayzed extends React.Component {
       ...rest
     } = {}
   ) => {
-    let { maxDate, offset: offsetMonth, onOffsetChanged } = this.props;
+    let { maxDate } = this.props;
+    let offsetMonth = this.getOffset();
     return {
       onClick: composeEventHandlers(onClick, () => {
-        onOffsetChanged(offsetMonth + addMonth({ calendars, offset, maxDate }));
+        this.onOffsetChanged(offsetMonth + addMonth({ calendars, offset, maxDate }));
       }),
       disabled: isForwardDisabled({ calendars, offset, maxDate }),
       "aria-label": `Go forward ${offset} month${offset === 1 ? "" : "s"}`,
@@ -93,12 +100,33 @@ class Dayzed extends React.Component {
       ...rest
     };
   };
+
+  /*------------------------- Control Props ---*/
+
+  getOffset = () => {
+    return this.isOffsetControlled() ? this.props.offset : this.state.offset;
+  }
+  
+  isOffsetControlled = () => {
+    return this.props.offset !== undefined;
+  }
+
+  onOffsetChanged = (newOffset) => {
+    if (this.isOffsetControlled()) {
+      this.props.onOffsetChanged(newOffset);
+    } else {
+      this.setState({ offset: newOffset }, () => {
+        this.props.onOffsetChanged(newOffset);
+      });
+    }
+  }
+
 }
 
 Dayzed.defaultProps = {
   date: new Date(),
   monthsToDisplay: 1,
-  selected: null
+  onOffsetChanged: () => {}
 };
 
 Dayzed.propTypes = {
@@ -106,13 +134,12 @@ Dayzed.propTypes = {
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
   monthsToDisplay: PropTypes.number,
-  offset: PropTypes.number.isRequired,
+  offset: PropTypes.number,
   onDateSelected: PropTypes.func.isRequired,
   onOffsetChanged: PropTypes.func,
   selected: PropTypes.oneOfType([
     PropTypes.arrayOf(Date),
-    PropTypes.instanceOf(Date),
-    PropTypes.oneOf([null, undefined, ""])
+    PropTypes.instanceOf(Date)
   ])
 };
 
