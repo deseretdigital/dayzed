@@ -2,23 +2,7 @@ import React from "react";
 import glamorous from "glamorous";
 import Dayzed from "../../src/index";
 import ArrowKeysReact from "arrow-keys-react";
-
-const monthNamesFull = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
-
-const weekdayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+import { monthNamesFull, weekdayNamesShort } from "./calendarUtils";
 
 let Calendar = glamorous.div({
   maxWidth: 800,
@@ -54,7 +38,7 @@ let DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
   background: "transparent"
 });
 
-class Datepicker extends React.Component {  
+class Datepicker extends React.Component {
   constructor(props) {
     super(props);
     ArrowKeysReact.config({
@@ -136,13 +120,11 @@ class Datepicker extends React.Component {
                     ))}
                     {calendar.weeks.map((week, windex) =>
                       week.map((dateObj, index) => {
-                        let key = `${calendar.month}${calendar.year}${windex}${index}`;
+                        let key = `${calendar.month}${
+                          calendar.year
+                        }${windex}${index}`;
                         if (!dateObj) {
-                          return (
-                            <DayOfMonthEmpty
-                              key={key}
-                            />
-                          );
+                          return <DayOfMonthEmpty key={key} />;
                         }
                         let { date, selected, selectable, today } = dateObj;
                         return (

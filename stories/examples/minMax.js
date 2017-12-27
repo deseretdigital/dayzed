@@ -27,7 +27,7 @@ class MinMax extends React.Component {
     let minDate = new Date();
     let maxDate = new Date();
     // Set maxDate as 30 days from today.
-    maxDate.setDate(maxDate.getDate()+30);
+    maxDate.setDate(maxDate.getDate() + 30);
     return (
       <div>
         <Datepicker
