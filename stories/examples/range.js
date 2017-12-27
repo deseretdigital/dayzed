@@ -1,6 +1,7 @@
 import React from "react";
 import glamorous from "glamorous";
 import Dayzed from "../../src/index";
+import ArrowKeysReact from "arrow-keys-react";
 import { monthNamesFull, weekdayNamesShort } from "./calendarUtils";
 
 let Calendar = glamorous.div({
@@ -40,20 +41,53 @@ let DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
 class RangeDatepicker extends React.Component {
   state = { hoveredDate: null };
 
+  constructor(props) {
+    super(props);
+    ArrowKeysReact.config({
+      left: () => {
+        this.getKeyOffset(-1);
+      },
+      right: () => {
+        this.getKeyOffset(1);
+      },
+      up: () => {
+        this.getKeyOffset(-7);
+      },
+      down: () => {
+        this.getKeyOffset(7);
+      }
+    });
+  }
+
+  getKeyOffset(number) {
+    const e = document.activeElement;
+    let buttons = document.querySelectorAll("button");
+    buttons.forEach((el, i) => {
+      const newNodeKey = i + number;
+      if (el == e) {
+        if (newNodeKey <= buttons.length - 1 && newNodeKey >= 0) {
+          buttons[newNodeKey].focus();
+        } else {
+          buttons[0].focus();
+        }
+      }
+    });
+  }
+
   // Calendar level
-  _onMouseLeave = () => {
+  onMouseLeave = () => {
     this.setState({ hoveredDate: null });
   };
 
   // Date level
-  _onMouseEnter(date) {
+  onMouseEnter(date) {
     if (!this.props.selected.length) {
       return;
     }
     this.setState({ hoveredDate: date });
   }
 
-  _isInRange = date => {
+  isInRange = date => {
     let { selected } = this.props;
     let { hoveredDate } = this.state;
     if (selected.length) {
@@ -85,7 +119,10 @@ class RangeDatepicker extends React.Component {
         {({ calendars, getDateProps, getBackProps, getForwardProps }) => {
           if (calendars.length) {
             return (
-              <Calendar onMouseLeave={this._onMouseLeave}>
+              <Calendar
+                {...ArrowKeysReact.events}
+                onMouseLeave={this.onMouseLeave}
+              >
                 <div>
                   <button
                     {...getBackProps({
@@ -133,13 +170,13 @@ class RangeDatepicker extends React.Component {
                             {...getDateProps({
                               dateObj,
                               onMouseEnter: () => {
-                                this._onMouseEnter(date);
+                                this.onMouseEnter(date);
                               }
                             })}
                             selected={selected}
                             unavailable={!selectable}
                             today={today}
-                            isInRange={this._isInRange(date)}
+                            isInRange={this.isInRange(date)}
                           >
                             {selectable ? date.getDate() : "X"}
                           </DayOfMonth>
