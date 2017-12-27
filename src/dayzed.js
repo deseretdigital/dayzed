@@ -80,7 +80,6 @@ class Dayzed extends React.Component {
       onClick,
       dateObj = requiredProp("getDateProps", "dateObj"),
       ...rest
-      // onMouseEnter
     } = {}
   ) => {
     return {
@@ -91,12 +90,6 @@ class Dayzed extends React.Component {
       "aria-label": dateObj.date.toDateString(),
       "aria-pressed": dateObj.selected,
       role: "button",
-      // Looking to do something for range selection in the futre.
-      // Range selection can still work, this would just make
-      // styling dates in between those ranges easier.
-      // onMouseEnter: composeEventHandlers(onMouseEnter, () => {
-      //   // For date range selection
-      // }),
       ...rest
     };
   };
