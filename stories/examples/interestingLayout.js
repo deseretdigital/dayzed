@@ -2,23 +2,7 @@ import React from "react";
 import glamorous, { Div } from "glamorous";
 import Dayzed from "../../src/index";
 import ArrowKeysReact from "arrow-keys-react";
-
-const monthNamesShort = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec"
-];
-
-const weekdayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+import { monthNamesShort, weekdayNamesShort } from "./calendarUtils";
 
 let Calendar = glamorous.div({
   maxWidth: 800,
@@ -173,13 +157,11 @@ class Datepicker extends React.Component {
                         ))}
                       {calendar.weeks.map((week, windex) =>
                         week.map((dateObj, index) => {
-                          let key = `${calendar.month}${calendar.year}${windex}${index}`;
+                          let key = `${calendar.month}${
+                            calendar.year
+                          }${windex}${index}`;
                           if (!dateObj) {
-                            return (
-                              <DayOfMonthEmpty
-                                key={key}
-                              />
-                            );
+                            return <DayOfMonthEmpty key={key} />;
                           }
                           let { date, selected, selectable, today } = dateObj;
                           return (
@@ -241,7 +223,13 @@ class Single extends React.Component {
           monthsToDisplay={3}
         />
         {this.state.selectedDate && (
-          <div style={{ paddingTop: 20, textAlign: "center", fontFamily: "Arial, sans-serif" }}>
+          <div
+            style={{
+              paddingTop: 20,
+              textAlign: "center",
+              fontFamily: "Arial, sans-serif"
+            }}
+          >
             <p>Selected:</p>
             <p>{`${selectedDate.toLocaleDateString()}`}</p>
           </div>

@@ -26,9 +26,9 @@ const dayOfMonthStyle = {
 
 let DayOfMonth = glamorous.button(
   dayOfMonthStyle,
-  ({ selected, unavailable, today }) => {
+  ({ selected, unavailable, today, isInRange }) => {
     let background = today ? "cornflowerblue" : "";
-    background = selected ? "purple" : background;
+    background = selected || isInRange ? "purple" : background;
     background = unavailable ? "teal" : background;
     return { background };
   }
@@ -38,7 +38,9 @@ let DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
   background: "transparent"
 });
 
-class Datepicker extends React.Component {
+class RangeDatepicker extends React.Component {
+  state = { hoveredDate: null };
+
   constructor(props) {
     super(props);
     ArrowKeysReact.config({
@@ -72,6 +74,38 @@ class Datepicker extends React.Component {
     });
   }
 
+  // Calendar level
+  onMouseLeave = () => {
+    this.setState({ hoveredDate: null });
+  };
+
+  // Date level
+  onMouseEnter(date) {
+    if (!this.props.selected.length) {
+      return;
+    }
+    this.setState({ hoveredDate: date });
+  }
+
+  isInRange = date => {
+    let { selected } = this.props;
+    let { hoveredDate } = this.state;
+    if (selected.length) {
+      let firstSelected = selected[0].getTime();
+      if (selected.length === 2) {
+        let secondSelected = selected[1].getTime();
+        return firstSelected < date && secondSelected > date;
+      } else {
+        return (
+          hoveredDate &&
+          ((firstSelected < date && hoveredDate >= date) ||
+            (date < firstSelected && date >= hoveredDate))
+        );
+      }
+    }
+    return false;
+  };
+
   render() {
     return (
       <Dayzed
@@ -85,7 +119,10 @@ class Datepicker extends React.Component {
         {({ calendars, getDateProps, getBackProps, getForwardProps }) => {
           if (calendars.length) {
             return (
-              <Calendar {...ArrowKeysReact.events}>
+              <Calendar
+                {...ArrowKeysReact.events}
+                onMouseLeave={this.onMouseLeave}
+              >
                 <div>
                   <button
                     {...getBackProps({
@@ -131,11 +168,15 @@ class Datepicker extends React.Component {
                           <DayOfMonth
                             key={key}
                             {...getDateProps({
-                              dateObj
+                              dateObj,
+                              onMouseEnter: () => {
+                                this.onMouseEnter(date);
+                              }
                             })}
                             selected={selected}
                             unavailable={!selectable}
                             today={today}
+                            isInRange={this.isInRange(date)}
                           >
                             {selectable ? date.getDate() : "X"}
                           </DayOfMonth>
@@ -154,4 +195,54 @@ class Datepicker extends React.Component {
   }
 }
 
-export default Datepicker;
+class Range extends React.Component {
+  state = {
+    selectedDates: []
+  };
+
+  _handleOnDateSelected = ({ selected, selectable, date }) => {
+    if (!selectable) {
+      return;
+    }
+    let dateTime = date.getTime();
+    let newDates = [...this.state.selectedDates];
+    if (this.state.selectedDates.length) {
+      if (this.state.selectedDates.length === 1) {
+        let firstTime = this.state.selectedDates[0].getTime();
+        if (firstTime < dateTime) {
+          newDates.push(date);
+        } else {
+          newDates.unshift(date);
+        }
+        this.setState({ selectedDates: newDates });
+      } else if (newDates.length === 2) {
+        this.setState({ selectedDates: [date] });
+      }
+    } else {
+      newDates.push(date);
+      this.setState({ selectedDates: newDates });
+    }
+  };
+
+  render() {
+    let { selectedDates } = this.state;
+    return (
+      <div>
+        <RangeDatepicker
+          selected={this.state.selectedDates}
+          onDateSelected={this._handleOnDateSelected}
+          monthsToDisplay={2}
+        />
+        {selectedDates.length === 2 && (
+          <div style={{ paddingTop: 20, textAlign: "center" }}>
+            <p>Selected:</p>
+            <p
+            >{`${selectedDates[0].toLocaleDateString()} - ${selectedDates[1].toLocaleDateString()}`}</p>
+          </div>
+        )}
+      </div>
+    );
+  }
+}
+
+export default Range;
