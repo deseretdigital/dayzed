@@ -1,6 +1,6 @@
 {
   "name": "dayzed",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Primitives to build simple, flexible, WAI-ARIA compliant React datepicker components.",
   "main": "dist/dayzed.cjs.js",
   "jsnext:main": "dist/dayzed.esm.js",
