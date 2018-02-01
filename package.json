@@ -1,6 +1,6 @@
 {
   "name": "dayzed",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Primitives to build simple, flexible, WAI-ARIA compliant React datepicker components.",
   "main": "dist/dayzed.cjs.js",
   "jsnext:main": "dist/dayzed.esm.js",
@@ -29,5 +29,13 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deseretdigital/dayzed.git"
+  },
+  "bugs": {
+    "url": "https://github.com/deseretdigital/dayzed/issues"
+  },
+  "homepage": "https://github.com/deseretdigital/dayzed#readme"
 }
