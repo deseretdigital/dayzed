@@ -13,7 +13,7 @@ import {
 } from "./utils";
 
 class Dayzed extends React.Component {
-  state = { offset: 0 }
+  state = { offset: 0 };
 
   /*------------------------- React Component Lifecycle Methods ---*/
 
@@ -22,7 +22,9 @@ class Dayzed extends React.Component {
       ...this.props,
       offset: this.getOffset()
     });
-    let children = unwrapChildrenForPreact(this.props.children);
+    let children = unwrapChildrenForPreact(
+      this.props.render || this.props.children
+    );
     return children({
       calendars,
       getDateProps: this.getDateProps,
@@ -33,14 +35,12 @@ class Dayzed extends React.Component {
 
   /*------------------------- Prop Getters ---*/
 
-  getBackProps = (
-    {
-      onClick,
-      offset = 1,
-      calendars = requiredProp("getBackProps", "calendars"),
-      ...rest
-    } = {}
-  ) => {
+  getBackProps = ({
+    onClick,
+    offset = 1,
+    calendars = requiredProp("getBackProps", "calendars"),
+    ...rest
+  } = {}) => {
     let { minDate } = this.props;
     let offsetMonth = this.getOffset();
     return {
@@ -55,19 +55,19 @@ class Dayzed extends React.Component {
     };
   };
 
-  getForwardProps = (
-    {
-      onClick,
-      offset = 1,
-      calendars = requiredProp("getForwardProps", "calendars"),
-      ...rest
-    } = {}
-  ) => {
+  getForwardProps = ({
+    onClick,
+    offset = 1,
+    calendars = requiredProp("getForwardProps", "calendars"),
+    ...rest
+  } = {}) => {
     let { maxDate } = this.props;
     let offsetMonth = this.getOffset();
     return {
       onClick: composeEventHandlers(onClick, () => {
-        this.onOffsetChanged(offsetMonth + addMonth({ calendars, offset, maxDate }));
+        this.onOffsetChanged(
+          offsetMonth + addMonth({ calendars, offset, maxDate })
+        );
       }),
       disabled: isForwardDisabled({ calendars, offset, maxDate }),
       "aria-label": `Go forward ${offset} month${offset === 1 ? "" : "s"}`,
@@ -75,13 +75,11 @@ class Dayzed extends React.Component {
     };
   };
 
-  getDateProps = (
-    {
-      onClick,
-      dateObj = requiredProp("getDateProps", "dateObj"),
-      ...rest
-    } = {}
-  ) => {
+  getDateProps = ({
+    onClick,
+    dateObj = requiredProp("getDateProps", "dateObj"),
+    ...rest
+  } = {}) => {
     return {
       onClick: composeEventHandlers(onClick, () => {
         this.props.onDateSelected(dateObj);
@@ -98,13 +96,13 @@ class Dayzed extends React.Component {
 
   getOffset = () => {
     return this.isOffsetControlled() ? this.props.offset : this.state.offset;
-  }
-  
+  };
+
   isOffsetControlled = () => {
     return this.props.offset !== undefined;
-  }
+  };
 
-  onOffsetChanged = (newOffset) => {
+  onOffsetChanged = newOffset => {
     if (this.isOffsetControlled()) {
       this.props.onOffsetChanged(newOffset);
     } else {
@@ -112,8 +110,7 @@ class Dayzed extends React.Component {
         this.props.onOffsetChanged(newOffset);
       });
     }
-  }
-
+  };
 }
 
 Dayzed.defaultProps = {
@@ -123,6 +120,7 @@ Dayzed.defaultProps = {
 };
 
 Dayzed.propTypes = {
+  render: PropTypes.func,
   date: PropTypes.instanceOf(Date),
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),

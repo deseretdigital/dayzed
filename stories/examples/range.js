@@ -115,8 +115,12 @@ class RangeDatepicker extends React.Component {
         maxDate={this.props.maxDate}
         selected={this.props.selected}
         monthsToDisplay={this.props.monthsToDisplay}
-      >
-        {({ calendars, getDateProps, getBackProps, getForwardProps }) => {
+        render={({
+          calendars,
+          getDateProps,
+          getBackProps,
+          getForwardProps
+        }) => {
           if (calendars.length) {
             return (
               <Calendar
@@ -190,7 +194,7 @@ class RangeDatepicker extends React.Component {
           }
           return null;
         }}
-      </Dayzed>
+      />
     );
   }
 }

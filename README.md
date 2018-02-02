@@ -89,8 +89,12 @@ class Datepicker extends React.Component {
       <Dayzed
         onDateSelected={this.props.onDateSelected}
         selected={this.props.selected}
-      >
-        {({ calendars, getBackProps, getForwardProps, getDateProps }) => {
+        render={({
+          calendars,
+          getBackProps,
+          getForwardProps,
+          getDateProps
+        }) => {
           if (calendars.length) {
             return (
               <div
@@ -168,7 +172,7 @@ class Datepicker extends React.Component {
           }
           return null;
         }}
-      </Dayzed>
+      />
     );
   }
 }
@@ -241,6 +245,13 @@ An array of `Date`s or a single `Date` that has been selected.
 Called when the user selects a date.
 
 * `selectedDate`: The date that was just selected.
+
+### render
+
+> `function({})` | _required_
+
+This is called with an object. Read more about the properties of this object in
+the section "[Render Prop Function](#render-prop-function)".
 
 ### offset
 
