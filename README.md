@@ -4,11 +4,11 @@ Primitives to build simple, flexible, WAI-ARIA compliant React date-picker compo
 
 ## The problem
 
-You need a date-picker in your application that is accessible, can fit a number of use cases (single date, multi date, range), and has styling and layout that can be easily extended. 
+You need a date-picker in your application that is accessible, can fit a number of use cases (single date, multi date, range), and has styling and layout that can be easily extended.
 
 ## This solution
 
-This is a component that focuses on controlling user interactions so you can focus on creating beautiful, accessible, and useful date-pickers. It uses a [render function as children](https://medium.com/merrickchristensen/function-as-child-components-5f3920a9ace9). This means you are responsible for rendering everything, but props are provided by the render function, through a pattern called [prop getters](https://blog.kentcdodds.com/how-to-give-rendering-control-to-users-with-prop-getters-549eaef76acf), which can be used to help enhance what you are rendering.
+This is a component that focuses on controlling user interactions so you can focus on creating beautiful, accessible, and useful date-pickers. It uses a [render function as children][render-function-as-children]. This means you are responsible for rendering everything, but props are provided by the render function, through a pattern called [prop getters][prop-getters], which can be used to help enhance what you are rendering.
 
 This differs from other solutions which render things for their use case and then expose many options to allow for extensibility resulting in a bigger API that is less flexible as well as making the implementation more complicated and harder to contribute to.
 
@@ -17,38 +17,84 @@ This differs from other solutions which render things for their use case and the
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
+- [Installation](#installation)
 - [Usage](#usage)
+- [Props](#props)
+  - [date](#date)
+  - [maxDate](#maxdate)
+  - [minDate](#mindate)
+  - [monthsToDisplay](#monthstodisplay)
+  - [selected](#selected)
+  - [onDateSelected](#ondateselected)
+  - [render](#render)
+  - [offset](#offset)
+  - [onOffsetChanged](#onoffsetchanged)
+- [Control Props](#control-props)
+- [Render Prop Function](#render-prop-function)
+  - [prop getters](#prop-getters)
+  - [state](#state)
 - [Inspiration and Thanks!](#inspiration-and-thanks)
 - [Other Solutions](#other-solutions)
 - [LICENSE](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## Installation
+
+This module is distributed via [npm][npm] which is bundled with [node][node] and
+should be installed as one of your project's `dependencies`:
+
+```
+npm install --save dayzed
+```
+
+Or, you can install this module through the [yarn][yarn] package manager.
+
+```
+yarn add dayzed
+```
+
+> This package also depends on `react` and `prop-types`. Please make sure you
+> have those installed as well.
+
+> Note also this library supports `preact` out of the box. If you are using
+> `preact` then use the corresponding module in the `preact/dist` folder. You
+> can even `import Dayzed from 'dayzed/preact'`
+
 ## Usage
+
 ```jsx
 import React from "react";
 import Dayzed from "dayzed";
 
-const monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const monthNamesShort = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+];
 const weekdayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 class Datepicker extends React.Component {
-  state = { offset: 0 };
-
-  onOffsetChanged = offset => {
-    this.setState(state => ({ offset }));
-  };
-
   render() {
     return (
       <Dayzed
-        offset={this.state.offset}
-        onOffsetChanged={this.onOffsetChanged}
         onDateSelected={this.props.onDateSelected}
         selected={this.props.selected}
-      >
-        {({ calendars, getBackProps, getForwardProps, getDateProps }) => {
+        render={({
+          calendars,
+          getBackProps,
+          getForwardProps,
+          getDateProps
+        }) => {
           if (calendars.length) {
             return (
               <div
@@ -126,7 +172,7 @@ class Datepicker extends React.Component {
           }
           return null;
         }}
-      </Dayzed>
+      />
     );
   }
 }
@@ -158,26 +204,161 @@ class Single extends React.Component {
 }
 
 export default Single;
-
 ```
+
+## Props
+
+### date
+
+> `date` | defaults to `new Date()`
+
+Used to calculate what month to display on initial render.
+
+### maxDate
+
+> `date` | optional
+
+Used to calculate the maximum month to render.
+
+### minDate
+
+> `date` | optional
+
+Used to calculate the minimum month to render.
+
+### monthsToDisplay
+
+> `number` | defaults to `1`
+
+Number of months returned, based off the `date` and `offset` props.
+
+### selected
+
+> `any` | optional
+
+An array of `Date`s or a single `Date` that has been selected.
+
+### onDateSelected
+
+> `function(selectedDate: date)` | _required_
+
+Called when the user selects a date.
+
+* `selectedDate`: The date that was just selected.
+
+### render
+
+> `function({})` | _required_
+
+This is called with an object. Read more about the properties of this object in
+the section "[Render Prop Function](#render-prop-function)".
+
+### offset
+
+> `number` | **control prop** (read more about this in the "Control Props"
+> section below) - defaults to `0` if not controlled.
+
+Number off months to offset from the `date` prop.
+
+### onOffsetChanged
+
+> `function(offset: number)` | **control prop** (read more about this in the "Control Props"
+> section below)
+
+Called when the user selects to go forward or back. This function is **required** if `offset` is being provided as a prop.
+
+* `offset`: The number of months offset.
+
+## Control Props
+
+dayzed manages its own `offset` state internally and calls your `onOffsetChanged` handler when the offset changes. Your render prop function (read more below) can be used to manipulate this state from within the render function and can likely support many of your use cases.
+
+However, if more control is needed, you can pass `offset` as a prop (as indicated above) and that state becomes controlled. As soon as `this.props.offset !== undefined`, internally, `dayzed` will determine its state based on your prop's value rather than its own internal state. You will be required to keep the state up to date (this is where the `onOffsetChanged` handler comes in really handy), but you can also control the state from anywhere, be that state from other components, `redux`, `react-router`, or anywhere else.
+
+> Note: This is very similar to how normal controlled components work elsewhere
+> in react (like `<input />`). If you want to learn more about this concept, you
+> can learn about that from this the ["Controlled Components"
+> lecture][controlled-components-lecture]
+
+## Render Prop Function
+
+This is where you render whatever you want to based on the state of `dayzed`.
+It's a regular prop called `render`: `<Dayzed render={/* right here*/} />`.
+
+> You can also pass it as the children prop if you prefer to do things that way
+> `<Dayzed>{/* right here*/}</Dayzed>`
+
+The properties of this object can be split into two categories as indicated
+below:
+
+### prop getters
+
+> See
+> [the blog post about prop getters][prop-getters]
+
+These functions are used to apply props to the elements that you render. This
+gives you maximum flexibility to render what, when, and wherever you like. You
+call these on the element in question (for example: `<button {...getDateProps()}`)). It's advisable to pass all your props to that function
+rather than applying them on the element yourself to avoid your props being
+overridden (or overriding the props returned). For example:
+`getDateProps({onClick(event) {console.log(event)}})`.
+
+| property          | type           | description                                                                    |
+| ----------------- | -------------- | ------------------------------------------------------------------------------ |
+| `getDateProps`    | `function({})` | Returns the props you should apply to the date button elements you render.     |
+| `getBackProps`    | `function({})` | Returns the props you should apply to any `back` button element you render.    |
+| `getForwardProps` | `function({})` | Returns the props you should apply to any `forward` button element you render. |
+
+### state
+
+These are values that represent the current state of the dayzed component.
+
+| property                               | type      | description                                                                                                                                                  |
+| -------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `calendars`                            | `any`     | An array containing objects of each month's data.                                                                                                            |
+| `calendars[{}].month`                  | `number`  | Zero-based number of the month. (0 - 11)                                                                                                                     |
+| `calendars[{}].year`                   | `number`  | The year of the month.                                                                                                                                       |
+| `calendars[{}].firstDayOfMonth`        | `date`    | First day of the month.                                                                                                                                      |
+| `calendars[{}].lastDayOfMonth`         | `date`    | Last day of the month.                                                                                                                                       |
+| `calendars[{}].weeks`                  | `any`     | An array containing an array of date objects for each week of the month. Starting from Sunday to Saturday. `[ ["", "", "", "", dateObj, dateObj, dateObj] ]` |
+| `calendars[{}].weeks[[{}]].date`       | `date`    | A `Date` object for that day of the week.                                                                                                                    |
+| `calendars[{}].weeks[[{}]].selected`   | `boolean` | Whether the `Date` was given as part of the provided `selected` prop.                                                                                        |
+| `calendars[{}].weeks[[{}]].selectable` | `boolean` | Whether the `Date` is selectable given the provided `maxDate` and `minDate` props.                                                                           |
+| `calendars[{}].weeks[[{}]].today`      | `boolean` | Whether the `Date` is today's date.                                                                                                                          |
 
 ## Inspiration and Thanks!
 
-- [Jen Luker](https://github.com/knittingcodemonkey)
-    - For help with naming and reviewing this library.
-- [Kent C. Dodds](https://github.com/kentcdodds)
-    - This library borrows **heavily** from his awesome [downshift](https://github.com/paypal/downshift) library!
-- [Michael Jackson](https://github.com/mjackson) & [Ryan Florence](https://github.com/ryanflorence)
-    - For teaching the use of the [render prop pattern](https://cdb.reacttraining.com/use-a-render-prop-50de598f11ce).
+* [Jen Luker][jenluker]
+  * For help with naming and reviewing this library.
+* [Kent C. Dodds][kentcdodds]
+  * This library borrows **heavily** from his awesome [downshift][downshift] library!
+* [Michael Jackson][michaeljackson] & [Ryan Florence][ryanflorence]
+  * For teaching the use of the [render prop pattern][render-prop-pattern].
 
 ## Other Solutions
 
 Here are some other great daypicker solutions:
 
-- [react-dates](https://github.com/airbnb/react-dates)
-- [react-calendar](https://github.com/wojtekmaj/react-calendar)
-- [react-day-picker](https://github.com/gpbl/react-day-picker)
+* [react-dates][react-dates]
+* [react-calendar][react-calendar]
+* [react-day-picker][react-day-picker]
 
 ## LICENSE
 
 MIT
+
+[render-function-as-children]: https://medium.com/merrickchristensen/function-as-child-components-5f3920a9ace9
+[prop-getters]: https://blog.kentcdodds.com/how-to-give-rendering-control-to-users-with-prop-getters-549eaef76acf
+[npm]: https://www.npmjs.com/
+[node]: https://nodejs.org
+[yarn]: https://yarnpkg.com
+[controlled-components-lecture]: https://courses.reacttraining.com/courses/advanced-react/lectures/3172720
+[downshift]: https://github.com/paypal/downshift
+[jenluker]: https://github.com/knittingcodemonkey
+[kentcdodds]: https://github.com/kentcdodds
+[michaeljackson]: https://github.com/mjackson
+[ryanflorence]: https://github.com/ryanflorence
+[render-prop-pattern]: https://cdb.reacttraining.com/use-a-render-prop-50de598f11ce
+[react-dates]: https://github.com/airbnb/react-dates
+[react-calendar]: https://github.com/wojtekmaj/react-calendar
+[react-day-picker]: https://github.com/gpbl/react-day-picker

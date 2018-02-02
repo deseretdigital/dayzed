@@ -119,8 +119,12 @@ class Datepicker extends React.Component {
         maxDate={this.props.maxDate}
         selected={this.props.selected}
         monthsToDisplay={this.props.monthsToDisplay}
-      >
-        {({ calendars, getDateProps, getBackProps, getForwardProps }) => {
+        render={({
+          calendars,
+          getDateProps,
+          getBackProps,
+          getForwardProps
+        }) => {
           if (calendars.length) {
             return (
               <Calendar {...ArrowKeysReact.events}>
@@ -186,7 +190,7 @@ class Datepicker extends React.Component {
           }
           return null;
         }}
-      </Dayzed>
+      />
     );
   }
 }
