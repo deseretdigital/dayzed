@@ -15,27 +15,27 @@ This differs from other solutions which render things for their use case and the
 ## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-* [Installation](#installation)
-* [Usage](#usage)
-* [Props](#props)
-  * [date](#date)
-  * [maxDate](#maxdate)
-  * [minDate](#mindate)
-  * [monthsToDisplay](#monthstodisplay)
-  * [selected](#selected)
-  * [onDateSelected](#ondateselected)
-  * [offset](#offset)
-  * [onOffsetChanged](#onoffsetchanged)
-* [Control Props](#control-props)
-* [Render Prop Function](#render-prop-function)
-  * [prop getters](#prop-getters)
-  * [state](#state)
-* [Inspiration and Thanks!](#inspiration-and-thanks)
-* [Other Solutions](#other-solutions)
-* [LICENSE](#license)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Props](#props)
+  - [date](#date)
+  - [maxDate](#maxdate)
+  - [minDate](#mindate)
+  - [monthsToDisplay](#monthstodisplay)
+  - [selected](#selected)
+  - [onDateSelected](#ondateselected)
+  - [render](#render)
+  - [offset](#offset)
+  - [onOffsetChanged](#onoffsetchanged)
+- [Control Props](#control-props)
+- [Render Prop Function](#render-prop-function)
+  - [prop getters](#prop-getters)
+  - [state](#state)
+- [Inspiration and Thanks!](#inspiration-and-thanks)
+- [Other Solutions](#other-solutions)
+- [LICENSE](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
