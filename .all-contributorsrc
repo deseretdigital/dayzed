@@ -1,0 +1,45 @@
+{
+  "projectName": "dayzed",
+  "projectOwner": "mkartchner994",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "mkartchner994",
+      "name": "Morgan Kartchner",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3399907?v=4",
+      "profile": "https://github.com/mkartchner994",
+      "contributions": [
+        "code",
+        "doc",
+        "example",
+        "ideas",
+        "review"
+      ]
+    },
+    {
+      "login": "knittingcodemonkey",
+      "name": "Jen Luker",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1584489?v=4",
+      "profile": "http://jenluker.com",
+      "contributions": [
+        "code",
+        "example",
+        "ideas"
+      ]
+    },
+    {
+      "login": "sjgale",
+      "name": "Sam Gale",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/10711493?v=4",
+      "profile": "https://github.com/sjgale",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
+    }
+  ]
+}

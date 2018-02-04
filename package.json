@@ -8,6 +8,7 @@
   "author": "Morgan Kartchner",
   "license": "MIT",
   "scripts": {
+    "add-contributor": "kcd-scripts contributors add",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "yarn install; kcd-scripts build --bundle --p-react",
     "storybook": "start-storybook -p 9001 -c stories",

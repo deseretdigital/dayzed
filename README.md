@@ -2,6 +2,15 @@
 
 Primitives to build simple, flexible, WAI-ARIA compliant React date-picker components.
 
+[![version][version-badge]][package]
+[![MIT License][license-badge]][license]
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
+
+[![Supports React and Preact][react-badge]][react]
+[![size][size-badge]][unpkg-dist]
+[![gzip size][gzip-badge]][unpkg-dist]
+[![module formats: umd, cjs, and es][module-formats-badge]][unpkg-dist]
+
 ## The problem
 
 You need a date-picker in your application that is accessible, can fit a number of use cases (single date, multi date, range), and has styling and layout that can be easily extended.
@@ -35,6 +44,7 @@ This differs from other solutions which render things for their use case and the
   - [state](#state)
 - [Inspiration and Thanks!](#inspiration-and-thanks)
 - [Other Solutions](#other-solutions)
+- [Contributors](#contributors)
 - [LICENSE](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -343,6 +353,21 @@ Here are some other great daypicker solutions:
 * [react-calendar][react-calendar]
 * [react-day-picker][react-day-picker]
 
+## Contributors
+
+Thanks goes to these people ([emoji key][emojis]):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
+<!-- prettier-ignore -->
+| [<img src="https://avatars2.githubusercontent.com/u/3399907?v=4" width="100px;"/><br /><sub>Morgan Kartchner</sub>](https://github.com/mkartchner994)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Code") [📖](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Documentation") [💡](#example-mkartchner994 "Examples") [🤔](#ideas-mkartchner994 "Ideas, Planning, & Feedback") [👀](#review-mkartchner994 "Reviewed Pull Requests") | [<img src="https://avatars2.githubusercontent.com/u/1584489?v=4" width="100px;"/><br /><sub>Jen Luker</sub>](http://jenluker.com)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=knittingcodemonkey "Code") [💡](#example-knittingcodemonkey "Examples") [🤔](#ideas-knittingcodemonkey "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/10711493?v=4" width="100px;"/><br /><sub>Sam Gale</sub>](https://github.com/sjgale)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=sjgale "Code") [🤔](#ideas-sjgale "Ideas, Planning, & Feedback") |
+| :---: | :---: | :---: |
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors][all-contributors] specification.
+Contributions of any kind welcome!
+
 ## LICENSE
 
 MIT
@@ -362,3 +387,15 @@ MIT
 [react-dates]: https://github.com/airbnb/react-dates
 [react-calendar]: https://github.com/wojtekmaj/react-calendar
 [react-day-picker]: https://github.com/gpbl/react-day-picker
+[emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
+[all-contributors]: https://github.com/kentcdodds/all-contributors
+[license-badge]: https://img.shields.io/npm/l/dayzed.svg?style=flat-square
+[license]: https://github.com/deseretdigital/dayzed/blob/master/LICENSE
+[version-badge]: https://img.shields.io/npm/v/dayzed.svg?style=flat-square
+[package]: https://www.npmjs.com/package/dayzed
+[react-badge]: https://img.shields.io/badge/%E2%9A%9B%EF%B8%8F-(p)react-00d8ff.svg?style=flat-square
+[react]: https://facebook.github.io/react/
+[gzip-badge]: http://img.badgesize.io/https://unpkg.com/dayzed/dist/dayzed.umd.min.js?compression=gzip&label=gzip%20size&style=flat-square
+[size-badge]: http://img.badgesize.io/https://unpkg.com/dayzed/dist/dayzed.umd.min.js?label=size&style=flat-square
+[unpkg-dist]: https://unpkg.com/dayzed/dist/
+[module-formats-badge]: https://img.shields.io/badge/module%20formats-umd%2C%20cjs%2C%20es-green.svg?style=flat-square
