@@ -94,17 +94,19 @@ class Datepicker extends React.Component {
                   <button
                     {...getBackProps({
                       calendars,
-                      offset: 12
+                      offset: 12,
+                      'data-test': 'backYear'
                     })}
                   >
                     {"<<"}
                   </button>
-                  <button {...getBackProps({ calendars })}>Back</button>
-                  <button {...getForwardProps({ calendars })}>Next</button>
+                  <button {...getBackProps({ calendars, 'data-test': 'backMonth' })}>Back</button>
+                  <button {...getForwardProps({ calendars, 'data-test': 'forwardMonth' })}>Next</button>
                   <button
                     {...getForwardProps({
                       calendars,
-                      offset: 12
+                      offset: 12,
+                      'data-test': 'forwardYear'
                     })}
                   >
                     {">>"}
@@ -112,7 +114,7 @@ class Datepicker extends React.Component {
                 </div>
                 {calendars.map(calendar => (
                   <Month key={`${calendar.month}${calendar.year}`}>
-                    <div>
+                    <div data-test="monthYear">
                       {monthNamesFull[calendar.month]} {calendar.year}
                     </div>
                     {weekdayNamesShort.map(weekday => (
