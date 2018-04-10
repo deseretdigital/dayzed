@@ -1,3 +1,5 @@
+import isEqual from 'date-fns/is_equal';
+
 /**
  * This is intended to be used to compose event handlers
  * They are executed in order until one of them calls
@@ -315,20 +317,6 @@ function isSelectable(minDate, maxDate, date) {
     return false;
   }
   return true;
-}
-
-/**
- * Normalizes dates to the beginning of the day,
- * then checks to see if the date given is
- * equal to the dateToCompare.
- * @param {Date} date The date to compare with
- * @param {Date} dateToCompare The date to compare against
- * @returns
- */
-function isEqual(date, dateToCompare) {
-  return (
-    normalizeDate(date).getTime() === normalizeDate(dateToCompare).getTime()
-  );
 }
 
 /**

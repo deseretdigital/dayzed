@@ -37,7 +37,9 @@
     "react-dom": "^16.0.0",
     "serve": "^6.5.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "date-fns": "^1.29.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/deseretdigital/dayzed.git"
