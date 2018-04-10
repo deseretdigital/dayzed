@@ -1,4 +1,5 @@
 import isEqual from 'date-fns/is_equal';
+import startOfDay from 'date-fns/start_of_day';
 
 /**
  * This is intended to be used to compose event handlers
@@ -143,15 +144,15 @@ export function getCalendars({
   maxDate
 }) {
   let months = [];
-  let startDate = normalizeDate(date);
+  let startDate = startOfDay(date);
   if (minDate) {
-    let minDateNormalized = normalizeDate(minDate);
+    let minDateNormalized = startOfDay(minDate);
     if (isBefore(startDate, minDateNormalized)) {
       startDate = minDateNormalized;
     }
   }
   if (maxDate) {
-    let maxDateNormalized = normalizeDate(maxDate);
+    let maxDateNormalized = startOfDay(maxDate);
     if (isBefore(maxDateNormalized, startDate)) {
       startDate = maxDateNormalized;
     }
@@ -275,7 +276,7 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
  * @returns {Boolean} Whether date is before dateToCompare
  */
 function isBefore(date, dateToCompare) {
-  return normalizeDate(date).getTime() < normalizeDate(dateToCompare).getTime();
+  return startOfDay(date).getTime() < startOfDay(dateToCompare).getTime();
 }
 
 /**
@@ -293,7 +294,7 @@ function isSelected(selectedDates, date) {
   return selectedDates.some(selectedDate => {
     if (
       selectedDate instanceof Date &&
-      normalizeDate(selectedDate).getTime() === normalizeDate(date).getTime()
+      startOfDay(selectedDate).getTime() === startOfDay(date).getTime()
     ) {
       return true;
     }
@@ -346,16 +347,3 @@ function monthDiff(date, dateToDiff) {
   return months <= 0 ? 0 : months;
 }
 
-/**
- * Takes a date and creates a
- * new date with the hours, minutes,
- * seconds, and milliseconds set to 0
- * (Beginning of day).
- * @param {Date} date The Date to normalize
- * @returns {Date} The normalized date
- */
-function normalizeDate(date) {
-  let normalizeDate = new Date(date.getTime());
-  normalizeDate.setHours(0, 0, 0, 0);
-  return normalizeDate;
-}
