@@ -1,3 +1,4 @@
+import addDays from 'date-fns/add_days';
 import isBefore from 'date-fns/is_before';
 import isToday from 'date-fns/is_today';
 import startOfDay from 'date-fns/start_of_day';
@@ -97,7 +98,7 @@ export function isBackDisabled({ calendars, minDate }) {
     return false;
   }
   let { firstDayOfMonth } = calendars[0];
-  let firstDayOfMonthMinusOne = adjustDateByXDays(firstDayOfMonth, -1);
+  let firstDayOfMonthMinusOne = addDays(firstDayOfMonth, -1);
   if (isBefore(firstDayOfMonthMinusOne, minDate)) {
     return true;
   }
@@ -117,7 +118,7 @@ export function isForwardDisabled({ calendars, maxDate }) {
     return false;
   }
   let { lastDayOfMonth } = calendars[calendars.length - 1];
-  let lastDayOfMonthPlusOne = adjustDateByXDays(lastDayOfMonth, 1);
+  let lastDayOfMonthPlusOne = addDays(lastDayOfMonth, 1);
   if (isBefore(maxDate, lastDayOfMonthPlusOne)) {
     return true;
   }
@@ -307,19 +308,6 @@ function isSelectable(minDate, maxDate, date) {
     return false;
   }
   return true;
-}
-
-/**
- * Takes the date given and creates a
- * new date adjusted by x number of days.
- * @param {Date} date The date to adjust
- * @param {Number} x The number of days to adjust by
- * @returns {Date} The new adjusted date
- */
-function adjustDateByXDays(date, x) {
-  let adjustedDate = new Date(date.getTime());
-  adjustedDate.setDate(adjustedDate.getDate() + x);
-  return adjustedDate;
 }
 
 /**
