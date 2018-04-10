@@ -2,6 +2,7 @@ import addDays from 'date-fns/add_days';
 import isBefore from 'date-fns/is_before';
 import isToday from 'date-fns/is_today';
 import startOfDay from 'date-fns/start_of_day';
+import differenceInCalendarMonths from 'date-fns/difference_in_calendar_months';
 
 /**
  * This is intended to be used to compose event handlers
@@ -57,7 +58,7 @@ function noop() {}
 export function subtractMonth({ calendars, offset, minDate }) {
   if (offset > 1 && minDate) {
     let { firstDayOfMonth } = calendars[0];
-    let diffInMonths = monthDiff(minDate, firstDayOfMonth);
+    let diffInMonths = differenceInCalendarMonths(firstDayOfMonth, minDate);
     if (diffInMonths < offset) {
       offset = diffInMonths;
     }
@@ -77,7 +78,7 @@ export function subtractMonth({ calendars, offset, minDate }) {
 export function addMonth({ calendars, offset, maxDate }) {
   if (offset > 1 && maxDate) {
     let { lastDayOfMonth } = calendars[calendars.length - 1];
-    let diffInMonths = monthDiff(lastDayOfMonth, maxDate);
+    let diffInMonths = differenceInCalendarMonths(maxDate, lastDayOfMonth);
     if (diffInMonths < offset) {
       offset = diffInMonths;
     }
@@ -309,18 +310,3 @@ function isSelectable(minDate, maxDate, date) {
   }
   return true;
 }
-
-/**
- * Finds the difference in months between
- * the given dates.
- * @param {Date} date The date to diff with
- * @param {Date} dateToDiff The date to diff against
- * @returns {Number} The difference in months
- */
-function monthDiff(date, dateToDiff) {
-  let months = (dateToDiff.getFullYear() - date.getFullYear()) * 12;
-  months -= date.getMonth();
-  months += dateToDiff.getMonth();
-  return months <= 0 ? 0 : months;
-}
-
