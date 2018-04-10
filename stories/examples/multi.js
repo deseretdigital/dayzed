@@ -3,7 +3,8 @@ import Datepicker from "./Datepicker";
 
 class Multi extends React.Component {
   state = {
-    selectedDates: []
+    selectedDates: [],
+    date: new Date("05/01/2018")
   };
 
   _getDateIndex = condition => {
@@ -42,10 +43,11 @@ class Multi extends React.Component {
   };
 
   render() {
-    let { selectedDates } = this.state;
+    let { selectedDates, date } = this.state;
     return (
       <div>
         <Datepicker
+          date={date}
           selected={this.state.selectedDates}
           onDateSelected={this._handleOnDateSelected}
         />

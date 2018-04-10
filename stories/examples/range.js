@@ -201,7 +201,8 @@ class RangeDatepicker extends React.Component {
 
 class Range extends React.Component {
   state = {
-    selectedDates: []
+    selectedDates: [],
+    date: new Date("05/01/2018")
   };
 
   _handleOnDateSelected = ({ selected, selectable, date }) => {
@@ -229,10 +230,11 @@ class Range extends React.Component {
   };
 
   render() {
-    let { selectedDates } = this.state;
+    let { selectedDates, date } = this.state;
     return (
       <div>
         <RangeDatepicker
+          date={date}
           selected={this.state.selectedDates}
           onDateSelected={this._handleOnDateSelected}
           monthsToDisplay={2}

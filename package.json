@@ -12,7 +12,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "yarn install; kcd-scripts build --bundle --p-react",
     "storybook": "start-storybook -p 9001 -c stories",
-    "build-storybook": "build-storybook -c stories -o storybook-static"
+    "build-storybook": "build-storybook -c stories -o storybook-static",
+    "storybook:serve": "serve ./storybook-static -p 9001",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test:cypress": "npm run build-storybook; npm-run-all --parallel --race storybook:serve cypress:run"
   },
   "files": [
     "dist",
@@ -24,11 +28,14 @@
   },
   "devDependencies": {
     "@storybook/react": "^3.2.12",
+    "cypress": "^2.1.0",
     "kcd-scripts": "^0.24.0",
+    "npm-run-all": "^4.1.2",
     "preact": "^8.2.5",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "serve": "^6.5.4"
   },
   "dependencies": {},
   "repository": {
