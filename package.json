@@ -13,7 +13,7 @@
     "build": "yarn install; kcd-scripts build --bundle --p-react",
     "storybook": "start-storybook -p 9001 -c stories",
     "build-storybook": "build-storybook -c stories -o storybook-static",
-    "storybook:serve": "serve ./storybook-static -p 6006",
+    "storybook:serve": "serve ./storybook-static -p 9001",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test:cypress": "npm run build-storybook; npm-run-all --parallel --race storybook:serve cypress:run"

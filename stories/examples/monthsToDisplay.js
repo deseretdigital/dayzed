@@ -4,6 +4,7 @@ import Datepicker from "./Datepicker";
 class MonthsToDisplay extends React.Component {
   state = {
     selectedDate: null,
+    date: new Date("05/01/2018"),
     monthsToDisplay: 2
   };
 
@@ -30,15 +31,19 @@ class MonthsToDisplay extends React.Component {
   };
 
   render() {
-    let { selectedDate } = this.state;
+    let { selectedDate, date } = this.state;
     return (
       <div style={{ textAlign: "center" }}>
         <div style={{ paddingBottom: 10 }}>
-          <button onClick={this._toggleMonthsToDisplay}>
+          <button
+            data-test="monthsToDisplay"
+            onClick={this._toggleMonthsToDisplay}
+          >
             Toggle Months To Display
           </button>
         </div>
         <Datepicker
+          date={date}
           selected={this.state.selectedDate}
           onDateSelected={this._handleOnDateSelected}
           monthsToDisplay={this.state.monthsToDisplay}

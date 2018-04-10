@@ -39,6 +39,10 @@ let DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
 });
 
 class Datepicker extends React.Component {
+  state = {
+    offset: 0
+  };
+
   constructor(props) {
     super(props);
     ArrowKeysReact.config({
@@ -57,6 +61,12 @@ class Datepicker extends React.Component {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.date !== prevProps.date) {
+      this.setState({ offset: 0 });
+    }
+  }
+
   getKeyOffset(number) {
     const e = document.activeElement;
     let buttons = document.querySelectorAll("button");
@@ -72,6 +82,12 @@ class Datepicker extends React.Component {
     });
   }
 
+  _handleOffsetChanged = offset => {
+    this.setState({
+      offset
+    });
+  };
+
   render() {
     return (
       <Dayzed
@@ -81,6 +97,8 @@ class Datepicker extends React.Component {
         maxDate={this.props.maxDate}
         selected={this.props.selected}
         monthsToDisplay={this.props.monthsToDisplay}
+        offset={this.state.offset}
+        onOffsetChanged={this._handleOffsetChanged}
         render={({
           calendars,
           getDateProps,
@@ -95,18 +113,29 @@ class Datepicker extends React.Component {
                     {...getBackProps({
                       calendars,
                       offset: 12,
-                      'data-test': 'backYear'
+                      "data-test": "backYear"
                     })}
                   >
                     {"<<"}
                   </button>
-                  <button {...getBackProps({ calendars, 'data-test': 'backMonth' })}>Back</button>
-                  <button {...getForwardProps({ calendars, 'data-test': 'forwardMonth' })}>Next</button>
+                  <button
+                    {...getBackProps({ calendars, "data-test": "backMonth" })}
+                  >
+                    Back
+                  </button>
+                  <button
+                    {...getForwardProps({
+                      calendars,
+                      "data-test": "forwardMonth"
+                    })}
+                  >
+                    Next
+                  </button>
                   <button
                     {...getForwardProps({
                       calendars,
                       offset: 12,
-                      'data-test': 'forwardYear'
+                      "data-test": "forwardYear"
                     })}
                   >
                     {">>"}

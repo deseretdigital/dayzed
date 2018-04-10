@@ -3,7 +3,10 @@ import Datepicker from "./Datepicker";
 
 class MinMax extends React.Component {
   state = {
-    selectedDate: null
+    selectedDate: null,
+    date: new Date("05/01/2018"),
+    minDate: new Date("05/04/2018"),
+    maxDate: new Date("06/27/2018")
   };
 
   _handleOnDateSelected = ({ selected, selectable, date }) => {
@@ -23,14 +26,11 @@ class MinMax extends React.Component {
   };
 
   render() {
-    let { selectedDate } = this.state;
-    let minDate = new Date();
-    let maxDate = new Date();
-    // Set maxDate as 30 days from today.
-    maxDate.setDate(maxDate.getDate() + 30);
+    let { selectedDate, date, minDate, maxDate } = this.state;
     return (
       <div>
         <Datepicker
+          date={date}
           selected={this.state.selectedDate}
           onDateSelected={this._handleOnDateSelected}
           minDate={minDate}
