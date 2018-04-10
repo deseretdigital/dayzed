@@ -1,5 +1,5 @@
 import isBefore from 'date-fns/is_before';
-import isEqual from 'date-fns/is_equal';
+import isToday from 'date-fns/is_today';
 import startOfDay from 'date-fns/start_of_day';
 
 /**
@@ -214,7 +214,6 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
   };
   let thisMonthDays = daysInMonth[month];
   let dates = [];
-  let today = new Date();
 
   // Account for leap year
   if (month === 2 && year % 4 === 0) {
@@ -227,7 +226,7 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
       date,
       selected: isSelected(selectedDates, date),
       selectable: isSelectable(minDate, maxDate, date),
-      today: isEqual(date, today)
+      today: isToday(date)
     };
     dates.push(dateObj);
   }
