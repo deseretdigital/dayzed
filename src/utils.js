@@ -1,3 +1,4 @@
+import isBefore from 'date-fns/is_before';
 import isEqual from 'date-fns/is_equal';
 import startOfDay from 'date-fns/start_of_day';
 
@@ -266,17 +267,6 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
     year: year,
     weeks: weeks
   };
-}
-
-/**
- * Normalizes dates given to the beginning of the day,
- * then compares if date comes before dateToCompare.
- * @param {Date} date The date to compare with
- * @param {Date} dateToCompare The date to compare against
- * @returns {Boolean} Whether date is before dateToCompare
- */
-function isBefore(date, dateToCompare) {
-  return startOfDay(date).getTime() < startOfDay(dateToCompare).getTime();
 }
 
 /**
