@@ -1,3 +1,9 @@
+import addDays from 'date-fns/add_days';
+import isBefore from 'date-fns/is_before';
+import isToday from 'date-fns/is_today';
+import startOfDay from 'date-fns/start_of_day';
+import differenceInCalendarMonths from 'date-fns/difference_in_calendar_months';
+
 /**
  * This is intended to be used to compose event handlers
  * They are executed in order until one of them calls
@@ -52,7 +58,7 @@ function noop() {}
 export function subtractMonth({ calendars, offset, minDate }) {
   if (offset > 1 && minDate) {
     let { firstDayOfMonth } = calendars[0];
-    let diffInMonths = monthDiff(minDate, firstDayOfMonth);
+    let diffInMonths = differenceInCalendarMonths(firstDayOfMonth, minDate);
     if (diffInMonths < offset) {
       offset = diffInMonths;
     }
@@ -72,7 +78,7 @@ export function subtractMonth({ calendars, offset, minDate }) {
 export function addMonth({ calendars, offset, maxDate }) {
   if (offset > 1 && maxDate) {
     let { lastDayOfMonth } = calendars[calendars.length - 1];
-    let diffInMonths = monthDiff(lastDayOfMonth, maxDate);
+    let diffInMonths = differenceInCalendarMonths(maxDate, lastDayOfMonth);
     if (diffInMonths < offset) {
       offset = diffInMonths;
     }
@@ -93,7 +99,7 @@ export function isBackDisabled({ calendars, minDate }) {
     return false;
   }
   let { firstDayOfMonth } = calendars[0];
-  let firstDayOfMonthMinusOne = adjustDateByXDays(firstDayOfMonth, -1);
+  let firstDayOfMonthMinusOne = addDays(firstDayOfMonth, -1);
   if (isBefore(firstDayOfMonthMinusOne, minDate)) {
     return true;
   }
@@ -113,7 +119,7 @@ export function isForwardDisabled({ calendars, maxDate }) {
     return false;
   }
   let { lastDayOfMonth } = calendars[calendars.length - 1];
-  let lastDayOfMonthPlusOne = adjustDateByXDays(lastDayOfMonth, 1);
+  let lastDayOfMonthPlusOne = addDays(lastDayOfMonth, 1);
   if (isBefore(maxDate, lastDayOfMonthPlusOne)) {
     return true;
   }
@@ -141,15 +147,15 @@ export function getCalendars({
   maxDate
 }) {
   let months = [];
-  let startDate = normalizeDate(date);
+  let startDate = startOfDay(date);
   if (minDate) {
-    let minDateNormalized = normalizeDate(minDate);
+    let minDateNormalized = startOfDay(minDate);
     if (isBefore(startDate, minDateNormalized)) {
       startDate = minDateNormalized;
     }
   }
   if (maxDate) {
-    let maxDateNormalized = normalizeDate(maxDate);
+    let maxDateNormalized = startOfDay(maxDate);
     if (isBefore(maxDateNormalized, startDate)) {
       startDate = maxDateNormalized;
     }
@@ -210,7 +216,6 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
   };
   let thisMonthDays = daysInMonth[month];
   let dates = [];
-  let today = new Date();
 
   // Account for leap year
   if (month === 2 && year % 4 === 0) {
@@ -223,7 +228,7 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
       date,
       selected: isSelected(selectedDates, date),
       selectable: isSelectable(minDate, maxDate, date),
-      today: isEqual(date, today)
+      today: isToday(date)
     };
     dates.push(dateObj);
   }
@@ -266,17 +271,6 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
 }
 
 /**
- * Normalizes dates given to the beginning of the day,
- * then compares if date comes before dateToCompare.
- * @param {Date} date The date to compare with
- * @param {Date} dateToCompare The date to compare against
- * @returns {Boolean} Whether date is before dateToCompare
- */
-function isBefore(date, dateToCompare) {
-  return normalizeDate(date).getTime() < normalizeDate(dateToCompare).getTime();
-}
-
-/**
  * Normalizes dates to the beginning of the day,
  * then checks to see if the day given is found
  * in the selectedDates.
@@ -291,7 +285,7 @@ function isSelected(selectedDates, date) {
   return selectedDates.some(selectedDate => {
     if (
       selectedDate instanceof Date &&
-      normalizeDate(selectedDate).getTime() === normalizeDate(date).getTime()
+      startOfDay(selectedDate).getTime() === startOfDay(date).getTime()
     ) {
       return true;
     }
@@ -315,59 +309,4 @@ function isSelectable(minDate, maxDate, date) {
     return false;
   }
   return true;
-}
-
-/**
- * Normalizes dates to the beginning of the day,
- * then checks to see if the date given is
- * equal to the dateToCompare.
- * @param {Date} date The date to compare with
- * @param {Date} dateToCompare The date to compare against
- * @returns
- */
-function isEqual(date, dateToCompare) {
-  return (
-    normalizeDate(date).getTime() === normalizeDate(dateToCompare).getTime()
-  );
-}
-
-/**
- * Takes the date given and creates a
- * new date adjusted by x number of days.
- * @param {Date} date The date to adjust
- * @param {Number} x The number of days to adjust by
- * @returns {Date} The new adjusted date
- */
-function adjustDateByXDays(date, x) {
-  let adjustedDate = new Date(date.getTime());
-  adjustedDate.setDate(adjustedDate.getDate() + x);
-  return adjustedDate;
-}
-
-/**
- * Finds the difference in months between
- * the given dates.
- * @param {Date} date The date to diff with
- * @param {Date} dateToDiff The date to diff against
- * @returns {Number} The difference in months
- */
-function monthDiff(date, dateToDiff) {
-  let months = (dateToDiff.getFullYear() - date.getFullYear()) * 12;
-  months -= date.getMonth();
-  months += dateToDiff.getMonth();
-  return months <= 0 ? 0 : months;
-}
-
-/**
- * Takes a date and creates a
- * new date with the hours, minutes,
- * seconds, and milliseconds set to 0
- * (Beginning of day).
- * @param {Date} date The Date to normalize
- * @returns {Date} The normalized date
- */
-function normalizeDate(date) {
-  let normalizeDate = new Date(date.getTime());
-  normalizeDate.setHours(0, 0, 0, 0);
-  return normalizeDate;
 }
