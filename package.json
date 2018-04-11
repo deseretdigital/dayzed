@@ -23,12 +23,14 @@
     "preact"
   ],
   "peerDependencies": {
+    "date-fns": ">=1",
     "prop-types": ">=15",
     "react": ">=15"
   },
   "devDependencies": {
     "@storybook/react": "^3.2.12",
     "cypress": "^2.1.0",
+    "date-fns": "^1.29.0",
     "kcd-scripts": "^0.24.0",
     "npm-run-all": "^4.1.2",
     "preact": "^8.2.5",
@@ -37,9 +39,7 @@
     "react-dom": "^16.0.0",
     "serve": "^6.5.4"
   },
-  "dependencies": {
-    "date-fns": "^1.29.0"
-  },
+  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/deseretdigital/dayzed.git"
