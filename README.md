@@ -4,7 +4,7 @@ Primitives to build simple, flexible, WAI-ARIA compliant React date-picker compo
 
 [![version][version-badge]][package]
 [![MIT License][license-badge]][license]
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
 
 [![Supports React and Preact][react-badge]][react]
 [![size][size-badge]][unpkg-dist]
@@ -358,11 +358,9 @@ Here are some other great daypicker solutions:
 Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-
 <!-- prettier-ignore -->
-| [<img src="https://avatars2.githubusercontent.com/u/3399907?v=4" width="100px;"/><br /><sub>Morgan Kartchner</sub>](https://github.com/mkartchner994)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Code") [📖](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Documentation") [💡](#example-mkartchner994 "Examples") [🤔](#ideas-mkartchner994 "Ideas, Planning, & Feedback") [👀](#review-mkartchner994 "Reviewed Pull Requests") | [<img src="https://avatars2.githubusercontent.com/u/1584489?v=4" width="100px;"/><br /><sub>Jen Luker</sub>](http://jenluker.com)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=knittingcodemonkey "Code") [💡](#example-knittingcodemonkey "Examples") [🤔](#ideas-knittingcodemonkey "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/10711493?v=4" width="100px;"/><br /><sub>Sam Gale</sub>](https://github.com/sjgale)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=sjgale "Code") [🤔](#ideas-sjgale "Ideas, Planning, & Feedback") |
-| :---: | :---: | :---: |
-
+| [<img src="https://avatars2.githubusercontent.com/u/3399907?v=4" width="100px;"/><br /><sub><b>Morgan Kartchner</b></sub>](https://github.com/mkartchner994)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Code") [📖](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Documentation") [💡](#example-mkartchner994 "Examples") [🤔](#ideas-mkartchner994 "Ideas, Planning, & Feedback") [👀](#review-mkartchner994 "Reviewed Pull Requests") | [<img src="https://avatars2.githubusercontent.com/u/1584489?v=4" width="100px;"/><br /><sub><b>Jen Luker</b></sub>](http://jenluker.com)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=knittingcodemonkey "Code") [💡](#example-knittingcodemonkey "Examples") [🤔](#ideas-knittingcodemonkey "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/10711493?v=4" width="100px;"/><br /><sub><b>Sam Gale</b></sub>](https://github.com/sjgale)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=sjgale "Code") [🤔](#ideas-sjgale "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/13774309?v=4" width="100px;"/><br /><sub><b>Arthur Denner</b></sub>](https://github.com/arthurdenner)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=arthurdenner "Code") [🤔](#ideas-arthurdenner "Ideas, Planning, & Feedback") |
+| :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.

@@ -1,27 +1,25 @@
 {
   "name": "dayzed",
   "version": "1.1.0",
-  "description": "Primitives to build simple, flexible, WAI-ARIA compliant React datepicker components.",
+  "description":
+    "Primitives to build simple, flexible, WAI-ARIA compliant React datepicker components.",
   "main": "dist/dayzed.cjs.js",
   "jsnext:main": "dist/dayzed.esm.js",
   "module": "dist/dayzed.esm.js",
   "author": "Morgan Kartchner",
   "license": "MIT",
   "scripts": {
-    "add-contributor": "kcd-scripts contributors add",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "contributors:add": "all-contributors add",
     "build": "yarn install; kcd-scripts build --bundle --p-react",
     "storybook": "start-storybook -p 9001 -c stories",
     "build-storybook": "build-storybook -c stories -o storybook-static",
     "storybook:serve": "serve ./storybook-static -p 9001",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test:cypress": "npm run build-storybook; npm-run-all --parallel --race storybook:serve cypress:run"
+    "test:cypress":
+      "npm run build-storybook; npm-run-all --parallel --race storybook:serve cypress:run"
   },
-  "files": [
-    "dist",
-    "preact"
-  ],
+  "files": ["dist", "preact"],
   "peerDependencies": {
     "date-fns": ">=1",
     "prop-types": ">=15",
@@ -29,6 +27,7 @@
   },
   "devDependencies": {
     "@storybook/react": "^3.2.12",
+    "all-contributors-cli": "^4.11.1",
     "cypress": "^2.1.0",
     "date-fns": "^1.29.0",
     "kcd-scripts": "^0.24.0",
