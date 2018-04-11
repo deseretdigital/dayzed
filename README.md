@@ -64,7 +64,7 @@ Or, you can install this module through the [yarn][yarn] package manager.
 yarn add dayzed
 ```
 
-> This package also depends on `react` and `prop-types`. Please make sure you
+> This package also depends on `react`, `prop-types`, and `date-fns`. Please make sure you
 > have those installed as well.
 
 > Note also this library supports `preact` out of the box. If you are using
