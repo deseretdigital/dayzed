@@ -18,11 +18,16 @@ class Dayzed extends React.Component {
   /*------------------------- React Component Lifecycle Methods ---*/
 
   render() {
-    let calendars = getCalendars({
-      ...this.props,
+    const { date, selected, monthsToDisplay, minDate, maxDate } = this.props;
+    const calendars = getCalendars({
+      date,
+      selected,
+      monthsToDisplay,
+      minDate,
+      maxDate,
       offset: this.getOffset()
     });
-    let children = unwrapChildrenForPreact(
+    const children = unwrapChildrenForPreact(
       this.props.render || this.props.children
     );
     return children({
@@ -41,8 +46,8 @@ class Dayzed extends React.Component {
     calendars = requiredProp("getBackProps", "calendars"),
     ...rest
   } = {}) => {
-    let { minDate } = this.props;
-    let offsetMonth = this.getOffset();
+    const { minDate } = this.props;
+    const offsetMonth = this.getOffset();
     return {
       onClick: composeEventHandlers(onClick, () => {
         this.onOffsetChanged(
@@ -61,8 +66,8 @@ class Dayzed extends React.Component {
     calendars = requiredProp("getForwardProps", "calendars"),
     ...rest
   } = {}) => {
-    let { maxDate } = this.props;
-    let offsetMonth = this.getOffset();
+    const { maxDate } = this.props;
+    const offsetMonth = this.getOffset();
     return {
       onClick: composeEventHandlers(onClick, () => {
         this.onOffsetChanged(
@@ -121,6 +126,7 @@ Dayzed.defaultProps = {
 
 Dayzed.propTypes = {
   render: PropTypes.func,
+  children: PropTypes.func,
   date: PropTypes.instanceOf(Date),
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),

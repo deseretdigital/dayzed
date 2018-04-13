@@ -47,7 +47,9 @@
     "node_modules",
     "cypress",
     "stories",
-    "storybook-static"
+    "storybook-static",
+    "dist",
+    "preact"
   ],
   "repository": {
     "type": "git",
