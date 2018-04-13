@@ -11,6 +11,7 @@
   "scripts": {
     "contributors:add": "all-contributors add",
     "build": "yarn install; kcd-scripts build --bundle --p-react",
+    "lint": "kcd-scripts lint",
     "storybook": "start-storybook -p 9001 -c stories",
     "build-storybook": "build-storybook -c stories -o storybook-static",
     "storybook:serve": "serve ./storybook-static -p 9001",
@@ -39,6 +40,15 @@
     "serve": "^6.5.4"
   },
   "dependencies": {},
+  "eslintConfig": {
+    "extends": "./node_modules/kcd-scripts/eslint.js"
+  },
+  "eslintIgnore": [
+    "node_modules",
+    "cypress",
+    "stories",
+    "storybook-static"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/deseretdigital/dayzed.git"
