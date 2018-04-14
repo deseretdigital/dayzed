@@ -142,22 +142,10 @@ export function getCalendars({
   minDate,
   maxDate
 }) {
-  let months = [];
-  let startDate = startOfDay(date);
-  if (minDate) {
-    let minDateNormalized = startOfDay(minDate);
-    if (isBefore(startDate, minDateNormalized)) {
-      startDate = minDateNormalized;
-    }
-  }
-  if (maxDate) {
-    let maxDateNormalized = startOfDay(maxDate);
-    if (isBefore(maxDateNormalized, startDate)) {
-      startDate = maxDateNormalized;
-    }
-  }
+  const months = [];
+  const startDate = getStartDate(date, minDate, maxDate);
   for (let i = 0; i < monthsToDisplay; i++) {
-    let calendarDates = getMonths(
+    const calendarDates = getMonths(
       startDate.getMonth() + i + offset,
       startDate.getFullYear(),
       selected,
@@ -167,6 +155,31 @@ export function getCalendars({
     months.push(calendarDates);
   }
   return months;
+}
+
+/**
+ * Figures out the actual start date based on 
+ * the min and max dates available.
+ * @param {Date} date The we want to start the calendar at
+ * @param {Date} minDate The earliest date available to start at
+ * @param {Date} maxDate The latest date available to start at
+ * @returns {Date} The actual start date
+ */
+function getStartDate(date, minDate, maxDate) {
+  let startDate = startOfDay(date);
+  if (minDate) {
+    const minDateNormalized = startOfDay(minDate);
+    if (isBefore(startDate, minDateNormalized)) {
+      startDate = minDateNormalized;
+    }
+  }
+  if (maxDate) {
+    const maxDateNormalized = startOfDay(maxDate);
+    if (isBefore(maxDateNormalized, startDate)) {
+      startDate = maxDateNormalized;
+    }
+  }
+  return startDate;
 }
 
 /**
