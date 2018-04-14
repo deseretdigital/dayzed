@@ -38,18 +38,14 @@ export function requiredProp(fnName, propName) {
  */
 export function unwrapChildrenForPreact(arg) {
   arg = Array.isArray(arg) ? /* istanbul ignore next (preact) */ arg[0] : arg;
-  if (!arg) {
-    return noop;
-  } else {
-    return arg;
-  }
+  return arg || noop;
 }
 function noop() {}
 
 /**
  * Takes a calendars array and figures out the number of months to subtract
  * based on the current offset and the minDate allowed.
- * @param {Object} param
+ * @param {Object} param The param object
  * @param {Array} param.calendars The calendars array created by the getCalendars function
  * @param {Number} param.offset The num of months to be subtracted
  * @param {Date} param.minDate The earliest date we are allow to subtract back to
@@ -57,8 +53,8 @@ function noop() {}
  */
 export function subtractMonth({ calendars, offset, minDate }) {
   if (offset > 1 && minDate) {
-    let { firstDayOfMonth } = calendars[0];
-    let diffInMonths = differenceInCalendarMonths(firstDayOfMonth, minDate);
+    const { firstDayOfMonth } = calendars[0];
+    const diffInMonths = differenceInCalendarMonths(firstDayOfMonth, minDate);
     if (diffInMonths < offset) {
       offset = diffInMonths;
     }
@@ -69,7 +65,7 @@ export function subtractMonth({ calendars, offset, minDate }) {
 /**
  * Takes a calendars array and figures out the number of months to add
  * based on the current offset and the maxDate allowed.
- * @param {Object} param
+ * @param {Object} param The param object
  * @param {Array} param.calendars The calendars array created by the getCalendars function
  * @param {Number} param.offset The num of months to be added
  * @param {Date} param.maxDate The furthest date we are allow to add forward to
@@ -77,8 +73,8 @@ export function subtractMonth({ calendars, offset, minDate }) {
  */
 export function addMonth({ calendars, offset, maxDate }) {
   if (offset > 1 && maxDate) {
-    let { lastDayOfMonth } = calendars[calendars.length - 1];
-    let diffInMonths = differenceInCalendarMonths(maxDate, lastDayOfMonth);
+    const { lastDayOfMonth } = calendars[calendars.length - 1];
+    const diffInMonths = differenceInCalendarMonths(maxDate, lastDayOfMonth);
     if (diffInMonths < offset) {
       offset = diffInMonths;
     }
@@ -89,7 +85,7 @@ export function addMonth({ calendars, offset, maxDate }) {
 /**
  * Takes a calendars array and figures out if the back button should be
  * disabled based on the minDate allowed.
- * @param {Object} param
+ * @param {Object} param The param object
  * @param {Array} param.calendars The calendars array created by the getCalendars function
  * @param {Date} param.minDate The earliest date available
  * @returns {Boolean} Whether the back button should be disabled.
@@ -98,8 +94,8 @@ export function isBackDisabled({ calendars, minDate }) {
   if (!minDate) {
     return false;
   }
-  let { firstDayOfMonth } = calendars[0];
-  let firstDayOfMonthMinusOne = addDays(firstDayOfMonth, -1);
+  const { firstDayOfMonth } = calendars[0];
+  const firstDayOfMonthMinusOne = addDays(firstDayOfMonth, -1);
   if (isBefore(firstDayOfMonthMinusOne, minDate)) {
     return true;
   }
@@ -109,7 +105,7 @@ export function isBackDisabled({ calendars, minDate }) {
 /**
  * Takes a calendars array and figures out if the forward button should be
  * disabled based on the maxDate allowed.
- * @param {Object} param
+ * @param {Object} param The param object
  * @param {Array} param.calendars The calendars array created by the getCalendars function
  * @param {Date} param.maxDate The furthest date available
  * @returns {Boolean} Whether the forward button should be disabled.
@@ -118,8 +114,8 @@ export function isForwardDisabled({ calendars, maxDate }) {
   if (!maxDate) {
     return false;
   }
-  let { lastDayOfMonth } = calendars[calendars.length - 1];
-  let lastDayOfMonthPlusOne = addDays(lastDayOfMonth, 1);
+  const { lastDayOfMonth } = calendars[calendars.length - 1];
+  const lastDayOfMonthPlusOne = addDays(lastDayOfMonth, 1);
   if (isBefore(maxDate, lastDayOfMonthPlusOne)) {
     return true;
   }
@@ -129,7 +125,7 @@ export function isForwardDisabled({ calendars, maxDate }) {
 /**
  * Figures out the months data needed based off the number of monthsToDisplay
  * and other options provided.
- * @param {Object} param
+ * @param {Object} param The param object
  * @param {Date} param.date The date to start the calendar at
  * @param {Array.<Date>} param.selected An array of dates currently selected
  * @param {Number} param.monthsToDisplay The number of months to return in the calendar view
@@ -279,9 +275,9 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
  * @returns {Boolean} Whether day is found in selectedDates
  */
 function isSelected(selectedDates, date) {
-  selectedDates = !Array.isArray(selectedDates)
-    ? [selectedDates]
-    : selectedDates;
+  selectedDates = Array.isArray(selectedDates)
+    ? selectedDates
+    : [selectedDates];
   return selectedDates.some(selectedDate => {
     if (
       selectedDate instanceof Date &&
