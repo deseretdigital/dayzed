@@ -194,46 +194,16 @@ function getStartDate(date, minDate, maxDate) {
  * @returns {Object} The data for the selected month/year
  */
 function getMonths(month, year, selectedDates, minDate, maxDate) {
-  // increment since months are 0-based in JS
-  month++;
-  // If month is great than 12, increment year and reset
-  if (month > 12) {
-    year = year + Math.floor(month / 12);
-    month = month % 12;
-  }
-  // Calculate the correct month and year if we pass in a negative month
-  if (month < 1) {
-    while (month < 1) {
-      month += 12;
-      year -= 1;
-    }
-  }
-
-  let daysInMonth = {
-    1: 31,
-    2: 28,
-    3: 31,
-    4: 30,
-    5: 31,
-    6: 30,
-    7: 31,
-    8: 31,
-    9: 30,
-    10: 31,
-    11: 30,
-    12: 31
-  };
-  let thisMonthDays = daysInMonth[month];
-  let dates = [];
-
-  // Account for leap year
-  if (month === 2 && year % 4 === 0) {
-    thisMonthDays = 29;
-  }
-
-  for (let day = 1; day <= thisMonthDays; day++) {
-    let date = new Date(year, month - 1, day);
-    let dateObj = {
+  // Get the normalized month and year, along with days in the month.
+  const daysMonthYear = getNumDaysMonthYear(month, year);
+  const daysInMonth = daysMonthYear.daysInMonth;
+  month = daysMonthYear.month;
+  year = daysMonthYear.year;
+  // Fill out the dates for the month.
+  const dates = [];
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date = new Date(year, month, day);
+    const dateObj = {
       date,
       selected: isSelected(selectedDates, date),
       selectable: isSelectable(minDate, maxDate, date),
@@ -241,42 +211,76 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
     };
     dates.push(dateObj);
   }
-
-  // Fill out front and end of month from preceding month
-  let firstDate = new Date(dates[0].date);
-  let firstDay = firstDate.getDay();
-
+  // Fill out front week for days from 
+  // preceding month with buffer.
+  const firstDayOfMonth = new Date(year, month, 1);
+  let firstDay = firstDayOfMonth.getDay();
   while (firstDay > 0) {
     dates.unshift("");
     firstDay--;
   }
-
-  let lastDate = new Date(dates[dates.length - 1].date);
-  let lastDay = lastDate.getDay();
-
+  // Fill out back week for days from 
+  // following month with buffer.
+  const lastDayOfMonth = new Date(year, month, daysInMonth);
+  let lastDay = lastDayOfMonth.getDay();
   while (lastDay < 6) {
     dates.push("");
     lastDay++;
   }
+  // Get the filled out weeks for the 
+  // given dates.
+  const weeks = getWeeks(dates);
+  // return the calendar data.
+  return {
+    firstDayOfMonth,
+    lastDayOfMonth,
+    month,
+    year,
+    weeks
+  };
+}
 
-  let weeksLength = Math.ceil(dates.length / 7);
-  let weeks = [];
+/**
+ * Normalizes month (could be overflow) and year pairs and returns the
+ * normalized month and year along with the number of days in the month.
+ * @param {Number} month The month to normalize
+ * @param {Number} year The year to normalize
+ * @returns {Object} The normalized month and year along with the number of days in the month
+ */
+function getNumDaysMonthYear(month, year) {
+  // If a parameter you specify is outside of the expected range for Month or Day, 
+  // JS Date attempts to update the date information in the Date object accordingly!
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate
 
+  // Let Date handle the overflow of the month,
+  // which should return the normalized month and year.
+  const normalizedMonthYear = new Date(year, month, 1);
+  month = normalizedMonthYear.getMonth();
+  year = normalizedMonthYear.getFullYear();
+  // Overflow the date to the next month, then subtract the difference
+  // to get the number of days in the previous month.
+  // This will also account for leap years!
+  const daysInMonth = 32 - new Date(year, month, 32).getDate();
+  return { daysInMonth, month, year }
+}
+
+/**
+ * Takes an array of dates, and turns them into a multi dimensional
+ * array with 7 entries for each week.
+ * @param {Array.<Object>} dates An array of dates
+ * @returns {Array} The weeks as a multi dimensional array
+ */
+function getWeeks(dates) {
+  const weeksLength = Math.ceil(dates.length / 7);
+  const weeks = [];
   for (let i = 0; i < weeksLength; i++) {
     weeks[i] = [];
-
     for (let x = 0; x < 7; x++) {
       weeks[i].push(dates[i * 7 + x]);
     }
   }
-
-  return {
-    firstDayOfMonth: firstDate,
-    lastDayOfMonth: lastDate,
-    month: month - 1, // normalize month value (0-based)
-    year: year,
-    weeks: weeks
-  };
+  return weeks;
 }
 
 /**
