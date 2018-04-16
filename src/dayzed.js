@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   composeEventHandlers,
@@ -10,7 +10,7 @@ import {
   isBackDisabled,
   isForwardDisabled,
   getCalendars
-} from "./utils";
+} from './utils';
 
 class Dayzed extends React.Component {
   state = { offset: 0 };
@@ -43,7 +43,7 @@ class Dayzed extends React.Component {
   getBackProps = ({
     onClick,
     offset = 1,
-    calendars = requiredProp("getBackProps", "calendars"),
+    calendars = requiredProp('getBackProps', 'calendars'),
     ...rest
   } = {}) => {
     const { minDate } = this.props;
@@ -55,7 +55,7 @@ class Dayzed extends React.Component {
         );
       }),
       disabled: isBackDisabled({ calendars, offset, minDate }),
-      "aria-label": `Go back ${offset} month${offset === 1 ? "" : "s"}`,
+      'aria-label': `Go back ${offset} month${offset === 1 ? '' : 's'}`,
       ...rest
     };
   };
@@ -63,7 +63,7 @@ class Dayzed extends React.Component {
   getForwardProps = ({
     onClick,
     offset = 1,
-    calendars = requiredProp("getForwardProps", "calendars"),
+    calendars = requiredProp('getForwardProps', 'calendars'),
     ...rest
   } = {}) => {
     const { maxDate } = this.props;
@@ -75,14 +75,14 @@ class Dayzed extends React.Component {
         );
       }),
       disabled: isForwardDisabled({ calendars, offset, maxDate }),
-      "aria-label": `Go forward ${offset} month${offset === 1 ? "" : "s"}`,
+      'aria-label': `Go forward ${offset} month${offset === 1 ? '' : 's'}`,
       ...rest
     };
   };
 
   getDateProps = ({
     onClick,
-    dateObj = requiredProp("getDateProps", "dateObj"),
+    dateObj = requiredProp('getDateProps', 'dateObj'),
     ...rest
   } = {}) => {
     return {
@@ -90,9 +90,9 @@ class Dayzed extends React.Component {
         this.props.onDateSelected(dateObj);
       }),
       disabled: !dateObj.selectable,
-      "aria-label": dateObj.date.toDateString(),
-      "aria-pressed": dateObj.selected,
-      role: "button",
+      'aria-label': dateObj.date.toDateString(),
+      'aria-pressed': dateObj.selected,
+      role: 'button',
       ...rest
     };
   };

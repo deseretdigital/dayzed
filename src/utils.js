@@ -158,7 +158,7 @@ export function getCalendars({
 }
 
 /**
- * Figures out the actual start date based on 
+ * Figures out the actual start date based on
  * the min and max dates available.
  * @param {Date} date The we want to start the calendar at
  * @param {Date} minDate The earliest date available to start at
@@ -211,23 +211,23 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
     };
     dates.push(dateObj);
   }
-  // Fill out front week for days from 
+  // Fill out front week for days from
   // preceding month with buffer.
   const firstDayOfMonth = new Date(year, month, 1);
   let firstDay = firstDayOfMonth.getDay();
   while (firstDay > 0) {
-    dates.unshift("");
+    dates.unshift('');
     firstDay--;
   }
-  // Fill out back week for days from 
+  // Fill out back week for days from
   // following month with buffer.
   const lastDayOfMonth = new Date(year, month, daysInMonth);
   let lastDay = lastDayOfMonth.getDay();
   while (lastDay < 6) {
-    dates.push("");
+    dates.push('');
     lastDay++;
   }
-  // Get the filled out weeks for the 
+  // Get the filled out weeks for the
   // given dates.
   const weeks = getWeeks(dates);
   // return the calendar data.
@@ -248,7 +248,7 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
  * @returns {Object} The normalized month and year along with the number of days in the month
  */
 function getNumDaysMonthYear(month, year) {
-  // If a parameter you specify is outside of the expected range for Month or Day, 
+  // If a parameter you specify is outside of the expected range for Month or Day,
   // JS Date attempts to update the date information in the Date object accordingly!
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate
@@ -262,7 +262,7 @@ function getNumDaysMonthYear(month, year) {
   // to get the number of days in the previous month.
   // This will also account for leap years!
   const daysInMonth = 32 - new Date(year, month, 32).getDate();
-  return { daysInMonth, month, year }
+  return { daysInMonth, month, year };
 }
 
 /**
