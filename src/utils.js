@@ -38,18 +38,14 @@ export function requiredProp(fnName, propName) {
  */
 export function unwrapChildrenForPreact(arg) {
   arg = Array.isArray(arg) ? /* istanbul ignore next (preact) */ arg[0] : arg;
-  if (!arg) {
-    return noop;
-  } else {
-    return arg;
-  }
+  return arg || noop;
 }
 function noop() {}
 
 /**
  * Takes a calendars array and figures out the number of months to subtract
  * based on the current offset and the minDate allowed.
- * @param {Object} param
+ * @param {Object} param The param object
  * @param {Array} param.calendars The calendars array created by the getCalendars function
  * @param {Number} param.offset The num of months to be subtracted
  * @param {Date} param.minDate The earliest date we are allow to subtract back to
@@ -57,8 +53,8 @@ function noop() {}
  */
 export function subtractMonth({ calendars, offset, minDate }) {
   if (offset > 1 && minDate) {
-    let { firstDayOfMonth } = calendars[0];
-    let diffInMonths = differenceInCalendarMonths(firstDayOfMonth, minDate);
+    const { firstDayOfMonth } = calendars[0];
+    const diffInMonths = differenceInCalendarMonths(firstDayOfMonth, minDate);
     if (diffInMonths < offset) {
       offset = diffInMonths;
     }
@@ -69,7 +65,7 @@ export function subtractMonth({ calendars, offset, minDate }) {
 /**
  * Takes a calendars array and figures out the number of months to add
  * based on the current offset and the maxDate allowed.
- * @param {Object} param
+ * @param {Object} param The param object
  * @param {Array} param.calendars The calendars array created by the getCalendars function
  * @param {Number} param.offset The num of months to be added
  * @param {Date} param.maxDate The furthest date we are allow to add forward to
@@ -77,8 +73,8 @@ export function subtractMonth({ calendars, offset, minDate }) {
  */
 export function addMonth({ calendars, offset, maxDate }) {
   if (offset > 1 && maxDate) {
-    let { lastDayOfMonth } = calendars[calendars.length - 1];
-    let diffInMonths = differenceInCalendarMonths(maxDate, lastDayOfMonth);
+    const { lastDayOfMonth } = calendars[calendars.length - 1];
+    const diffInMonths = differenceInCalendarMonths(maxDate, lastDayOfMonth);
     if (diffInMonths < offset) {
       offset = diffInMonths;
     }
@@ -89,7 +85,7 @@ export function addMonth({ calendars, offset, maxDate }) {
 /**
  * Takes a calendars array and figures out if the back button should be
  * disabled based on the minDate allowed.
- * @param {Object} param
+ * @param {Object} param The param object
  * @param {Array} param.calendars The calendars array created by the getCalendars function
  * @param {Date} param.minDate The earliest date available
  * @returns {Boolean} Whether the back button should be disabled.
@@ -98,8 +94,8 @@ export function isBackDisabled({ calendars, minDate }) {
   if (!minDate) {
     return false;
   }
-  let { firstDayOfMonth } = calendars[0];
-  let firstDayOfMonthMinusOne = addDays(firstDayOfMonth, -1);
+  const { firstDayOfMonth } = calendars[0];
+  const firstDayOfMonthMinusOne = addDays(firstDayOfMonth, -1);
   if (isBefore(firstDayOfMonthMinusOne, minDate)) {
     return true;
   }
@@ -109,7 +105,7 @@ export function isBackDisabled({ calendars, minDate }) {
 /**
  * Takes a calendars array and figures out if the forward button should be
  * disabled based on the maxDate allowed.
- * @param {Object} param
+ * @param {Object} param The param object
  * @param {Array} param.calendars The calendars array created by the getCalendars function
  * @param {Date} param.maxDate The furthest date available
  * @returns {Boolean} Whether the forward button should be disabled.
@@ -118,8 +114,8 @@ export function isForwardDisabled({ calendars, maxDate }) {
   if (!maxDate) {
     return false;
   }
-  let { lastDayOfMonth } = calendars[calendars.length - 1];
-  let lastDayOfMonthPlusOne = addDays(lastDayOfMonth, 1);
+  const { lastDayOfMonth } = calendars[calendars.length - 1];
+  const lastDayOfMonthPlusOne = addDays(lastDayOfMonth, 1);
   if (isBefore(maxDate, lastDayOfMonthPlusOne)) {
     return true;
   }
@@ -129,7 +125,7 @@ export function isForwardDisabled({ calendars, maxDate }) {
 /**
  * Figures out the months data needed based off the number of monthsToDisplay
  * and other options provided.
- * @param {Object} param
+ * @param {Object} param The param object
  * @param {Date} param.date The date to start the calendar at
  * @param {Array.<Date>} param.selected An array of dates currently selected
  * @param {Number} param.monthsToDisplay The number of months to return in the calendar view
@@ -146,22 +142,10 @@ export function getCalendars({
   minDate,
   maxDate
 }) {
-  let months = [];
-  let startDate = startOfDay(date);
-  if (minDate) {
-    let minDateNormalized = startOfDay(minDate);
-    if (isBefore(startDate, minDateNormalized)) {
-      startDate = minDateNormalized;
-    }
-  }
-  if (maxDate) {
-    let maxDateNormalized = startOfDay(maxDate);
-    if (isBefore(maxDateNormalized, startDate)) {
-      startDate = maxDateNormalized;
-    }
-  }
+  const months = [];
+  const startDate = getStartDate(date, minDate, maxDate);
   for (let i = 0; i < monthsToDisplay; i++) {
-    let calendarDates = getMonths(
+    const calendarDates = getMonths(
       startDate.getMonth() + i + offset,
       startDate.getFullYear(),
       selected,
@@ -171,6 +155,31 @@ export function getCalendars({
     months.push(calendarDates);
   }
   return months;
+}
+
+/**
+ * Figures out the actual start date based on
+ * the min and max dates available.
+ * @param {Date} date The we want to start the calendar at
+ * @param {Date} minDate The earliest date available to start at
+ * @param {Date} maxDate The latest date available to start at
+ * @returns {Date} The actual start date
+ */
+function getStartDate(date, minDate, maxDate) {
+  let startDate = startOfDay(date);
+  if (minDate) {
+    const minDateNormalized = startOfDay(minDate);
+    if (isBefore(startDate, minDateNormalized)) {
+      startDate = minDateNormalized;
+    }
+  }
+  if (maxDate) {
+    const maxDateNormalized = startOfDay(maxDate);
+    if (isBefore(maxDateNormalized, startDate)) {
+      startDate = maxDateNormalized;
+    }
+  }
+  return startDate;
 }
 
 /**
@@ -185,46 +194,16 @@ export function getCalendars({
  * @returns {Object} The data for the selected month/year
  */
 function getMonths(month, year, selectedDates, minDate, maxDate) {
-  // increment since months are 0-based in JS
-  month++;
-  // If month is great than 12, increment year and reset
-  if (month > 12) {
-    year = year + Math.floor(month / 12);
-    month = month % 12;
-  }
-  // Calculate the correct month and year if we pass in a negative month
-  if (month < 1) {
-    while (month < 1) {
-      month += 12;
-      year -= 1;
-    }
-  }
-
-  let daysInMonth = {
-    1: 31,
-    2: 28,
-    3: 31,
-    4: 30,
-    5: 31,
-    6: 30,
-    7: 31,
-    8: 31,
-    9: 30,
-    10: 31,
-    11: 30,
-    12: 31
-  };
-  let thisMonthDays = daysInMonth[month];
-  let dates = [];
-
-  // Account for leap year
-  if (month === 2 && year % 4 === 0) {
-    thisMonthDays = 29;
-  }
-
-  for (let day = 1; day <= thisMonthDays; day++) {
-    let date = new Date(year, month - 1, day);
-    let dateObj = {
+  // Get the normalized month and year, along with days in the month.
+  const daysMonthYear = getNumDaysMonthYear(month, year);
+  const daysInMonth = daysMonthYear.daysInMonth;
+  month = daysMonthYear.month;
+  year = daysMonthYear.year;
+  // Fill out the dates for the month.
+  const dates = [];
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date = new Date(year, month, day);
+    const dateObj = {
       date,
       selected: isSelected(selectedDates, date),
       selectable: isSelectable(minDate, maxDate, date),
@@ -232,42 +211,76 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
     };
     dates.push(dateObj);
   }
-
-  // Fill out front and end of month from preceding month
-  let firstDate = new Date(dates[0].date);
-  let firstDay = firstDate.getDay();
-
+  // Fill out front week for days from
+  // preceding month with buffer.
+  const firstDayOfMonth = new Date(year, month, 1);
+  let firstDay = firstDayOfMonth.getDay();
   while (firstDay > 0) {
-    dates.unshift("");
+    dates.unshift('');
     firstDay--;
   }
-
-  let lastDate = new Date(dates[dates.length - 1].date);
-  let lastDay = lastDate.getDay();
-
+  // Fill out back week for days from
+  // following month with buffer.
+  const lastDayOfMonth = new Date(year, month, daysInMonth);
+  let lastDay = lastDayOfMonth.getDay();
   while (lastDay < 6) {
-    dates.push("");
+    dates.push('');
     lastDay++;
   }
+  // Get the filled out weeks for the
+  // given dates.
+  const weeks = getWeeks(dates);
+  // return the calendar data.
+  return {
+    firstDayOfMonth,
+    lastDayOfMonth,
+    month,
+    year,
+    weeks
+  };
+}
 
-  let weeksLength = Math.ceil(dates.length / 7);
-  let weeks = [];
+/**
+ * Normalizes month (could be overflow) and year pairs and returns the
+ * normalized month and year along with the number of days in the month.
+ * @param {Number} month The month to normalize
+ * @param {Number} year The year to normalize
+ * @returns {Object} The normalized month and year along with the number of days in the month
+ */
+function getNumDaysMonthYear(month, year) {
+  // If a parameter you specify is outside of the expected range for Month or Day,
+  // JS Date attempts to update the date information in the Date object accordingly!
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate
 
+  // Let Date handle the overflow of the month,
+  // which should return the normalized month and year.
+  const normalizedMonthYear = new Date(year, month, 1);
+  month = normalizedMonthYear.getMonth();
+  year = normalizedMonthYear.getFullYear();
+  // Overflow the date to the next month, then subtract the difference
+  // to get the number of days in the previous month.
+  // This will also account for leap years!
+  const daysInMonth = 32 - new Date(year, month, 32).getDate();
+  return { daysInMonth, month, year };
+}
+
+/**
+ * Takes an array of dates, and turns them into a multi dimensional
+ * array with 7 entries for each week.
+ * @param {Array.<Object>} dates An array of dates
+ * @returns {Array} The weeks as a multi dimensional array
+ */
+function getWeeks(dates) {
+  const weeksLength = Math.ceil(dates.length / 7);
+  const weeks = [];
   for (let i = 0; i < weeksLength; i++) {
     weeks[i] = [];
-
     for (let x = 0; x < 7; x++) {
       weeks[i].push(dates[i * 7 + x]);
     }
   }
-
-  return {
-    firstDayOfMonth: firstDate,
-    lastDayOfMonth: lastDate,
-    month: month - 1, // normalize month value (0-based)
-    year: year,
-    weeks: weeks
-  };
+  return weeks;
 }
 
 /**
@@ -279,9 +292,9 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
  * @returns {Boolean} Whether day is found in selectedDates
  */
 function isSelected(selectedDates, date) {
-  selectedDates = !Array.isArray(selectedDates)
-    ? [selectedDates]
-    : selectedDates;
+  selectedDates = Array.isArray(selectedDates)
+    ? selectedDates
+    : [selectedDates];
   return selectedDates.some(selectedDate => {
     if (
       selectedDate instanceof Date &&

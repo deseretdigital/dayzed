@@ -11,13 +11,15 @@
   "scripts": {
     "contributors:add": "all-contributors add",
     "build": "yarn install; kcd-scripts build --bundle --p-react",
+    "lint": "kcd-scripts lint",
     "storybook": "start-storybook -p 9001 -c stories",
     "build-storybook": "build-storybook -c stories -o storybook-static",
     "storybook:serve": "serve ./storybook-static -p 9001",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test:cypress":
-      "npm run build-storybook; npm-run-all --parallel --race storybook:serve cypress:run"
+      "npm run build-storybook; npm-run-all --parallel --race storybook:serve cypress:run",
+    "precommit": "kcd-scripts precommit"
   },
   "files": ["dist", "preact"],
   "peerDependencies": {
@@ -30,7 +32,7 @@
     "all-contributors-cli": "^4.11.1",
     "cypress": "^2.1.0",
     "date-fns": "^1.29.0",
-    "kcd-scripts": "^0.24.0",
+    "kcd-scripts": "^0.37.0",
     "npm-run-all": "^4.1.2",
     "preact": "^8.2.5",
     "prop-types": "^15.6.0",
@@ -39,6 +41,17 @@
     "serve": "^6.5.4"
   },
   "dependencies": {},
+  "eslintConfig": {
+    "extends": "./node_modules/kcd-scripts/eslint.js"
+  },
+  "eslintIgnore": [
+    "node_modules",
+    "cypress",
+    "stories",
+    "storybook-static",
+    "dist",
+    "preact"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/deseretdigital/dayzed.git"

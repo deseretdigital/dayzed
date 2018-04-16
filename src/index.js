@@ -1,4 +1,4 @@
-import Dayzed from "./dayzed";
+import Dayzed from './dayzed';
 
 /*
  * Fix importing in typescript after rollup compilation

@@ -1,41 +1,41 @@
-import React from "react";
-import glamorous from "glamorous";
-import Dayzed from "../../src/index";
-import ArrowKeysReact from "arrow-keys-react";
-import { monthNamesFull, weekdayNamesShort } from "./calendarUtils";
+import React from 'react';
+import glamorous from 'glamorous';
+import Dayzed from '../../src/index';
+import ArrowKeysReact from 'arrow-keys-react';
+import { monthNamesFull, weekdayNamesShort } from './calendarUtils';
 
 let Calendar = glamorous.div({
   maxWidth: 800,
-  margin: "0 auto",
-  textAlign: "center"
+  margin: '0 auto',
+  textAlign: 'center'
 });
 
 let Month = glamorous.div({
-  display: "inline-block",
-  width: "50%",
-  padding: "0 10px 30px",
-  boxSizing: "border-box"
+  display: 'inline-block',
+  width: '50%',
+  padding: '0 10px 30px',
+  boxSizing: 'border-box'
 });
 
 const dayOfMonthStyle = {
-  display: "inline-block",
-  width: "calc((100% / 7) - 4px)", // make allowance for active border
-  border: "none",
-  margin: "2px" // make allowance for active border
+  display: 'inline-block',
+  width: 'calc((100% / 7) - 4px)', // make allowance for active border
+  border: 'none',
+  margin: '2px' // make allowance for active border
 };
 
 let DayOfMonth = glamorous.button(
   dayOfMonthStyle,
   ({ selected, unavailable, today }) => {
-    let background = today ? "cornflowerblue" : "";
-    background = selected ? "purple" : background;
-    background = unavailable ? "teal" : background;
+    let background = today ? 'cornflowerblue' : '';
+    background = selected ? 'purple' : background;
+    background = unavailable ? 'teal' : background;
     return { background };
   }
 );
 
 let DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
-  background: "transparent"
+  background: 'transparent'
 });
 
 class Datepicker extends React.Component {
@@ -69,7 +69,7 @@ class Datepicker extends React.Component {
 
   getKeyOffset(number) {
     const e = document.activeElement;
-    let buttons = document.querySelectorAll("button");
+    let buttons = document.querySelectorAll('button');
     buttons.forEach((el, i) => {
       const newNodeKey = i + number;
       if (el == e) {
@@ -113,20 +113,20 @@ class Datepicker extends React.Component {
                     {...getBackProps({
                       calendars,
                       offset: 12,
-                      "data-test": "backYear"
+                      'data-test': 'backYear'
                     })}
                   >
-                    {"<<"}
+                    {'<<'}
                   </button>
                   <button
-                    {...getBackProps({ calendars, "data-test": "backMonth" })}
+                    {...getBackProps({ calendars, 'data-test': 'backMonth' })}
                   >
                     Back
                   </button>
                   <button
                     {...getForwardProps({
                       calendars,
-                      "data-test": "forwardMonth"
+                      'data-test': 'forwardMonth'
                     })}
                   >
                     Next
@@ -135,10 +135,10 @@ class Datepicker extends React.Component {
                     {...getForwardProps({
                       calendars,
                       offset: 12,
-                      "data-test": "forwardYear"
+                      'data-test': 'forwardYear'
                     })}
                   >
-                    {">>"}
+                    {'>>'}
                   </button>
                 </div>
                 {calendars.map(calendar => (
@@ -172,7 +172,7 @@ class Datepicker extends React.Component {
                             unavailable={!selectable}
                             today={today}
                           >
-                            {selectable ? date.getDate() : "X"}
+                            {selectable ? date.getDate() : 'X'}
                           </DayOfMonth>
                         );
                       })

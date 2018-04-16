@@ -1,10 +1,10 @@
-import React from "react";
-import Datepicker from "./Datepicker";
+import React from 'react';
+import Datepicker from './Datepicker';
 
 class Multi extends React.Component {
   state = {
     selectedDates: [],
-    date: new Date("05/01/2018")
+    date: new Date('05/01/2018')
   };
 
   _getDateIndex = condition => {
@@ -51,7 +51,7 @@ class Multi extends React.Component {
           selected={this.state.selectedDates}
           onDateSelected={this._handleOnDateSelected}
         />
-        <div style={{ paddingTop: 20, textAlign: "center" }}>
+        <div style={{ paddingTop: 20, textAlign: 'center' }}>
           {selectedDates.length ? <p>Selected:</p> : null}
           {selectedDates.map(date => (
             <p key={date.getTime()}>{`${date.toLocaleDateString()}`}</p>
