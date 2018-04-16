@@ -1,41 +1,41 @@
-import React from "react";
-import glamorous from "glamorous";
-import Dayzed from "../../src/index";
-import ArrowKeysReact from "arrow-keys-react";
-import { monthNamesFull, weekdayNamesShort } from "./calendarUtils";
+import React from 'react';
+import glamorous from 'glamorous';
+import Dayzed from '../../src/index';
+import ArrowKeysReact from 'arrow-keys-react';
+import { monthNamesFull, weekdayNamesShort } from './calendarUtils';
 
 let Calendar = glamorous.div({
   maxWidth: 800,
-  margin: "0 auto",
-  textAlign: "center"
+  margin: '0 auto',
+  textAlign: 'center'
 });
 
 let Month = glamorous.div({
-  display: "inline-block",
-  width: "50%",
-  padding: "0 10px 30px",
-  boxSizing: "border-box"
+  display: 'inline-block',
+  width: '50%',
+  padding: '0 10px 30px',
+  boxSizing: 'border-box'
 });
 
 const dayOfMonthStyle = {
-  display: "inline-block",
-  width: "calc((100% / 7) - 4px)", // make allowance for active border
-  border: "none",
-  margin: "2px" // make allowance for active border
+  display: 'inline-block',
+  width: 'calc((100% / 7) - 4px)', // make allowance for active border
+  border: 'none',
+  margin: '2px' // make allowance for active border
 };
 
 let DayOfMonth = glamorous.button(
   dayOfMonthStyle,
   ({ selected, unavailable, today, isInRange }) => {
-    let background = today ? "cornflowerblue" : "";
-    background = selected || isInRange ? "purple" : background;
-    background = unavailable ? "teal" : background;
+    let background = today ? 'cornflowerblue' : '';
+    background = selected || isInRange ? 'purple' : background;
+    background = unavailable ? 'teal' : background;
     return { background };
   }
 );
 
 let DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
-  background: "transparent"
+  background: 'transparent'
 });
 
 class RangeDatepicker extends React.Component {
@@ -61,7 +61,7 @@ class RangeDatepicker extends React.Component {
 
   getKeyOffset(number) {
     const e = document.activeElement;
-    let buttons = document.querySelectorAll("button");
+    let buttons = document.querySelectorAll('button');
     buttons.forEach((el, i) => {
       const newNodeKey = i + number;
       if (el == e) {
@@ -134,7 +134,7 @@ class RangeDatepicker extends React.Component {
                       offset: 12
                     })}
                   >
-                    {"<<"}
+                    {'<<'}
                   </button>
                   <button {...getBackProps({ calendars })}>Back</button>
                   <button {...getForwardProps({ calendars })}>Next</button>
@@ -144,7 +144,7 @@ class RangeDatepicker extends React.Component {
                       offset: 12
                     })}
                   >
-                    {">>"}
+                    {'>>'}
                   </button>
                 </div>
                 {calendars.map(calendar => (
@@ -182,7 +182,7 @@ class RangeDatepicker extends React.Component {
                             today={today}
                             isInRange={this.isInRange(date)}
                           >
-                            {selectable ? date.getDate() : "X"}
+                            {selectable ? date.getDate() : 'X'}
                           </DayOfMonth>
                         );
                       })
@@ -202,7 +202,7 @@ class RangeDatepicker extends React.Component {
 class Range extends React.Component {
   state = {
     selectedDates: [],
-    date: new Date("05/01/2018")
+    date: new Date('05/01/2018')
   };
 
   _handleOnDateSelected = ({ selected, selectable, date }) => {
@@ -240,7 +240,7 @@ class Range extends React.Component {
           monthsToDisplay={2}
         />
         {selectedDates.length === 2 && (
-          <div style={{ paddingTop: 20, textAlign: "center" }}>
+          <div style={{ paddingTop: 20, textAlign: 'center' }}>
             <p>Selected:</p>
             <p
             >{`${selectedDates[0].toLocaleDateString()} - ${selectedDates[1].toLocaleDateString()}`}</p>

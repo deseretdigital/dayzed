@@ -1,79 +1,79 @@
-import React from "react";
-import glamorous, { Div } from "glamorous";
-import Dayzed from "../../src/index";
-import ArrowKeysReact from "arrow-keys-react";
-import { monthNamesShort, weekdayNamesShort } from "./calendarUtils";
+import React from 'react';
+import glamorous, { Div } from 'glamorous';
+import Dayzed from '../../src/index';
+import ArrowKeysReact from 'arrow-keys-react';
+import { monthNamesShort, weekdayNamesShort } from './calendarUtils';
 
 let Calendar = glamorous.div({
   maxWidth: 800,
-  margin: "0 auto",
-  textAlign: "center",
-  fontFamily: "Arial, sans-serif",
+  margin: '0 auto',
+  textAlign: 'center',
+  fontFamily: 'Arial, sans-serif',
   fontSize: 16,
   paddingTop: 30
 });
 
 let Controls = glamorous.div({
-  margin: "0 auto",
-  width: "50%"
+  margin: '0 auto',
+  width: '50%'
 });
 
 let ControlButton = glamorous.button({
-  width: "25%",
-  background: "#000",
+  width: '25%',
+  background: '#000',
   padding: 10,
-  color: "#fff",
-  border: "none",
+  color: '#fff',
+  border: 'none',
   fontSize: 16,
-  ":disabled": {
-    color: "#4d4d4d"
+  ':disabled': {
+    color: '#4d4d4d'
   }
 });
 
 let MonthYear = glamorous.div({
-  writingMode: "vertical-rl",
-  textOrientation: "upright",
-  display: "inline-block",
-  verticalAlign: "middle",
+  writingMode: 'vertical-rl',
+  textOrientation: 'upright',
+  display: 'inline-block',
+  verticalAlign: 'middle',
   letterSpacing: 3,
-  color: "#c1c1c1",
-  padding: "0 10px"
+  color: '#c1c1c1',
+  padding: '0 10px'
 });
 
 let Month = glamorous.div({
-  display: "inline-block",
-  width: "50%",
-  background: "#e1e1e1",
+  display: 'inline-block',
+  width: '50%',
+  background: '#e1e1e1',
   padding: 10,
-  boxSizing: "border-box",
-  verticalAlign: "middle"
+  boxSizing: 'border-box',
+  verticalAlign: 'middle'
 });
 
 const dayOfMonthStyle = {
-  display: "inline-block",
-  width: "calc(100% / 7)",
-  border: "none",
+  display: 'inline-block',
+  width: 'calc(100% / 7)',
+  border: 'none',
   fontSize: 16,
-  background: "transparent"
+  background: 'transparent'
 };
 
 let DayOfMonth = glamorous.button(
   dayOfMonthStyle,
   ({ selected, unavailable, today }) => {
-    let background = today ? "cornflowerblue" : dayOfMonthStyle.background;
-    background = selected ? "purple" : background;
+    let background = today ? 'cornflowerblue' : dayOfMonthStyle.background;
+    background = selected ? 'purple' : background;
     return { background };
   },
   ({ selected, unavailable, today }) =>
-    (selected || today) && { color: "#fff" },
-  ({ unavailable }) => unavailable && { color: "#9b9b9b" }
+    (selected || today) && { color: '#fff' },
+  ({ unavailable }) => unavailable && { color: '#9b9b9b' }
 );
 
 let DayOfMonthEmpty;
 let WeekdayName = (DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
-  background: "transparent",
+  background: 'transparent',
   paddingBottom: 10,
-  color: "#fff"
+  color: '#fff'
 }));
 
 class Datepicker extends React.Component {
@@ -97,7 +97,7 @@ class Datepicker extends React.Component {
 
   getKeyOffset(number) {
     const e = document.activeElement;
-    let buttons = document.querySelectorAll("button");
+    let buttons = document.querySelectorAll('button');
     buttons.forEach((el, i) => {
       const newNodeKey = i + number;
       if (el == e) {
@@ -130,18 +130,18 @@ class Datepicker extends React.Component {
               <Calendar {...ArrowKeysReact.events}>
                 <Controls>
                   <ControlButton {...getBackProps({ calendars, offset: 12 })}>
-                    {"<<"}
+                    {'<<'}
                   </ControlButton>
                   <ControlButton {...getBackProps({ calendars })}>
-                    {"<"}
+                    {'<'}
                   </ControlButton>
                   <ControlButton {...getForwardProps({ calendars })}>
-                    {">"}
+                    {'>'}
                   </ControlButton>
                   <ControlButton
                     {...getForwardProps({ calendars, offset: 12 })}
                   >
-                    {">>"}
+                    {'>>'}
                   </ControlButton>
                 </Controls>
                 {calendars.map((calendar, i) => (
@@ -176,7 +176,7 @@ class Datepicker extends React.Component {
                               unavailable={!selectable}
                               today={today}
                             >
-                              {selectable ? date.getDate() : "X"}
+                              {selectable ? date.getDate() : 'X'}
                             </DayOfMonth>
                           );
                         })
@@ -230,8 +230,8 @@ class Single extends React.Component {
           <div
             style={{
               paddingTop: 20,
-              textAlign: "center",
-              fontFamily: "Arial, sans-serif"
+              textAlign: 'center',
+              fontFamily: 'Arial, sans-serif'
             }}
           >
             <p>Selected:</p>

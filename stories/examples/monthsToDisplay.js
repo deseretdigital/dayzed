@@ -1,10 +1,10 @@
-import React from "react";
-import Datepicker from "./Datepicker";
+import React from 'react';
+import Datepicker from './Datepicker';
 
 class MonthsToDisplay extends React.Component {
   state = {
     selectedDate: null,
-    date: new Date("05/01/2018"),
+    date: new Date('05/01/2018'),
     monthsToDisplay: 2
   };
 
@@ -33,7 +33,7 @@ class MonthsToDisplay extends React.Component {
   render() {
     let { selectedDate, date } = this.state;
     return (
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: 'center' }}>
         <div style={{ paddingBottom: 10 }}>
           <button
             data-test="monthsToDisplay"
