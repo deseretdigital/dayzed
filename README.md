@@ -359,7 +359,7 @@ Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-| [<img src="https://avatars2.githubusercontent.com/u/3399907?v=4" width="100px;"/><br /><sub><b>Morgan Kartchner</b></sub>](https://github.com/mkartchner994)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Code") [📖](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Documentation") [💡](#example-mkartchner994 "Examples") [🤔](#ideas-mkartchner994 "Ideas, Planning, & Feedback") [👀](#review-mkartchner994 "Reviewed Pull Requests") | [<img src="https://avatars2.githubusercontent.com/u/1584489?v=4" width="100px;"/><br /><sub><b>Jen Luker</b></sub>](http://jenluker.com)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=knittingcodemonkey "Code") [💡](#example-knittingcodemonkey "Examples") [🤔](#ideas-knittingcodemonkey "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/10711493?v=4" width="100px;"/><br /><sub><b>Sam Gale</b></sub>](https://github.com/sjgale)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=sjgale "Code") [🤔](#ideas-sjgale "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/13774309?v=4" width="100px;"/><br /><sub><b>Arthur Denner</b></sub>](https://github.com/arthurdenner)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=arthurdenner "Code") [🤔](#ideas-arthurdenner "Ideas, Planning, & Feedback") |
+| [<img src="https://avatars2.githubusercontent.com/u/3399907?v=4" width="100px;"/><br /><sub><b>Morgan Kartchner</b></sub>](https://github.com/mkartchner994)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Code") [📖](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Documentation") [💡](#example-mkartchner994 "Examples") [🤔](#ideas-mkartchner994 "Ideas, Planning, & Feedback") [👀](#review-mkartchner994 "Reviewed Pull Requests") | [<img src="https://avatars2.githubusercontent.com/u/1584489?v=4" width="100px;"/><br /><sub><b>Jen Luker</b></sub>](https://github.com/knitcodemonkey)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=knitcodemonkey "Code") [💡](#example-knitcodemonkey "Examples") [🤔](#ideas-knitcodemonkey "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/10711493?v=4" width="100px;"/><br /><sub><b>Sam Gale</b></sub>](https://github.com/sjgale)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=sjgale "Code") [🤔](#ideas-sjgale "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/13774309?v=4" width="100px;"/><br /><sub><b>Arthur Denner</b></sub>](https://github.com/arthurdenner)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=arthurdenner "Code") [🤔](#ideas-arthurdenner "Ideas, Planning, & Feedback") |
 | :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
@@ -377,7 +377,7 @@ MIT
 [yarn]: https://yarnpkg.com
 [controlled-components-lecture]: https://courses.reacttraining.com/courses/advanced-react/lectures/3172720
 [downshift]: https://github.com/paypal/downshift
-[jenluker]: https://github.com/knittingcodemonkey
+[jenluker]: https://github.com/knitcodemonkey
 [kentcdodds]: https://github.com/kentcdodds
 [michaeljackson]: https://github.com/mjackson
 [ryanflorence]: https://github.com/ryanflorence
