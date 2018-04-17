@@ -24,28 +24,29 @@ This differs from other solutions which render things for their use case and the
 ## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
+
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Props](#props)
-  - [date](#date)
-  - [maxDate](#maxdate)
-  - [minDate](#mindate)
-  - [monthsToDisplay](#monthstodisplay)
-  - [selected](#selected)
-  - [onDateSelected](#ondateselected)
-  - [render](#render)
-  - [offset](#offset)
-  - [onOffsetChanged](#onoffsetchanged)
-- [Control Props](#control-props)
-- [Render Prop Function](#render-prop-function)
-  - [prop getters](#prop-getters)
-  - [state](#state)
-- [Inspiration and Thanks!](#inspiration-and-thanks)
-- [Other Solutions](#other-solutions)
-- [Contributors](#contributors)
-- [LICENSE](#license)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Props](#props)
+  * [date](#date)
+  * [maxDate](#maxdate)
+  * [minDate](#mindate)
+  * [monthsToDisplay](#monthstodisplay)
+  * [selected](#selected)
+  * [onDateSelected](#ondateselected)
+  * [render](#render)
+  * [offset](#offset)
+  * [onOffsetChanged](#onoffsetchanged)
+* [Control Props](#control-props)
+* [Render Prop Function](#render-prop-function)
+  * [prop getters](#prop-getters)
+  * [state](#state)
+* [Inspiration and Thanks!](#inspiration-and-thanks)
+* [Other Solutions](#other-solutions)
+* [Contributors](#contributors)
+* [LICENSE](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -74,24 +75,24 @@ yarn add dayzed
 ## Usage
 
 ```jsx
-import React from "react";
-import Dayzed from "dayzed";
+import React from 'react';
+import Dayzed from 'dayzed';
 
 const monthNamesShort = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec"
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
 ];
-const weekdayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const weekdayNamesShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 class Datepicker extends React.Component {
   render() {
@@ -108,7 +109,7 @@ class Datepicker extends React.Component {
           if (calendars.length) {
             return (
               <div
-                style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}
+                style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}
               >
                 <div>
                   <button {...getBackProps({ calendars })}>Back</button>
@@ -118,10 +119,10 @@ class Datepicker extends React.Component {
                   <div
                     key={`${calendar.month}${calendar.year}`}
                     style={{
-                      display: "inline-block",
-                      width: "50%",
-                      padding: "0 10px 30px",
-                      boxSizing: "border-box"
+                      display: 'inline-block',
+                      width: '50%',
+                      padding: '0 10px 30px',
+                      boxSizing: 'border-box'
                     }}
                   >
                     <div>
@@ -131,10 +132,10 @@ class Datepicker extends React.Component {
                       <div
                         key={`${calendar.month}${calendar.year}${weekday}`}
                         style={{
-                          display: "inline-block",
-                          width: "calc(100% / 7)",
-                          border: "none",
-                          background: "transparent"
+                          display: 'inline-block',
+                          width: 'calc(100% / 7)',
+                          border: 'none',
+                          background: 'transparent'
                         }}
                       >
                         {weekday}
@@ -147,30 +148,30 @@ class Datepicker extends React.Component {
                             <div
                               key={`${calendar.year}${calendar.month}${index}`}
                               style={{
-                                display: "inline-block",
-                                width: "calc(100% / 7)",
-                                border: "none",
-                                background: "transparent"
+                                display: 'inline-block',
+                                width: 'calc(100% / 7)',
+                                border: 'none',
+                                background: 'transparent'
                               }}
                             />
                           );
                         }
                         let { date, selected, selectable, today } = dateObj;
-                        let background = today ? "cornflowerblue" : "";
-                        background = selected ? "purple" : background;
-                        background = !selectable ? "teal" : background;
+                        let background = today ? 'cornflowerblue' : '';
+                        background = selected ? 'purple' : background;
+                        background = !selectable ? 'teal' : background;
                         return (
                           <button
                             style={{
-                              display: "inline-block",
-                              width: "calc(100% / 7)",
-                              border: "none",
+                              display: 'inline-block',
+                              width: 'calc(100% / 7)',
+                              border: 'none',
                               background
                             }}
                             key={`${calendar.year}${calendar.month}${index}`}
                             {...getDateProps({ dateObj })}
                           >
-                            {selectable ? date.getDate() : "X"}
+                            {selectable ? date.getDate() : 'X'}
                           </button>
                         );
                       })
@@ -203,7 +204,7 @@ class Single extends React.Component {
           onDateSelected={this._handleOnDateSelected}
         />
         {this.state.selectedDate && (
-          <div style={{ paddingTop: 20, textAlign: "center" }}>
+          <div style={{ paddingTop: 20, textAlign: 'center' }}>
             <p>Selected:</p>
             <p>{`${selectedDate.toLocaleDateString()}`}</p>
           </div>
@@ -358,9 +359,11 @@ Here are some other great daypicker solutions:
 Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore -->
-| [<img src="https://avatars2.githubusercontent.com/u/3399907?v=4" width="100px;"/><br /><sub><b>Morgan Kartchner</b></sub>](https://github.com/mkartchner994)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Code") [📖](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Documentation") [💡](#example-mkartchner994 "Examples") [🤔](#ideas-mkartchner994 "Ideas, Planning, & Feedback") [👀](#review-mkartchner994 "Reviewed Pull Requests") | [<img src="https://avatars2.githubusercontent.com/u/1584489?v=4" width="100px;"/><br /><sub><b>Jen Luker</b></sub>](https://github.com/knitcodemonkey)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=knitcodemonkey "Code") [💡](#example-knitcodemonkey "Examples") [🤔](#ideas-knitcodemonkey "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/10711493?v=4" width="100px;"/><br /><sub><b>Sam Gale</b></sub>](https://github.com/sjgale)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=sjgale "Code") [🤔](#ideas-sjgale "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/13774309?v=4" width="100px;"/><br /><sub><b>Arthur Denner</b></sub>](https://github.com/arthurdenner)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=arthurdenner "Code") [🤔](#ideas-arthurdenner "Ideas, Planning, & Feedback") |
+| [<img src="https://avatars2.githubusercontent.com/u/3399907?v=4" width="100px;"/><br /><sub><b>Morgan Kartchner</b></sub>](https://github.com/mkartchner994)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Code") [📖](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Documentation") [💡](#example-mkartchner994 "Examples") [🤔](#ideas-mkartchner994 "Ideas, Planning, & Feedback") [👀](#review-mkartchner994 "Reviewed Pull Requests") | [<img src="https://avatars2.githubusercontent.com/u/1584489?v=4" width="100px;"/><br /><sub><b>Jen Luker</b></sub>](http://jenluker.com)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=knitcodemonkey "Code") [💡](#example-knitcodemonkey "Examples") [🤔](#ideas-knitcodemonkey "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/10711493?v=4" width="100px;"/><br /><sub><b>Sam Gale</b></sub>](https://github.com/sjgale)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=sjgale "Code") [🤔](#ideas-sjgale "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/13774309?v=4" width="100px;"/><br /><sub><b>Arthur Denner</b></sub>](https://github.com/arthurdenner)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=arthurdenner "Code") [🤔](#ideas-arthurdenner "Ideas, Planning, & Feedback") |
 | :---: | :---: | :---: | :---: |
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
