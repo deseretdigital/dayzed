@@ -142,7 +142,8 @@ export function getCalendars({
   offset,
   minDate,
   maxDate,
-  firstDayOfWeek
+  firstDayOfWeek,
+  fillAdjacentMonths
 }) {
   const months = [];
   const startDate = getStartDate(date, minDate, maxDate);
@@ -153,7 +154,8 @@ export function getCalendars({
       selectedDates: selected,
       minDate,
       maxDate,
-      firstDayOfWeek
+      firstDayOfWeek,
+      fillAdjacentMonths
     });
     months.push(calendarDates);
   }
@@ -196,6 +198,7 @@ function getStartDate(date, minDate, maxDate) {
  * @param {Date} param.minDate The earliest date available
  * @param {Date} param.maxDate The furthest date available
  * @param {Number} param.firstDayOfWeek First day of week, 0-6 (Sunday to Saturday)
+ * @param {Bool} param.fillAdjacentMonths Flag to fill front and back weeks with dates from adjacent months
  * @returns {Object} The data for the selected month/year
  */
 function getMonths({
@@ -204,13 +207,15 @@ function getMonths({
   selectedDates,
   minDate,
   maxDate,
-  firstDayOfWeek
+  firstDayOfWeek,
+  fillAdjacentMonths
 }) {
   // Get the normalized month and year, along with days in the month.
   const daysMonthYear = getNumDaysMonthYear(month, year);
   const daysInMonth = daysMonthYear.daysInMonth;
   month = daysMonthYear.month;
   year = daysMonthYear.year;
+
   // Fill out the dates for the month.
   const dates = [];
   for (let day = 1; day <= daysInMonth; day++) {
@@ -223,22 +228,31 @@ function getMonths({
     };
     dates.push(dateObj);
   }
-  // Fill out front week for days from
-  // preceding month with buffer.
+
   const firstDayOfMonth = new Date(year, month, 1);
-  let firstDay = (firstDayOfMonth.getDay() + 7 - firstDayOfWeek) % 7;
-  while (firstDay > 0) {
-    dates.unshift('');
-    firstDay--;
-  }
-  // Fill out back week for days from
-  // following month with buffer.
   const lastDayOfMonth = new Date(year, month, daysInMonth);
-  let lastDay = (lastDayOfMonth.getDay() + 7 - firstDayOfWeek) % 7;
-  while (lastDay < 6) {
-    dates.push('');
-    lastDay++;
-  }
+
+  const frontWeekBuffer = fillFrontWeek({
+    firstDayOfMonth,
+    minDate,
+    maxDate,
+    selectedDates,
+    firstDayOfWeek,
+    fillAdjacentMonths
+  });
+
+  const backWeekBuffer = fillBackWeek({
+    lastDayOfMonth,
+    minDate,
+    maxDate,
+    selectedDates,
+    firstDayOfWeek,
+    fillAdjacentMonths
+  });
+
+  dates.unshift(...frontWeekBuffer);
+  dates.push(...backWeekBuffer);
+
   // Get the filled out weeks for the
   // given dates.
   const weeks = getWeeks(dates);
@@ -250,6 +264,118 @@ function getMonths({
     year,
     weeks
   };
+}
+
+/**
+ * Fill front and back weeks with either empty buffer or dates from adjacent months,
+ * depending on fillAdjacentMonths flag
+ * @param {Object} param The param object
+ * @param {Array.<Date>} param.selectedDates An array of dates currently selected
+ * @param {Date} param.minDate The earliest date available
+ * @param {Date} param.maxDate The furthest date available
+ * @param {Date} param.firstDayOfMonth First day of the month
+ * @param {Number} param.firstDayOfWeek First day of week, 0-6 (Sunday to Saturday)
+ * @param {Bool} param.fillAdjacentMonths Flag to fill front and back weeks with dates from adjacent months
+ * @returns {Array.<Date>} Buffer to fill front week
+ */
+function fillFrontWeek({
+  firstDayOfMonth,
+  minDate,
+  maxDate,
+  selectedDates,
+  firstDayOfWeek,
+  fillAdjacentMonths
+}) {
+  const dates = [];
+  let firstDay = (firstDayOfMonth.getDay() + 7 - firstDayOfWeek) % 7;
+
+  if (fillAdjacentMonths) {
+    const lastDayOfPrevMonth = addDays(firstDayOfMonth, -1);
+    const prevDate = lastDayOfPrevMonth.getDate();
+    const prevDateMonth = lastDayOfPrevMonth.getMonth();
+    const prevDateYear = lastDayOfPrevMonth.getFullYear();
+
+    // Fill out front week for days from
+    // preceding month with dates from previous month.
+    let counter = 0;
+    while (counter < firstDay) {
+      const date = new Date(prevDateYear, prevDateMonth, prevDate - counter);
+      const dateObj = {
+        date,
+        selected: isSelected(selectedDates, date),
+        selectable: isSelectable(minDate, maxDate, date),
+        today: false,
+        prevMonth: true
+      };
+      dates.unshift(dateObj);
+      counter++;
+    }
+  } else {
+    // Fill out front week for days from
+    // preceding month with buffer.
+    while (firstDay > 0) {
+      dates.unshift('');
+      firstDay--;
+    }
+  }
+
+  return dates;
+}
+/* eslint-enable */
+
+/**
+ * Fill front and back weeks with either empty buffer or dates from adjacent months,
+ * depending on fillAdjacentMonths flag
+ * @param {Object} param The param object
+ * @param {Array.<Date>} param.selectedDates An array of dates currently selected
+ * @param {Date} param.minDate The earliest date available
+ * @param {Date} param.maxDate The furthest date available
+ * @param {Date} param.lastDayOfMonth Last day of the month
+ * @param {Number} param.firstDayOfWeek First day of week, 0-6 (Sunday to Saturday)
+ * @param {Bool} param.fillAdjacentMonths Flag to fill front and back weeks with dates from adjacent months
+ * @returns {Array.<Date>} Buffer to fill back week
+ */
+function fillBackWeek({
+  lastDayOfMonth,
+  minDate,
+  maxDate,
+  selectedDates,
+  firstDayOfWeek,
+  fillAdjacentMonths
+}) {
+  const dates = [];
+  let lastDay = (lastDayOfMonth.getDay() + 7 - firstDayOfWeek) % 7;
+
+  if (fillAdjacentMonths) {
+    const firstDayOfNextMonth = addDays(lastDayOfMonth, 1);
+    const nextDateMonth = firstDayOfNextMonth.getMonth();
+    const nextDateYear = firstDayOfNextMonth.getFullYear();
+
+    // Fill out back week for days from
+    // following month with dates from next month.
+    let counter = 0;
+    while (counter < 6 - lastDay) {
+      const date = new Date(nextDateYear, nextDateMonth, 1 + counter);
+      const dateObj = {
+        date,
+        selected: isSelected(selectedDates, date),
+        selectable: isSelectable(minDate, maxDate, date),
+        today: false,
+        nextMonth: true
+      };
+      dates.push(dateObj);
+      counter++;
+    }
+  } else {
+    // Fill out back week for days from
+    // following month with buffer.
+    while (lastDay < 6) {
+      dates.push('');
+      lastDay++;
+    }
+  }
+
+  return dates;
 }
 
 /**

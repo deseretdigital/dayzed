@@ -5,7 +5,8 @@ class Single extends React.Component {
   state = {
     selectedDate: null,
     date: new Date('04/01/2018'),
-    firstDayOfWeek: 0
+    firstDayOfWeek: 0,
+    fillAdjacentMonths: false
   };
 
   _handleToday = () => {
@@ -26,6 +27,12 @@ class Single extends React.Component {
     }));
   };
 
+  _handleFillAdjacentMonths = () => {
+    this.setState(state => ({
+      fillAdjacentMonths: !state.fillAdjacentMonths
+    }));
+  };
+
   _handleOnDateSelected = ({ selected, selectable, date }) => {
     if (!selectable) {
       return;
@@ -43,13 +50,14 @@ class Single extends React.Component {
   };
 
   render() {
-    let { selectedDate, date, firstDayOfWeek } = this.state;
+    let { selectedDate, date, firstDayOfWeek, fillAdjacentMonths } = this.state;
     return (
       <div>
         <Datepicker
           date={date}
+          selected={selectedDate}
           firstDayOfWeek={firstDayOfWeek}
-          selected={this.state.selectedDate}
+          fillAdjacentMonths={fillAdjacentMonths}
           onDateSelected={this._handleOnDateSelected}
         />
         <div style={{ paddingTop: 20, textAlign: 'center' }}>
@@ -69,6 +77,15 @@ class Single extends React.Component {
           >
             Switch First Day of Week to{' '}
             {firstDayOfWeek === 0 ? 'Monday' : 'Sunday'}
+          </button>
+        </div>
+        <div style={{ paddingTop: 20, textAlign: 'center' }}>
+          <button
+            data-test="fillAdjacentMonthsButton"
+            onClick={this._handleFillAdjacentMonths}
+          >
+            Toggle Show Dates from Adjacent Months{' '}
+            {fillAdjacentMonths ? 'true' : 'false'}
           </button>
         </div>
         {this.state.selectedDate && (

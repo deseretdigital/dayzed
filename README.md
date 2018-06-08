@@ -34,6 +34,7 @@ This differs from other solutions which render things for their use case and the
   - [minDate](#mindate)
   - [monthsToDisplay](#monthstodisplay)
   - [firstDayOfWeek](#firstdayofweek)
+  - [fillAdjacentMonths](#filladjacentmonths)
   - [selected](#selected)
   - [onDateSelected](#ondateselected)
   - [render](#render)
@@ -248,6 +249,12 @@ Number of months returned, based off the `date` and `offset` props.
 > `number` | defaults to `0`
 
 First day of the week with possible values 0-6 (Sunday to Saturday). Defaults to Sunday.
+
+### fillAdjacentMonths
+
+> `boolean` | defaults to false
+
+Flag to fill front and back weeks with dates from adjacent months
 
 ### selected
 

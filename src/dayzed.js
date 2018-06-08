@@ -24,7 +24,8 @@ class Dayzed extends React.Component {
       monthsToDisplay,
       minDate,
       maxDate,
-      firstDayOfWeek
+      firstDayOfWeek,
+      fillAdjacentMonths
     } = this.props;
     const calendars = getCalendars({
       date,
@@ -33,7 +34,8 @@ class Dayzed extends React.Component {
       minDate,
       maxDate,
       offset: this.getOffset(),
-      firstDayOfWeek
+      firstDayOfWeek,
+      fillAdjacentMonths
     });
     const children = unwrapChildrenForPreact(
       this.props.render || this.props.children
@@ -130,7 +132,8 @@ Dayzed.defaultProps = {
   date: new Date(),
   monthsToDisplay: 1,
   onOffsetChanged: () => {},
-  firstDayOfWeek: 0
+  firstDayOfWeek: 0,
+  fillAdjacentMonths: false
 };
 
 Dayzed.propTypes = {
@@ -141,6 +144,7 @@ Dayzed.propTypes = {
   minDate: PropTypes.instanceOf(Date),
   monthsToDisplay: PropTypes.number,
   firstDayOfWeek: PropTypes.number,
+  fillAdjacentMonths: PropTypes.bool,
   offset: PropTypes.number,
   onDateSelected: PropTypes.func.isRequired,
   onOffsetChanged: PropTypes.func,
