@@ -132,6 +132,7 @@ export function isForwardDisabled({ calendars, maxDate }) {
  * @param {Number} param.offset The number of months to offset based off the param.date given
  * @param {Date} param.minDate The earliest date available
  * @param {Date} param.maxDate The furthest date available
+ * @param {Number} param.firstDayOfWeek First day of week, 0-6 (Sunday to Saturday)
  * @returns {Array.<Object>} An array of objects with month data
  */
 export function getCalendars({
@@ -140,18 +141,20 @@ export function getCalendars({
   monthsToDisplay,
   offset,
   minDate,
-  maxDate
+  maxDate,
+  firstDayOfWeek
 }) {
   const months = [];
   const startDate = getStartDate(date, minDate, maxDate);
   for (let i = 0; i < monthsToDisplay; i++) {
-    const calendarDates = getMonths(
-      startDate.getMonth() + i + offset,
-      startDate.getFullYear(),
-      selected,
+    const calendarDates = getMonths({
+      month: startDate.getMonth() + i + offset,
+      year: startDate.getFullYear(),
+      selectedDates: selected,
       minDate,
-      maxDate
-    );
+      maxDate,
+      firstDayOfWeek
+    });
     months.push(calendarDates);
   }
   return months;
@@ -186,14 +189,23 @@ function getStartDate(date, minDate, maxDate) {
  * Figures what week/day data to return for the given month
  * and year. Adds flags to day data if found in the given selectedDates,
  * if is selectable inside the given min and max dates, or is today.
- * @param {Number} month The month to grab data for
- * @param {Number} year The year to grab data for
- * @param {Array.<Date>} selectedDates An array of dates currently selected
- * @param {Date} minDate The earliest date available
- * @param {Date} maxDate The furthest date available
+ * @param {Object} param The param object
+ * @param {Number} param.month The month to grab data for
+ * @param {Number} param.year The year to grab data for
+ * @param {Array.<Date>} sparam.electedDates An array of dates currently selected
+ * @param {Date} param.minDate The earliest date available
+ * @param {Date} param.maxDate The furthest date available
+ * @param {Number} param.firstDayOfWeek First day of week, 0-6 (Sunday to Saturday)
  * @returns {Object} The data for the selected month/year
  */
-function getMonths(month, year, selectedDates, minDate, maxDate) {
+function getMonths({
+  month,
+  year,
+  selectedDates,
+  minDate,
+  maxDate,
+  firstDayOfWeek
+}) {
   // Get the normalized month and year, along with days in the month.
   const daysMonthYear = getNumDaysMonthYear(month, year);
   const daysInMonth = daysMonthYear.daysInMonth;
@@ -214,7 +226,7 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
   // Fill out front week for days from
   // preceding month with buffer.
   const firstDayOfMonth = new Date(year, month, 1);
-  let firstDay = firstDayOfMonth.getDay();
+  let firstDay = (firstDayOfMonth.getDay() + 7 - firstDayOfWeek) % 7;
   while (firstDay > 0) {
     dates.unshift('');
     firstDay--;
@@ -222,7 +234,7 @@ function getMonths(month, year, selectedDates, minDate, maxDate) {
   // Fill out back week for days from
   // following month with buffer.
   const lastDayOfMonth = new Date(year, month, daysInMonth);
-  let lastDay = lastDayOfMonth.getDay();
+  let lastDay = (lastDayOfMonth.getDay() + 7 - firstDayOfWeek) % 7;
   while (lastDay < 6) {
     dates.push('');
     lastDay++;

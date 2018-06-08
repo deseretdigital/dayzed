@@ -4,7 +4,8 @@ import Datepicker from './Datepicker';
 class Single extends React.Component {
   state = {
     selectedDate: null,
-    date: new Date('04/01/2018')
+    date: new Date('04/01/2018'),
+    firstDayOfWeek: 0
   };
 
   _handleToday = () => {
@@ -17,6 +18,12 @@ class Single extends React.Component {
     this.setState({
       date: new Date('04/01/2018')
     });
+  };
+
+  _handleFirstDayOfWeek = () => {
+    this.setState(state => ({
+      firstDayOfWeek: state.firstDayOfWeek === 0 ? 1 : 0
+    }));
   };
 
   _handleOnDateSelected = ({ selected, selectable, date }) => {
@@ -36,11 +43,12 @@ class Single extends React.Component {
   };
 
   render() {
-    let { selectedDate, date } = this.state;
+    let { selectedDate, date, firstDayOfWeek } = this.state;
     return (
       <div>
         <Datepicker
           date={date}
+          firstDayOfWeek={firstDayOfWeek}
           selected={this.state.selectedDate}
           onDateSelected={this._handleOnDateSelected}
         />
@@ -52,6 +60,15 @@ class Single extends React.Component {
         <div style={{ paddingTop: 20, textAlign: 'center' }}>
           <button data-test="goToAprilButton" onClick={this._handleApril}>
             Jump To April 2018
+          </button>
+        </div>
+        <div style={{ paddingTop: 20, textAlign: 'center' }}>
+          <button
+            data-test="firstDayOfWeekButton"
+            onClick={this._handleFirstDayOfWeek}
+          >
+            Switch First Day of Week to{' '}
+            {firstDayOfWeek === 0 ? 'Monday' : 'Sunday'}
           </button>
         </div>
         {this.state.selectedDate && (
