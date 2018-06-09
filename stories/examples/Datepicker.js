@@ -38,6 +38,9 @@ let DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
   background: 'transparent'
 });
 
+let [sun, ...restOfWeek] = weekdayNamesShort;
+let weekdayNamesShortMon = [...restOfWeek, sun];
+
 class Datepicker extends React.Component {
   state = {
     offset: 0
@@ -89,6 +92,11 @@ class Datepicker extends React.Component {
   };
 
   render() {
+    let weekdayNames =
+      this.props.firstDayOfWeek === 0
+        ? weekdayNamesShort
+        : weekdayNamesShortMon;
+
     return (
       <Dayzed
         date={this.props.date}
@@ -97,6 +105,7 @@ class Datepicker extends React.Component {
         maxDate={this.props.maxDate}
         selected={this.props.selected}
         monthsToDisplay={this.props.monthsToDisplay}
+        firstDayOfWeek={this.props.firstDayOfWeek}
         offset={this.state.offset}
         onOffsetChanged={this._handleOffsetChanged}
         render={({
@@ -146,9 +155,12 @@ class Datepicker extends React.Component {
                     <div data-test="monthYear">
                       {monthNamesFull[calendar.month]} {calendar.year}
                     </div>
-                    {weekdayNamesShort.map(weekday => (
+                    {weekdayNames.map((weekday, idx) => (
                       <DayOfMonthEmpty
                         key={`${calendar.month}${calendar.year}${weekday}`}
+                        {...(idx === 0
+                          ? { 'data-test': 'firstDayOfWeek' }
+                          : {})}
                       >
                         {weekday}
                       </DayOfMonthEmpty>

@@ -18,14 +18,22 @@ class Dayzed extends React.Component {
   /*------------------------- React Component Lifecycle Methods ---*/
 
   render() {
-    const { date, selected, monthsToDisplay, minDate, maxDate } = this.props;
+    const {
+      date,
+      selected,
+      monthsToDisplay,
+      minDate,
+      maxDate,
+      firstDayOfWeek
+    } = this.props;
     const calendars = getCalendars({
       date,
       selected,
       monthsToDisplay,
       minDate,
       maxDate,
-      offset: this.getOffset()
+      offset: this.getOffset(),
+      firstDayOfWeek
     });
     const children = unwrapChildrenForPreact(
       this.props.render || this.props.children
@@ -121,7 +129,8 @@ class Dayzed extends React.Component {
 Dayzed.defaultProps = {
   date: new Date(),
   monthsToDisplay: 1,
-  onOffsetChanged: () => {}
+  onOffsetChanged: () => {},
+  firstDayOfWeek: 0
 };
 
 Dayzed.propTypes = {
@@ -131,6 +140,7 @@ Dayzed.propTypes = {
   maxDate: PropTypes.instanceOf(Date),
   minDate: PropTypes.instanceOf(Date),
   monthsToDisplay: PropTypes.number,
+  firstDayOfWeek: PropTypes.number,
   offset: PropTypes.number,
   onDateSelected: PropTypes.func.isRequired,
   onOffsetChanged: PropTypes.func,
