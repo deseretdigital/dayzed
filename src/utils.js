@@ -133,6 +133,7 @@ export function isForwardDisabled({ calendars, maxDate }) {
  * @param {Date} param.minDate The earliest date available
  * @param {Date} param.maxDate The furthest date available
  * @param {Number} param.firstDayOfWeek First day of week, 0-6 (Sunday to Saturday)
+ * @param {Bool} param.fillAdjacentMonths Flag to fill front and back weeks with dates from adjacent months
  * @returns {Array.<Object>} An array of objects with month data
  */
 export function getCalendars({
@@ -224,7 +225,9 @@ function getMonths({
       date,
       selected: isSelected(selectedDates, date),
       selectable: isSelectable(minDate, maxDate, date),
-      today: isToday(date)
+      today: isToday(date),
+      prevMonth: false,
+      nextMonth: false
     };
     dates.push(dateObj);
   }
@@ -305,7 +308,8 @@ function fillFrontWeek({
         selected: isSelected(selectedDates, date),
         selectable: isSelectable(minDate, maxDate, date),
         today: false,
-        prevMonth: true
+        prevMonth: true,
+        nextMonth: false
       };
       dates.unshift(dateObj);
       counter++;
@@ -360,6 +364,7 @@ function fillBackWeek({
         selected: isSelected(selectedDates, date),
         selectable: isSelectable(minDate, maxDate, date),
         today: false,
+        prevMonth: false,
         nextMonth: true
       };
       dates.push(dateObj);
