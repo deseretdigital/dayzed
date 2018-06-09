@@ -26,11 +26,12 @@ const dayOfMonthStyle = {
 
 let DayOfMonth = glamorous.button(
   dayOfMonthStyle,
-  ({ selected, unavailable, today }) => {
-    let background = today ? 'cornflowerblue' : '';
+  ({ selected, unavailable, today, currentMonth }) => {
+    let background = today ? 'cornflowerblue' : 'transparent';
     background = selected ? 'purple' : background;
     background = unavailable ? 'teal' : background;
-    return { background };
+    let color = !currentMonth ? 'rgba(0, 0, 0, 0.6)' : '';
+    return { background, color };
   }
 );
 
@@ -106,6 +107,7 @@ class Datepicker extends React.Component {
         selected={this.props.selected}
         monthsToDisplay={this.props.monthsToDisplay}
         firstDayOfWeek={this.props.firstDayOfWeek}
+        fillAdjacentMonths={this.props.fillAdjacentMonths}
         offset={this.state.offset}
         onOffsetChanged={this._handleOffsetChanged}
         render={({
@@ -173,7 +175,14 @@ class Datepicker extends React.Component {
                         if (!dateObj) {
                           return <DayOfMonthEmpty key={key} />;
                         }
-                        let { date, selected, selectable, today } = dateObj;
+                        let {
+                          date,
+                          selected,
+                          selectable,
+                          today,
+                          prevMonth,
+                          nextMonth
+                        } = dateObj;
                         return (
                           <DayOfMonth
                             key={key}
@@ -182,6 +191,7 @@ class Datepicker extends React.Component {
                             })}
                             selected={selected}
                             unavailable={!selectable}
+                            currentMonth={!prevMonth && !nextMonth}
                             today={today}
                           >
                             {selectable ? date.getDate() : 'X'}
