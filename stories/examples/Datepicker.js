@@ -93,10 +93,11 @@ class Datepicker extends React.Component {
   };
 
   render() {
-    let weekdayNames =
-      this.props.firstDayOfWeek === 0
-        ? weekdayNamesShort
-        : weekdayNamesShortMon;
+    let weekdayNames = [...weekdayNamesShort];
+    if (this.props.firstDayOfWeek > 0) {
+      let weekdaysFromFront = weekdayNames.splice(0, this.props.firstDayOfWeek);
+      weekdayNames = weekdayNames.concat(weekdaysFromFront);
+    }
 
     return (
       <Dayzed
@@ -167,38 +168,40 @@ class Datepicker extends React.Component {
                         {weekday}
                       </DayOfMonthEmpty>
                     ))}
-                    {calendar.weeks.map((week, windex) =>
-                      week.map((dateObj, index) => {
-                        let key = `${calendar.month}${
-                          calendar.year
-                        }${windex}${index}`;
-                        if (!dateObj) {
-                          return <DayOfMonthEmpty key={key} />;
-                        }
-                        let {
-                          date,
-                          selected,
-                          selectable,
-                          today,
-                          prevMonth,
-                          nextMonth
-                        } = dateObj;
-                        return (
-                          <DayOfMonth
-                            key={key}
-                            {...getDateProps({
-                              dateObj
-                            })}
-                            selected={selected}
-                            unavailable={!selectable}
-                            currentMonth={!prevMonth && !nextMonth}
-                            today={today}
-                          >
-                            {selectable ? date.getDate() : 'X'}
-                          </DayOfMonth>
-                        );
-                      })
-                    )}
+                    <div data-test="calendarDates">
+                      {calendar.weeks.map((week, windex) =>
+                        week.map((dateObj, index) => {
+                          let key = `${calendar.month}${
+                            calendar.year
+                          }${windex}${index}`;
+                          if (!dateObj) {
+                            return <DayOfMonthEmpty key={key} />;
+                          }
+                          let {
+                            date,
+                            selected,
+                            selectable,
+                            today,
+                            prevMonth,
+                            nextMonth
+                          } = dateObj;
+                          return (
+                            <DayOfMonth
+                              key={key}
+                              {...getDateProps({
+                                dateObj
+                              })}
+                              selected={selected}
+                              unavailable={!selectable}
+                              currentMonth={!prevMonth && !nextMonth}
+                              today={today}
+                            >
+                              {selectable ? date.getDate() : 'X'}
+                            </DayOfMonth>
+                          );
+                        })
+                      )}
+                    </div>
                   </Month>
                 ))}
               </Calendar>

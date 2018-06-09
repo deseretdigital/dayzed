@@ -21,9 +21,9 @@ class Single extends React.Component {
     });
   };
 
-  _handleFirstDayOfWeek = () => {
+  _handleFirstDayOfWeek = firstDayOfWeek => {
     this.setState(state => ({
-      firstDayOfWeek: state.firstDayOfWeek === 0 ? 1 : 0
+      firstDayOfWeek
     }));
   };
 
@@ -71,21 +71,25 @@ class Single extends React.Component {
           </button>
         </div>
         <div style={{ paddingTop: 20, textAlign: 'center' }}>
-          <button
-            data-test="firstDayOfWeekButton"
-            onClick={this._handleFirstDayOfWeek}
-          >
-            Switch First Day of Week to{' '}
-            {firstDayOfWeek === 0 ? 'Monday' : 'Sunday'}
-          </button>
+          <div>Set First Day of The Week</div>
+          {['Su', 'M', 'T', 'W', 'Th', 'F', 'S'].map((day, i) => (
+            <button
+              data-test={`firstDayOfWeekButton${day}`}
+              key={day}
+              onClick={this._handleFirstDayOfWeek.bind(this, i)}
+              style={{ background: firstDayOfWeek === i ? 'purple' : null }}
+            >
+              {day}
+            </button>
+          ))}
         </div>
         <div style={{ paddingTop: 20, textAlign: 'center' }}>
           <button
             data-test="fillAdjacentMonthsButton"
             onClick={this._handleFillAdjacentMonths}
           >
-            Toggle Show Dates from Adjacent Months{' '}
-            {fillAdjacentMonths ? 'true' : 'false'}
+            Toggle Show Dates from Adjacent Months:{' '}
+            {fillAdjacentMonths ? 'True' : 'False'}
           </button>
         </div>
         {this.state.selectedDate && (
