@@ -267,7 +267,7 @@ function getMonths({
 }
 
 /**
- * Fill front and back weeks with either empty buffer or dates from adjacent months,
+ * Fill front week with either empty buffer or dates from previous month,
  * depending on fillAdjacentMonths flag
  * @param {Object} param The param object
  * @param {Array.<Date>} param.selectedDates An array of dates currently selected
@@ -321,10 +321,9 @@ function fillFrontWeek({
 
   return dates;
 }
-/* eslint-enable */
 
 /**
- * Fill front and back weeks with either empty buffer or dates from adjacent months,
+ * Fill back weeks with either empty buffer or dates from next month,
  * depending on fillAdjacentMonths flag
  * @param {Object} param The param object
  * @param {Array.<Date>} param.selectedDates An array of dates currently selected
