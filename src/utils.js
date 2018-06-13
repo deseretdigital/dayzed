@@ -133,7 +133,7 @@ export function isForwardDisabled({ calendars, maxDate }) {
  * @param {Date} param.minDate The earliest date available
  * @param {Date} param.maxDate The furthest date available
  * @param {Number} param.firstDayOfWeek First day of week, 0-6 (Sunday to Saturday)
- * @param {Bool} param.fillAdjacentMonths Flag to fill front and back weeks with dates from adjacent months
+ * @param {Bool} param.showOutsideDays Flag to fill front and back weeks with dates from adjacent months
  * @returns {Array.<Object>} An array of objects with month data
  */
 export function getCalendars({
@@ -144,7 +144,7 @@ export function getCalendars({
   minDate,
   maxDate,
   firstDayOfWeek,
-  fillAdjacentMonths
+  showOutsideDays
 }) {
   const months = [];
   const startDate = getStartDate(date, minDate, maxDate);
@@ -156,7 +156,7 @@ export function getCalendars({
       minDate,
       maxDate,
       firstDayOfWeek,
-      fillAdjacentMonths
+      showOutsideDays
     });
     months.push(calendarDates);
   }
@@ -199,7 +199,7 @@ function getStartDate(date, minDate, maxDate) {
  * @param {Date} param.minDate The earliest date available
  * @param {Date} param.maxDate The furthest date available
  * @param {Number} param.firstDayOfWeek First day of week, 0-6 (Sunday to Saturday)
- * @param {Bool} param.fillAdjacentMonths Flag to fill front and back weeks with dates from adjacent months
+ * @param {Bool} param.showOutsideDays Flag to fill front and back weeks with dates from adjacent months
  * @returns {Object} The data for the selected month/year
  */
 function getMonths({
@@ -209,7 +209,7 @@ function getMonths({
   minDate,
   maxDate,
   firstDayOfWeek,
-  fillAdjacentMonths
+  showOutsideDays
 }) {
   // Get the normalized month and year, along with days in the month.
   const daysMonthYear = getNumDaysMonthYear(month, year);
@@ -241,7 +241,7 @@ function getMonths({
     maxDate,
     selectedDates,
     firstDayOfWeek,
-    fillAdjacentMonths
+    showOutsideDays
   });
 
   const backWeekBuffer = fillBackWeek({
@@ -250,7 +250,7 @@ function getMonths({
     maxDate,
     selectedDates,
     firstDayOfWeek,
-    fillAdjacentMonths
+    showOutsideDays
   });
 
   dates.unshift(...frontWeekBuffer);
@@ -271,14 +271,14 @@ function getMonths({
 
 /**
  * Fill front week with either empty buffer or dates from previous month,
- * depending on fillAdjacentMonths flag
+ * depending on showOutsideDays flag
  * @param {Object} param The param object
  * @param {Array.<Date>} param.selectedDates An array of dates currently selected
  * @param {Date} param.minDate The earliest date available
  * @param {Date} param.maxDate The furthest date available
  * @param {Date} param.firstDayOfMonth First day of the month
  * @param {Number} param.firstDayOfWeek First day of week, 0-6 (Sunday to Saturday)
- * @param {Bool} param.fillAdjacentMonths Flag to fill front and back weeks with dates from adjacent months
+ * @param {Bool} param.showOutsideDays Flag to fill front and back weeks with dates from adjacent months
  * @returns {Array.<Date>} Buffer to fill front week
  */
 function fillFrontWeek({
@@ -287,12 +287,12 @@ function fillFrontWeek({
   maxDate,
   selectedDates,
   firstDayOfWeek,
-  fillAdjacentMonths
+  showOutsideDays
 }) {
   const dates = [];
   let firstDay = (firstDayOfMonth.getDay() + 7 - firstDayOfWeek) % 7;
 
-  if (fillAdjacentMonths) {
+  if (showOutsideDays) {
     const lastDayOfPrevMonth = addDays(firstDayOfMonth, -1);
     const prevDate = lastDayOfPrevMonth.getDate();
     const prevDateMonth = lastDayOfPrevMonth.getMonth();
@@ -328,14 +328,14 @@ function fillFrontWeek({
 
 /**
  * Fill back weeks with either empty buffer or dates from next month,
- * depending on fillAdjacentMonths flag
+ * depending on showOutsideDays flag
  * @param {Object} param The param object
  * @param {Array.<Date>} param.selectedDates An array of dates currently selected
  * @param {Date} param.minDate The earliest date available
  * @param {Date} param.maxDate The furthest date available
  * @param {Date} param.lastDayOfMonth Last day of the month
  * @param {Number} param.firstDayOfWeek First day of week, 0-6 (Sunday to Saturday)
- * @param {Bool} param.fillAdjacentMonths Flag to fill front and back weeks with dates from adjacent months
+ * @param {Bool} param.showOutsideDays Flag to fill front and back weeks with dates from adjacent months
  * @returns {Array.<Date>} Buffer to fill back week
  */
 function fillBackWeek({
@@ -344,12 +344,12 @@ function fillBackWeek({
   maxDate,
   selectedDates,
   firstDayOfWeek,
-  fillAdjacentMonths
+  showOutsideDays
 }) {
   const dates = [];
   let lastDay = (lastDayOfMonth.getDay() + 7 - firstDayOfWeek) % 7;
 
-  if (fillAdjacentMonths) {
+  if (showOutsideDays) {
     const firstDayOfNextMonth = addDays(lastDayOfMonth, 1);
     const nextDateMonth = firstDayOfNextMonth.getMonth();
     const nextDateYear = firstDayOfNextMonth.getFullYear();

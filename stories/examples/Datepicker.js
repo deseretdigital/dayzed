@@ -108,7 +108,7 @@ class Datepicker extends React.Component {
         selected={this.props.selected}
         monthsToDisplay={this.props.monthsToDisplay}
         firstDayOfWeek={this.props.firstDayOfWeek}
-        fillAdjacentMonths={this.props.fillAdjacentMonths}
+        showOutsideDays={this.props.showOutsideDays}
         offset={this.state.offset}
         onOffsetChanged={this._handleOffsetChanged}
         render={({
