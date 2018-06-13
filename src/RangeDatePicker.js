@@ -89,13 +89,14 @@ class RangeDatePicker extends React.Component {
 
   render() {
     const { children: childrenFn, render, ...rest } = this.props;
+    const { hoveredDate } = this.state;
     const children = render || childrenFn;
     const { selected } = this.props;
 
     const dateBounds =
-      selected.length === 2 || !selected.length
+      selected.length === 2 || !selected.length || !hoveredDate
         ? selected
-        : [selected[0], this.state.hoveredDate].sort(compareAsc);
+        : [selected[0], hoveredDate].sort(compareAsc);
 
     return (
       <BaseDatePicker
