@@ -33,20 +33,8 @@ class Single extends React.Component {
     }));
   };
 
-  _handleOnDateSelected = ({ selected, selectable, date }) => {
-    if (!selectable) {
-      return;
-    }
-    this.setState(state => {
-      let newDate = date;
-      if (
-        state.selectedDate &&
-        state.selectedDate.getTime() === date.getTime()
-      ) {
-        newDate = null;
-      }
-      return { selectedDate: newDate };
-    });
+  _handleOnChange = selectedDate => {
+    this.setState({ selectedDate: selectedDate });
   };
 
   render() {
@@ -58,7 +46,7 @@ class Single extends React.Component {
           selected={selectedDate}
           firstDayOfWeek={firstDayOfWeek}
           fillAdjacentMonths={fillAdjacentMonths}
-          onDateSelected={this._handleOnDateSelected}
+          onChange={this._handleOnChange}
         />
         <div style={{ paddingTop: 20, textAlign: 'center' }}>
           <button data-test="todayButton" onClick={this._handleToday}>

@@ -8,19 +8,9 @@ class MonthsToDisplay extends React.Component {
     monthsToDisplay: 2
   };
 
-  _handleOnDateSelected = ({ selected, selectable, date }) => {
-    if (!selectable) {
-      return;
-    }
-    this.setState(state => {
-      let newDate = date;
-      if (
-        state.selectedDate &&
-        state.selectedDate.getTime() === date.getTime()
-      ) {
-        newDate = null;
-      }
-      return { selectedDate: newDate };
+  _handleOnChange = selected => {
+    this.setState({
+      selectedDate: selected
     });
   };
 
@@ -45,7 +35,7 @@ class MonthsToDisplay extends React.Component {
         <Datepicker
           date={date}
           selected={this.state.selectedDate}
-          onDateSelected={this._handleOnDateSelected}
+          onChange={this._handleOnChange}
           monthsToDisplay={this.state.monthsToDisplay}
         />
         {this.state.selectedDate && (

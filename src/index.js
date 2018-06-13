@@ -1,4 +1,15 @@
-import Dayzed from './dayzed';
+import Dayzed from './Dayzed';
+import BaseDatePicker from './BaseDatePicker';
+import DatePicker from './DatePicker';
+import MultiDatePicker from './MultiDatePicker';
+import RangeDatePicker from './RangeDatePicker';
+import {
+  dayzedPropTypes,
+  baseDatePickerPropTypes,
+  datePickerPropTypes,
+  multiDatePickerPropTypes,
+  rangeDatePickerPropTypes
+} from './propTypes';
 
 /*
  * Fix importing in typescript after rollup compilation
@@ -7,4 +18,15 @@ import Dayzed from './dayzed';
  */
 Dayzed.default = Dayzed;
 
+export {
+  BaseDatePicker,
+  DatePicker,
+  MultiDatePicker,
+  RangeDatePicker,
+  dayzedPropTypes,
+  baseDatePickerPropTypes,
+  datePickerPropTypes,
+  multiDatePickerPropTypes,
+  rangeDatePickerPropTypes
+};
 export default Dayzed;
