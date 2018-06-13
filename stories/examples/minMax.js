@@ -9,20 +9,8 @@ class MinMax extends React.Component {
     maxDate: new Date('06/27/2018')
   };
 
-  _handleOnDateSelected = ({ selected, selectable, date }) => {
-    if (!selectable) {
-      return;
-    }
-    this.setState(state => {
-      let newDate = date;
-      if (
-        state.selectedDate &&
-        state.selectedDate.getTime() === date.getTime()
-      ) {
-        newDate = null;
-      }
-      return { selectedDate: newDate };
-    });
+  _handleOnChange = selected => {
+    this.setState({ selectedDate: selected });
   };
 
   render() {
@@ -32,7 +20,7 @@ class MinMax extends React.Component {
         <Datepicker
           date={date}
           selected={this.state.selectedDate}
-          onDateSelected={this._handleOnDateSelected}
+          onChange={this._handleOnChange}
           minDate={minDate}
           maxDate={maxDate}
         />

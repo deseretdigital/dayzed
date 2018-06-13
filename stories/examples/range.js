@@ -1,7 +1,6 @@
 import React from 'react';
 import glamorous from 'glamorous';
-import Dayzed from '../../src/index';
-import ArrowKeysReact from 'arrow-keys-react';
+import { RangeDatePicker } from '../../src/index';
 import { monthNamesFull, weekdayNamesShort } from './calendarUtils';
 
 let Calendar = glamorous.div({
@@ -26,11 +25,23 @@ const dayOfMonthStyle = {
 
 let DayOfMonth = glamorous.button(
   dayOfMonthStyle,
-  ({ selected, unavailable, today, isInRange }) => {
+  ({ selected, unavailable, today, inRange, start, end }) => {
     let background = today ? 'cornflowerblue' : '';
-    background = selected || isInRange ? 'purple' : background;
+    background = selected || inRange ? 'purple' : background;
     background = unavailable ? 'teal' : background;
-    return { background };
+
+    let color = selected || inRange ? 'white' : 'inherit';
+
+    return {
+      background,
+      color,
+      ...(start
+        ? { borderTopLeftRadius: '16px', borderBottomLeftRadius: '16px' }
+        : {}),
+      ...(end
+        ? { borderTopRightRadius: '16px', borderBottomRightRadius: '16px' }
+        : {})
+    };
   }
 );
 
@@ -39,94 +50,20 @@ let DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
 });
 
 class RangeDatepicker extends React.Component {
-  state = { hoveredDate: null };
-
-  constructor(props) {
-    super(props);
-    ArrowKeysReact.config({
-      left: () => {
-        this.getKeyOffset(-1);
-      },
-      right: () => {
-        this.getKeyOffset(1);
-      },
-      up: () => {
-        this.getKeyOffset(-7);
-      },
-      down: () => {
-        this.getKeyOffset(7);
-      }
-    });
-  }
-
-  getKeyOffset(number) {
-    const e = document.activeElement;
-    let buttons = document.querySelectorAll('button');
-    buttons.forEach((el, i) => {
-      const newNodeKey = i + number;
-      if (el == e) {
-        if (newNodeKey <= buttons.length - 1 && newNodeKey >= 0) {
-          buttons[newNodeKey].focus();
-        } else {
-          buttons[0].focus();
-        }
-      }
-    });
-  }
-
-  // Calendar level
-  onMouseLeave = () => {
-    this.setState({ hoveredDate: null });
-  };
-
-  // Date level
-  onMouseEnter(date) {
-    if (!this.props.selected.length) {
-      return;
-    }
-    this.setState({ hoveredDate: date });
-  }
-
-  isInRange = date => {
-    let { selected } = this.props;
-    let { hoveredDate } = this.state;
-    if (selected.length) {
-      let firstSelected = selected[0].getTime();
-      if (selected.length === 2) {
-        let secondSelected = selected[1].getTime();
-        return firstSelected < date && secondSelected > date;
-      } else {
-        return (
-          hoveredDate &&
-          ((firstSelected < date && hoveredDate >= date) ||
-            (date < firstSelected && date >= hoveredDate))
-        );
-      }
-    }
-    return false;
-  };
-
   render() {
     return (
-      <Dayzed
-        date={this.props.date}
-        onDateSelected={this.props.onDateSelected}
-        minDate={this.props.minDate}
-        maxDate={this.props.maxDate}
-        selected={this.props.selected}
-        monthsToDisplay={this.props.monthsToDisplay}
+      <RangeDatePicker
+        {...this.props}
         render={({
           calendars,
+          getRootProps,
           getDateProps,
           getBackProps,
           getForwardProps
         }) => {
           if (calendars.length) {
             return (
-              <Calendar
-                {...ArrowKeysReact.events}
-                onMouseLeave={this.onMouseLeave}
-              >
+              <Calendar {...getRootProps({ refKey: 'innerRef' })}>
                 <div>
                   <button
                     {...getBackProps({
@@ -172,15 +109,11 @@ class RangeDatepicker extends React.Component {
                           <DayOfMonth
                             key={key}
                             {...getDateProps({
-                              dateObj,
-                              onMouseEnter: () => {
-                                this.onMouseEnter(date);
-                              }
+                              dateObj
                             })}
                             selected={selected}
                             unavailable={!selectable}
                             today={today}
-                            isInRange={this.isInRange(date)}
                           >
                             {selectable ? date.getDate() : 'X'}
                           </DayOfMonth>
@@ -205,28 +138,8 @@ class Range extends React.Component {
     date: new Date('05/01/2018')
   };
 
-  _handleOnDateSelected = ({ selected, selectable, date }) => {
-    if (!selectable) {
-      return;
-    }
-    let dateTime = date.getTime();
-    let newDates = [...this.state.selectedDates];
-    if (this.state.selectedDates.length) {
-      if (this.state.selectedDates.length === 1) {
-        let firstTime = this.state.selectedDates[0].getTime();
-        if (firstTime < dateTime) {
-          newDates.push(date);
-        } else {
-          newDates.unshift(date);
-        }
-        this.setState({ selectedDates: newDates });
-      } else if (newDates.length === 2) {
-        this.setState({ selectedDates: [date] });
-      }
-    } else {
-      newDates.push(date);
-      this.setState({ selectedDates: newDates });
-    }
+  _handleOnChange = selectedDates => {
+    this.setState({ selectedDates });
   };
 
   render() {
@@ -236,7 +149,7 @@ class Range extends React.Component {
         <RangeDatepicker
           date={date}
           selected={this.state.selectedDates}
-          onDateSelected={this._handleOnDateSelected}
+          onChange={this._handleOnChange}
           monthsToDisplay={2}
         />
         {selectedDates.length === 2 && (

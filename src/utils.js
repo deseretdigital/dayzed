@@ -21,6 +21,35 @@ export function composeEventHandlers(...fns) {
 }
 
 /**
+ * Create an event handler for keyboard key given a config map
+ * of event handlers
+ * @param {Object} config consists of left, right, up, and down
+ * @return {Function} the event handler to handle keyboard key
+ */
+export function getArrowKeyHandlers(config) {
+  return event => {
+    const { keyCode } = event;
+    const fn = {
+      37: config.left,
+      39: config.right,
+      38: config.up,
+      40: config.down
+    }[keyCode];
+    fn && fn(event);
+  };
+}
+
+/**
+ * Checks if a given date is with date range
+ * @param {Array} range the range array with upper and lower bound
+ * @param {Date} date a given date
+ * @return {Boolean} true if date is in the range, false otherwise
+ */
+export function isInRange(range, date) {
+  return range.length === 2 && range[0] <= date && range[1] >= date;
+}
+
+/**
  * Throws a helpful error message for required properties. Useful
  * to be used as a default in destructuring or object params.
  * @param {String} fnName the function name

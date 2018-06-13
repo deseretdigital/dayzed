@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { dayzedPropTypes } from './propTypes';
 
 import {
   composeEventHandlers,
@@ -136,22 +136,6 @@ Dayzed.defaultProps = {
   fillAdjacentMonths: false
 };
 
-Dayzed.propTypes = {
-  render: PropTypes.func,
-  children: PropTypes.func,
-  date: PropTypes.instanceOf(Date),
-  maxDate: PropTypes.instanceOf(Date),
-  minDate: PropTypes.instanceOf(Date),
-  monthsToDisplay: PropTypes.number,
-  firstDayOfWeek: PropTypes.number,
-  fillAdjacentMonths: PropTypes.bool,
-  offset: PropTypes.number,
-  onDateSelected: PropTypes.func.isRequired,
-  onOffsetChanged: PropTypes.func,
-  selected: PropTypes.oneOfType([
-    PropTypes.arrayOf(Date),
-    PropTypes.instanceOf(Date)
-  ])
-};
+Dayzed.propTypes = dayzedPropTypes;
 
 export default Dayzed;

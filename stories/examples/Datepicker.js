@@ -1,7 +1,6 @@
 import React from 'react';
 import glamorous from 'glamorous';
-import Dayzed from '../../src/index';
-import ArrowKeysReact from 'arrow-keys-react';
+import { DatePicker, MultiDatePicker } from '../../src/index';
 import { monthNamesFull, weekdayNamesShort } from './calendarUtils';
 
 let Calendar = glamorous.div({
@@ -42,176 +41,118 @@ let DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
 let [sun, ...restOfWeek] = weekdayNamesShort;
 let weekdayNamesShortMon = [...restOfWeek, sun];
 
-class Datepicker extends React.Component {
-  state = {
-    offset: 0
-  };
-
-  constructor(props) {
-    super(props);
-    ArrowKeysReact.config({
-      left: () => {
-        this.getKeyOffset(-1);
-      },
-      right: () => {
-        this.getKeyOffset(1);
-      },
-      up: () => {
-        this.getKeyOffset(-7);
-      },
-      down: () => {
-        this.getKeyOffset(7);
-      }
-    });
+const Datepicker = props => {
+  let weekdayNames = [...weekdayNamesShort];
+  if (props.firstDayOfWeek > 0) {
+    let weekdaysFromFront = weekdayNames.splice(0, props.firstDayOfWeek);
+    weekdayNames = weekdayNames.concat(weekdaysFromFront);
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.date !== prevProps.date) {
-      this.setState({ offset: 0 });
-    }
-  }
+  const { multi, ...rest } = props;
+  const DatePickerComp = multi ? MultiDatePicker : DatePicker;
 
-  getKeyOffset(number) {
-    const e = document.activeElement;
-    let buttons = document.querySelectorAll('button');
-    buttons.forEach((el, i) => {
-      const newNodeKey = i + number;
-      if (el == e) {
-        if (newNodeKey <= buttons.length - 1 && newNodeKey >= 0) {
-          buttons[newNodeKey].focus();
-        } else {
-          buttons[0].focus();
+  return (
+    <DatePickerComp
+      {...rest}
+      render={({
+        calendars,
+        getRootProps,
+        getDateProps,
+        getBackProps,
+        getForwardProps
+      }) => {
+        if (calendars.length) {
+          return (
+            <Calendar {...getRootProps({ refKey: 'innerRef' })}>
+              <div>
+                <button
+                  {...getBackProps({
+                    calendars,
+                    offset: 12,
+                    'data-test': 'backYear'
+                  })}
+                >
+                  {'<<'}
+                </button>
+                <button
+                  {...getBackProps({ calendars, 'data-test': 'backMonth' })}
+                >
+                  Back
+                </button>
+                <button
+                  {...getForwardProps({
+                    calendars,
+                    'data-test': 'forwardMonth'
+                  })}
+                >
+                  Next
+                </button>
+                <button
+                  {...getForwardProps({
+                    calendars,
+                    offset: 12,
+                    'data-test': 'forwardYear'
+                  })}
+                >
+                  {'>>'}
+                </button>
+              </div>
+              {calendars.map(calendar => (
+                <Month key={`${calendar.month}${calendar.year}`}>
+                  <div data-test="monthYear">
+                    {monthNamesFull[calendar.month]} {calendar.year}
+                  </div>
+                  {weekdayNames.map((weekday, idx) => (
+                    <DayOfMonthEmpty
+                      key={`${calendar.month}${calendar.year}${weekday}`}
+                      {...(idx === 0 ? { 'data-test': 'firstDayOfWeek' } : {})}
+                    >
+                      {weekday}
+                    </DayOfMonthEmpty>
+                  ))}
+                  <div data-test="calendarDates">
+                    {calendar.weeks.map((week, windex) =>
+                      week.map((dateObj, index) => {
+                        let key = `${calendar.month}${
+                          calendar.year
+                        }${windex}${index}`;
+                        if (!dateObj) {
+                          return <DayOfMonthEmpty key={key} />;
+                        }
+                        let {
+                          date,
+                          selected,
+                          selectable,
+                          today,
+                          prevMonth,
+                          nextMonth
+                        } = dateObj;
+                        return (
+                          <DayOfMonth
+                            key={key}
+                            {...getDateProps({
+                              dateObj
+                            })}
+                            selected={selected}
+                            unavailable={!selectable}
+                            currentMonth={!prevMonth && !nextMonth}
+                            today={today}
+                          >
+                            {selectable ? date.getDate() : 'X'}
+                          </DayOfMonth>
+                        );
+                      })
+                    )}
+                  </div>
+                </Month>
+              ))}
+            </Calendar>
+          );
         }
-      }
-    });
-  }
-
-  _handleOffsetChanged = offset => {
-    this.setState({
-      offset
-    });
-  };
-
-  render() {
-    let weekdayNames = [...weekdayNamesShort];
-    if (this.props.firstDayOfWeek > 0) {
-      let weekdaysFromFront = weekdayNames.splice(0, this.props.firstDayOfWeek);
-      weekdayNames = weekdayNames.concat(weekdaysFromFront);
-    }
-
-    return (
-      <Dayzed
-        date={this.props.date}
-        onDateSelected={this.props.onDateSelected}
-        minDate={this.props.minDate}
-        maxDate={this.props.maxDate}
-        selected={this.props.selected}
-        monthsToDisplay={this.props.monthsToDisplay}
-        firstDayOfWeek={this.props.firstDayOfWeek}
-        fillAdjacentMonths={this.props.fillAdjacentMonths}
-        offset={this.state.offset}
-        onOffsetChanged={this._handleOffsetChanged}
-        render={({
-          calendars,
-          getDateProps,
-          getBackProps,
-          getForwardProps
-        }) => {
-          if (calendars.length) {
-            return (
-              <Calendar {...ArrowKeysReact.events}>
-                <div>
-                  <button
-                    {...getBackProps({
-                      calendars,
-                      offset: 12,
-                      'data-test': 'backYear'
-                    })}
-                  >
-                    {'<<'}
-                  </button>
-                  <button
-                    {...getBackProps({ calendars, 'data-test': 'backMonth' })}
-                  >
-                    Back
-                  </button>
-                  <button
-                    {...getForwardProps({
-                      calendars,
-                      'data-test': 'forwardMonth'
-                    })}
-                  >
-                    Next
-                  </button>
-                  <button
-                    {...getForwardProps({
-                      calendars,
-                      offset: 12,
-                      'data-test': 'forwardYear'
-                    })}
-                  >
-                    {'>>'}
-                  </button>
-                </div>
-                {calendars.map(calendar => (
-                  <Month key={`${calendar.month}${calendar.year}`}>
-                    <div data-test="monthYear">
-                      {monthNamesFull[calendar.month]} {calendar.year}
-                    </div>
-                    {weekdayNames.map((weekday, idx) => (
-                      <DayOfMonthEmpty
-                        key={`${calendar.month}${calendar.year}${weekday}`}
-                        {...(idx === 0
-                          ? { 'data-test': 'firstDayOfWeek' }
-                          : {})}
-                      >
-                        {weekday}
-                      </DayOfMonthEmpty>
-                    ))}
-                    <div data-test="calendarDates">
-                      {calendar.weeks.map((week, windex) =>
-                        week.map((dateObj, index) => {
-                          let key = `${calendar.month}${
-                            calendar.year
-                          }${windex}${index}`;
-                          if (!dateObj) {
-                            return <DayOfMonthEmpty key={key} />;
-                          }
-                          let {
-                            date,
-                            selected,
-                            selectable,
-                            today,
-                            prevMonth,
-                            nextMonth
-                          } = dateObj;
-                          return (
-                            <DayOfMonth
-                              key={key}
-                              {...getDateProps({
-                                dateObj
-                              })}
-                              selected={selected}
-                              unavailable={!selectable}
-                              currentMonth={!prevMonth && !nextMonth}
-                              today={today}
-                            >
-                              {selectable ? date.getDate() : 'X'}
-                            </DayOfMonth>
-                          );
-                        })
-                      )}
-                    </div>
-                  </Month>
-                ))}
-              </Calendar>
-            );
-          }
-          return null;
-        }}
-      />
-    );
-  }
-}
+        return null;
+      }}
+    />
+  );
+};
 
 export default Datepicker;

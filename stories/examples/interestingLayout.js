@@ -1,7 +1,6 @@
 import React from 'react';
 import glamorous, { Div } from 'glamorous';
-import Dayzed from '../../src/index';
-import ArrowKeysReact from 'arrow-keys-react';
+import { DatePicker } from '../../src/index';
 import { monthNamesShort, weekdayNamesShort } from './calendarUtils';
 
 let Calendar = glamorous.div({
@@ -77,57 +76,20 @@ let WeekdayName = (DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
 }));
 
 class Datepicker extends React.Component {
-  constructor(props) {
-    super(props);
-    ArrowKeysReact.config({
-      left: () => {
-        this.getKeyOffset(-1);
-      },
-      right: () => {
-        this.getKeyOffset(1);
-      },
-      up: () => {
-        this.getKeyOffset(-7);
-      },
-      down: () => {
-        this.getKeyOffset(7);
-      }
-    });
-  }
-
-  getKeyOffset(number) {
-    const e = document.activeElement;
-    let buttons = document.querySelectorAll('button');
-    buttons.forEach((el, i) => {
-      const newNodeKey = i + number;
-      if (el == e) {
-        if (newNodeKey <= buttons.length - 1 && newNodeKey >= 0) {
-          buttons[newNodeKey].focus();
-        } else {
-          buttons[0].focus();
-        }
-      }
-    });
-  }
-
   render() {
     return (
-      <Dayzed
-        date={this.props.date}
-        onDateSelected={this.props.onDateSelected}
-        minDate={this.props.minDate}
-        maxDate={this.props.maxDate}
-        selected={this.props.selected}
-        monthsToDisplay={this.props.monthsToDisplay}
+      <DatePicker
+        {...this.props}
         render={({
           calendars,
+          getRootProps,
           getDateProps,
           getBackProps,
           getForwardProps
         }) => {
           if (calendars.length) {
             return (
-              <Calendar {...ArrowKeysReact.events}>
+              <Calendar {...getRootProps({ refKey: 'innerRef' })}>
                 <Controls>
                   <ControlButton {...getBackProps({ calendars, offset: 12 })}>
                     {'<<'}
@@ -200,20 +162,8 @@ class Single extends React.Component {
     selectedDate: null
   };
 
-  _handleOnDateSelected = ({ selected, selectable, date }) => {
-    if (!selectable) {
-      return;
-    }
-    this.setState(state => {
-      let newDate = date;
-      if (
-        state.selectedDate &&
-        state.selectedDate.getTime() === date.getTime()
-      ) {
-        newDate = null;
-      }
-      return { selectedDate: newDate };
-    });
+  _handleOnChange = selected => {
+    this.setState({ selectedDate: selected });
   };
 
   render() {
@@ -222,7 +172,7 @@ class Single extends React.Component {
       <div>
         <Datepicker
           selected={this.state.selectedDate}
-          onDateSelected={this._handleOnDateSelected}
+          onChange={this._handleOnChange}
           minDate={new Date()}
           monthsToDisplay={3}
         />
