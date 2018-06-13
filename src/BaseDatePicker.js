@@ -4,6 +4,10 @@ import { getArrowKeyHandlers } from './utils';
 import { baseDatePickerPropTypes } from './propTypes';
 
 class BaseDatePicker extends React.Component {
+  state = {
+    offset: 0
+  };
+
   handleArrowKeys = getArrowKeyHandlers({
     left: () => {
       this.getKeyOffset(-1);
@@ -46,6 +50,18 @@ class BaseDatePicker extends React.Component {
     };
   };
 
+  _handleOffsetChanged = offset => {
+    this.setState({
+      offset
+    });
+  };
+
+  componentDidUpdate(prevProps) {
+    if (this.props.date !== prevProps.date) {
+      this._handleOffsetChanged(0);
+    }
+  }
+
   render() {
     const { children: childrenFn, render, ...rest } = this.props;
     const children = render || childrenFn;
@@ -53,6 +69,8 @@ class BaseDatePicker extends React.Component {
     return (
       <Dayzed
         {...rest}
+        offset={this.state.offset}
+        onOffsetChanged={this._handleOffsetChanged}
         render={renderProps =>
           children({
             ...renderProps,
