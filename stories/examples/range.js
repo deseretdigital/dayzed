@@ -1,7 +1,6 @@
 import React from 'react';
 import glamorous from 'glamorous';
 import { RangeDatePicker } from '../../src/index';
-import ArrowKeysReact from 'arrow-keys-react';
 import { monthNamesFull, weekdayNamesShort } from './calendarUtils';
 
 let Calendar = glamorous.div({
