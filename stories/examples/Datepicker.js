@@ -101,14 +101,7 @@ class Datepicker extends React.Component {
 
     return (
       <Dayzed
-        date={this.props.date}
-        onDateSelected={this.props.onDateSelected}
-        minDate={this.props.minDate}
-        maxDate={this.props.maxDate}
-        selected={this.props.selected}
-        monthsToDisplay={this.props.monthsToDisplay}
-        firstDayOfWeek={this.props.firstDayOfWeek}
-        showOutsideDays={this.props.showOutsideDays}
+        {...this.props}
         offset={this.state.offset}
         onOffsetChanged={this._handleOffsetChanged}
         render={({

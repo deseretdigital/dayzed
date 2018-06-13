@@ -24,7 +24,7 @@ class Dayzed extends React.Component {
       typeof props.fillAdjacentMonths !== 'undefined'
     ) {
       console.warn(
-        `Warning: Dayzed's fillAdjacementMonths is deprecated and may be removed in future releases. Please use showOutsideDays instead. It works identically.`
+        `Warning: Dayzed's fillAdjacementMonths is deprecated and may be removed in future releases. Please use showOutsideDays instead. It works identically. For more info see https://github.com/deseretdigital/dayzed/#showoutsidedays`
       );
     }
     /* eslint-enable */
