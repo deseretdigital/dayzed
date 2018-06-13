@@ -35,6 +35,7 @@ This differs from other solutions which render things for their use case and the
   - [monthsToDisplay](#monthstodisplay)
   - [firstDayOfWeek](#firstdayofweek)
   - [showOutsideDays](#showoutsidedays)
+  - [fillAdjacentMonths](#filladjacentmonths)
   - [selected](#selected)
   - [onDateSelected](#ondateselected)
   - [render](#render)
@@ -255,6 +256,12 @@ First day of the week with possible values 0-6 (Sunday to Saturday). Defaults to
 > `boolean` | defaults to false
 
 Flag to fill front and back weeks with dates from adjacent months.
+
+### fillAdjacentMonths
+
+> `boolean` | defaults to false
+
+(Deprecated) Use [showOutsideDays](#showoutsidedays) instead.
 
 ### selected
 

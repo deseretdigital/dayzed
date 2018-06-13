@@ -15,6 +15,21 @@ import {
 class Dayzed extends React.Component {
   state = { offset: 0 };
 
+  /* TODO: Remove this block in next major release */
+  constructor(props) {
+    super(props);
+    /* eslint-disable */
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      typeof props.fillAdjacentMonths !== 'undefined'
+    ) {
+      console.warn(
+        `Warning: Dayzed's fillAdjacementMonths is deprecated and may be removed in future releases. Please use showOutsideDays instead. It works identically.`
+      );
+    }
+    /* eslint-enable */
+  }
+
   /*------------------------- React Component Lifecycle Methods ---*/
 
   render() {
@@ -25,6 +40,7 @@ class Dayzed extends React.Component {
       minDate,
       maxDate,
       firstDayOfWeek,
+      fillAdjacentMonths,
       showOutsideDays
     } = this.props;
     const calendars = getCalendars({
@@ -35,7 +51,8 @@ class Dayzed extends React.Component {
       maxDate,
       offset: this.getOffset(),
       firstDayOfWeek,
-      showOutsideDays
+      /* TODO: Remove fillAdjacementMonths in next major release */
+      showOutsideDays: showOutsideDays || fillAdjacentMonths
     });
     const children = unwrapChildrenForPreact(
       this.props.render || this.props.children
@@ -145,6 +162,8 @@ Dayzed.propTypes = {
   monthsToDisplay: PropTypes.number,
   firstDayOfWeek: PropTypes.number,
   showOutsideDays: PropTypes.bool,
+  /* TODO: Remove fillAdjacementMonths in next major release */
+  fillAdjacentMonths: PropTypes.bool,
   offset: PropTypes.number,
   onDateSelected: PropTypes.func.isRequired,
   onOffsetChanged: PropTypes.func,
