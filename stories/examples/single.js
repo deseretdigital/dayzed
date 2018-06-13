@@ -6,7 +6,7 @@ class Single extends React.Component {
     selectedDate: null,
     date: new Date('04/01/2018'),
     firstDayOfWeek: 0,
-    fillAdjacentMonths: false
+    showOutsideDays: false
   };
 
   _handleToday = () => {
@@ -27,9 +27,9 @@ class Single extends React.Component {
     }));
   };
 
-  _handleFillAdjacentMonths = () => {
+  _handleShowOutsideDays = () => {
     this.setState(state => ({
-      fillAdjacentMonths: !state.fillAdjacentMonths
+      showOutsideDays: !state.showOutsideDays
     }));
   };
 
@@ -50,14 +50,14 @@ class Single extends React.Component {
   };
 
   render() {
-    let { selectedDate, date, firstDayOfWeek, fillAdjacentMonths } = this.state;
+    let { selectedDate, date, firstDayOfWeek, showOutsideDays } = this.state;
     return (
       <div>
         <Datepicker
           date={date}
           selected={selectedDate}
           firstDayOfWeek={firstDayOfWeek}
-          fillAdjacentMonths={fillAdjacentMonths}
+          showOutsideDays={showOutsideDays}
           onDateSelected={this._handleOnDateSelected}
         />
         <div style={{ paddingTop: 20, textAlign: 'center' }}>
@@ -85,11 +85,10 @@ class Single extends React.Component {
         </div>
         <div style={{ paddingTop: 20, textAlign: 'center' }}>
           <button
-            data-test="fillAdjacentMonthsButton"
-            onClick={this._handleFillAdjacentMonths}
+            data-test="showOutsideDaysButton"
+            onClick={this._handleShowOutsideDays}
           >
-            Toggle Show Dates from Adjacent Months:{' '}
-            {fillAdjacentMonths ? 'True' : 'False'}
+            Toggle Show Outside Days: {showOutsideDays ? 'True' : 'False'}
           </button>
         </div>
         {this.state.selectedDate && (
