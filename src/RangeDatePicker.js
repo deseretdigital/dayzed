@@ -26,7 +26,7 @@ class RangeDatePicker extends React.Component {
 
   // Date level
   onHoverFocusDate(date) {
-    if (!this.props.selected.length) {
+    if (this.props.selected.length !== 1) {
       return;
     }
     this.setHoveredDate(date);
@@ -59,6 +59,10 @@ class RangeDatePicker extends React.Component {
     }
 
     onChange && onChange(newDates);
+
+    if (newDates.length === 2) {
+      this.setHoveredDate(null);
+    }
   };
 
   getEnhancedDateProps = (
@@ -66,12 +70,14 @@ class RangeDatePicker extends React.Component {
     dateBounds,
     { onMouseEnter, onFocus, ...restProps }
   ) => {
+    const { hoveredDate } = this.state;
     const { date } = restProps.dateObj;
     return getDateProps({
       ...restProps,
       inRange: isInRange(dateBounds, date),
       start: dateBounds[0] && isSameDay(dateBounds[0], date),
       end: dateBounds[1] && isSameDay(dateBounds[1], date),
+      hovered: hoveredDate && isSameDay(hoveredDate, date),
       onMouseEnter: composeEventHandlers(onMouseEnter, () => {
         this.onHoverFocusDate(date);
       }),
