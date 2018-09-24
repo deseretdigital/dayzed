@@ -143,12 +143,13 @@ class Datepicker extends React.Component {
                         {weekday}
                       </div>
                     ))}
-                    {calendar.weeks.map(week =>
+                    {calendar.weeks.map((week, weekIndex) =>
                       week.map((dateObj, index) => {
+                      let key = `${calendar.month}${calendar.year}${weekIndex}${index}`;
                         if (!dateObj) {
                           return (
                             <div
-                              key={`${calendar.year}${calendar.month}${index}`}
+                              key={key}
                               style={{
                                 display: 'inline-block',
                                 width: 'calc(100% / 7)',
@@ -170,7 +171,7 @@ class Datepicker extends React.Component {
                               border: 'none',
                               background
                             }}
-                            key={`${calendar.year}${calendar.month}${index}`}
+                            key={key}
                             {...getDateProps({ dateObj })}
                           >
                             {selectable ? date.getDate() : 'X'}
