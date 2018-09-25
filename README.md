@@ -4,7 +4,7 @@ Primitives to build simple, flexible, WAI-ARIA compliant React date-picker compo
 
 [![version][version-badge]][package]
 [![MIT License][license-badge]][license]
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors)
 
 [![Supports React and Preact][react-badge]][react]
 [![size][size-badge]][unpkg-dist]
@@ -24,31 +24,32 @@ This differs from other solutions which render things for their use case and the
 ## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
+
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Props](#props)
-  - [date](#date)
-  - [maxDate](#maxdate)
-  - [minDate](#mindate)
-  - [monthsToDisplay](#monthstodisplay)
-  - [firstDayOfWeek](#firstdayofweek)
-  - [showOutsideDays](#showoutsidedays)
-  - [fillAdjacentMonths](#filladjacentmonths)
-  - [selected](#selected)
-  - [onDateSelected](#ondateselected)
-  - [render](#render)
-  - [offset](#offset)
-  - [onOffsetChanged](#onoffsetchanged)
-- [Control Props](#control-props)
-- [Render Prop Function](#render-prop-function)
-  - [prop getters](#prop-getters)
-  - [state](#state)
-- [Inspiration and Thanks!](#inspiration-and-thanks)
-- [Other Solutions](#other-solutions)
-- [Contributors](#contributors)
-- [LICENSE](#license)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Props](#props)
+  * [date](#date)
+  * [maxDate](#maxdate)
+  * [minDate](#mindate)
+  * [monthsToDisplay](#monthstodisplay)
+  * [firstDayOfWeek](#firstdayofweek)
+  * [showOutsideDays](#showoutsidedays)
+  * [fillAdjacentMonths](#filladjacentmonths)
+  * [selected](#selected)
+  * [onDateSelected](#ondateselected)
+  * [render](#render)
+  * [offset](#offset)
+  * [onOffsetChanged](#onoffsetchanged)
+* [Control Props](#control-props)
+* [Render Prop Function](#render-prop-function)
+  * [prop getters](#prop-getters)
+  * [state](#state)
+* [Inspiration and Thanks!](#inspiration-and-thanks)
+* [Other Solutions](#other-solutions)
+* [Contributors](#contributors)
+* [LICENSE](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -145,7 +146,9 @@ class Datepicker extends React.Component {
                     ))}
                     {calendar.weeks.map((week, weekIndex) =>
                       week.map((dateObj, index) => {
-                      let key = `${calendar.month}${calendar.year}${weekIndex}${index}`;
+                        let key = `${calendar.month}${
+                          calendar.year
+                        }${weekIndex}${index}`;
                         if (!dateObj) {
                           return (
                             <div
@@ -276,7 +279,7 @@ An array of `Date`s or a single `Date` that has been selected.
 
 Called when the user selects a date.
 
-- `selectedDate`: The date that was just selected.
+* `selectedDate`: The date that was just selected.
 
 ### render
 
@@ -299,7 +302,7 @@ Number off months to offset from the `date` prop.
 
 Called when the user selects to go forward or back. This function is **required** if `offset` is being provided as a prop.
 
-- `offset`: The number of months offset.
+* `offset`: The number of months offset.
 
 ## Control Props
 
@@ -362,20 +365,20 @@ These are values that represent the current state of the dayzed component.
 
 ## Inspiration and Thanks!
 
-- [Jen Luker][jenluker]
-  - For help with naming and reviewing this library.
-- [Kent C. Dodds][kentcdodds]
-  - This library borrows **heavily** from his awesome [downshift][downshift] library!
-- [Michael Jackson][michaeljackson] & [Ryan Florence][ryanflorence]
-  - For teaching the use of the [render prop pattern][render-prop-pattern].
+* [Jen Luker][jenluker]
+  * For help with naming and reviewing this library.
+* [Kent C. Dodds][kentcdodds]
+  * This library borrows **heavily** from his awesome [downshift][downshift] library!
+* [Michael Jackson][michaeljackson] & [Ryan Florence][ryanflorence]
+  * For teaching the use of the [render prop pattern][render-prop-pattern].
 
 ## Other Solutions
 
 Here are some other great daypicker solutions:
 
-- [react-dates][react-dates]
-- [react-calendar][react-calendar]
-- [react-day-picker][react-day-picker]
+* [react-dates][react-dates]
+* [react-calendar][react-calendar]
+* [react-day-picker][react-day-picker]
 
 ## Contributors
 
@@ -384,8 +387,8 @@ Thanks goes to these people ([emoji key][emojis]):
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 
 <!-- prettier-ignore -->
-| [<img src="https://avatars2.githubusercontent.com/u/3399907?v=4" width="100px;"/><br /><sub><b>Morgan Kartchner</b></sub>](https://github.com/mkartchner994)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Code") [📖](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Documentation") [💡](#example-mkartchner994 "Examples") [🤔](#ideas-mkartchner994 "Ideas, Planning, & Feedback") [👀](#review-mkartchner994 "Reviewed Pull Requests") [⚠️](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Tests") | [<img src="https://avatars2.githubusercontent.com/u/1584489?v=4" width="100px;"/><br /><sub><b>Jen Luker</b></sub>](http://jenluker.com)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=knitcodemonkey "Code") [💡](#example-knitcodemonkey "Examples") [🤔](#ideas-knitcodemonkey "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/10711493?v=4" width="100px;"/><br /><sub><b>Sam Gale</b></sub>](https://github.com/sjgale)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=sjgale "Code") [🤔](#ideas-sjgale "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/13774309?v=4" width="100px;"/><br /><sub><b>Arthur Denner</b></sub>](https://github.com/arthurdenner)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=arthurdenner "Code") [🤔](#ideas-arthurdenner "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/410792?v=4" width="100px;"/><br /><sub><b>Dony Sukardi</b></sub>](http://dsds.io)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=donysukardi "Code") [💡](#example-donysukardi "Examples") [⚠️](https://github.com/mkartchner994/dayzed/commits?author=donysukardi "Tests") |
-| :---: | :---: | :---: | :---: | :---: |
+| [<img src="https://avatars2.githubusercontent.com/u/3399907?v=4" width="100px;"/><br /><sub><b>Morgan Kartchner</b></sub>](https://github.com/mkartchner994)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Code") [📖](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Documentation") [💡](#example-mkartchner994 "Examples") [🤔](#ideas-mkartchner994 "Ideas, Planning, & Feedback") [👀](#review-mkartchner994 "Reviewed Pull Requests") [⚠️](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Tests") | [<img src="https://avatars2.githubusercontent.com/u/1584489?v=4" width="100px;"/><br /><sub><b>Jen Luker</b></sub>](http://jenluker.com)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=knitcodemonkey "Code") [💡](#example-knitcodemonkey "Examples") [🤔](#ideas-knitcodemonkey "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/10711493?v=4" width="100px;"/><br /><sub><b>Sam Gale</b></sub>](https://github.com/sjgale)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=sjgale "Code") [🤔](#ideas-sjgale "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/13774309?v=4" width="100px;"/><br /><sub><b>Arthur Denner</b></sub>](https://github.com/arthurdenner)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=arthurdenner "Code") [🤔](#ideas-arthurdenner "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/410792?v=4" width="100px;"/><br /><sub><b>Dony Sukardi</b></sub>](http://dsds.io)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=donysukardi "Code") [💡](#example-donysukardi "Examples") [⚠️](https://github.com/mkartchner994/dayzed/commits?author=donysukardi "Tests") | [<img src="https://avatars3.githubusercontent.com/u/3483526?v=4" width="100px;"/><br /><sub><b>Amit Solanki</b></sub>](http://solankiamit.com)<br />[📖](https://github.com/mkartchner994/dayzed/commits?author=iamsolankiamit "Documentation") |
+| :---: | :---: | :---: | :---: | :---: | :---: |
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
