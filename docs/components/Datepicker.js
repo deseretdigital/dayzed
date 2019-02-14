@@ -30,7 +30,7 @@ let DayOfMonth = glamorous.button(
     let background = today ? 'cornflowerblue' : 'transparent';
     background = selected ? 'purple' : background;
     background = unavailable ? 'teal' : background;
-    let color = !currentMonth ? 'rgba(0, 0, 0, 0.6)' : '';
+    let color = !currentMonth ? 'rgba(0, 0, 0, 0.6)' : 'inherit';
     return { background, color };
   }
 );
@@ -38,9 +38,6 @@ let DayOfMonth = glamorous.button(
 let DayOfMonthEmpty = glamorous.div(dayOfMonthStyle, {
   background: 'transparent'
 });
-
-let [sun, ...restOfWeek] = weekdayNamesShort;
-let weekdayNamesShortMon = [...restOfWeek, sun];
 
 class Datepicker extends React.Component {
   state = {

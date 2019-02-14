@@ -242,8 +242,7 @@ class Range extends React.Component {
         {selectedDates.length === 2 && (
           <div style={{ paddingTop: 20, textAlign: 'center' }}>
             <p>Selected:</p>
-            <p
-            >{`${selectedDates[0].toLocaleDateString()} - ${selectedDates[1].toLocaleDateString()}`}</p>
+            <p>{`${selectedDates[0].toLocaleDateString()} - ${selectedDates[1].toLocaleDateString()}`}</p>
           </div>
         )}
       </div>

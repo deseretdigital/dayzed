@@ -1,8 +1,7 @@
 {
   "name": "dayzed",
-  "version": "2.2.0",
-  "description":
-    "Primitives to build simple, flexible, WAI-ARIA compliant React datepicker components.",
+  "version": "3.0.0",
+  "description": "Primitives to build simple, flexible, WAI-ARIA compliant React datepicker components.",
   "main": "dist/dayzed.cjs.js",
   "jsnext:main": "dist/dayzed.esm.js",
   "module": "dist/dayzed.esm.js",
@@ -12,32 +11,38 @@
     "contributors:add": "all-contributors add",
     "build": "yarn install; kcd-scripts build --bundle --p-react",
     "lint": "kcd-scripts lint",
-    "storybook": "start-storybook -p 9001 -c stories",
-    "build-storybook": "build-storybook -c stories -o storybook-static",
-    "storybook:serve": "serve ./storybook-static -p 9001",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test:cypress":
-      "npm run build-storybook; npm-run-all --parallel --race storybook:serve cypress:run",
-    "precommit": "kcd-scripts precommit"
+    "test:cypress": "npm run docz:build; npm-run-all --parallel --race docz:serve cypress:run",
+    "precommit": "kcd-scripts precommit",
+    "docz:serve": "serve ./.docz/dist -p 9001",
+    "docz:dev": "docz dev",
+    "docz:build": "docz build"
   },
-  "files": ["dist", "preact"],
+  "files": [
+    "dist",
+    "preact"
+  ],
   "peerDependencies": {
     "date-fns": ">=1",
     "prop-types": ">=15",
-    "react": ">=15"
+    "react": ">=16.8.0"
   },
   "devDependencies": {
-    "@storybook/react": "^3.2.12",
     "all-contributors-cli": "^4.11.1",
-    "cypress": "^2.1.0",
+    "arrow-keys-react": "^1.0.6",
+    "cypress": "^3.1.5",
     "date-fns": "^1.29.0",
+    "docz": "^0.13.7",
+    "docz-theme-default": "^0.13.7",
+    "glamor": "^2.20.40",
+    "glamorous": "^4.9.7",
     "kcd-scripts": "^0.37.0",
     "npm-run-all": "^4.1.2",
     "preact": "^8.2.5",
     "prop-types": "^15.6.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
     "serve": "^10.0.2"
   },
   "dependencies": {},
@@ -47,8 +52,7 @@
   "eslintIgnore": [
     "node_modules",
     "cypress",
-    "stories",
-    "storybook-static",
+    "docs/components",
     "dist",
     "preact"
   ],
