@@ -17,7 +17,7 @@ You need a date-picker in your application that is accessible, can fit a number 
 
 ## This solution
 
-This is a component that focuses on controlling user interactions so you can focus on creating beautiful, accessible, and useful date-pickers. It uses a [render function as children][render-function-as-children]. This means you are responsible for rendering everything, but props are provided by the render function, through a pattern called [prop getters][prop-getters], which can be used to help enhance what you are rendering.
+This is a component that focuses on controlling user interactions so you can focus on creating beautiful, accessible, and useful date-pickers. It uses a custom [Hook][react-hooks] or a [render function as children][render-function-as-children]. This means you are responsible for rendering everything, but props are provided by the Hook or render function, through a pattern called [prop getters][prop-getters], which can be used to help enhance what you are rendering.
 
 This differs from other solutions which render things for their use case and then expose many options to allow for extensibility resulting in a bigger API that is less flexible as well as making the implementation more complicated and harder to contribute to.
 
@@ -41,6 +41,7 @@ This differs from other solutions which render things for their use case and the
   - [offset](#offset)
   - [onOffsetChanged](#onoffsetchanged)
 - [Control Props](#control-props)
+- [Custom Hook](#custom-hook)
 - [Render Prop Function](#render-prop-function)
   - [prop getters](#prop-getters)
   - [state](#state)
@@ -66,34 +67,121 @@ Or, you can install this module through the [yarn][yarn] package manager.
 yarn add dayzed
 ```
 
-> This package also depends on `react`, `prop-types`, and `date-fns`. Please make sure you
+> This package also depends on `react@>=16.8.0`, `prop-types`, and `date-fns`. Please make sure you
 > have those installed as well.
 
-> Note also this library supports `preact` out of the box. If you are using
+> Note also this library supports `preact@>=9` out of the box. If you are using
 > `preact` then use the corresponding module in the `preact/dist` folder. You
-> can even `import Dayzed from 'dayzed/preact'`
+> can even `import Dayzed from 'dayzed/preact'` or `import { useDayzed } from 'dayzed/preact'`
 
 ## Usage
 
 ```jsx
-import React from 'react';
-import Dayzed from 'dayzed';
+import React from "react";
+import Dayzed, { useDayzed } from "dayzed";
 
 const monthNamesShort = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec'
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
 ];
-const weekdayNamesShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const weekdayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function Calendar({
+  calendars,
+  getBackProps,
+  getForwardProps,
+  getDateProps
+}) {
+  if (calendars.length) {
+    return (
+      <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
+        <div>
+          <button {...getBackProps({ calendars })}>Back</button>
+          <button {...getForwardProps({ calendars })}>Next</button>
+        </div>
+        {calendars.map(calendar => (
+          <div
+            key={`${calendar.month}${calendar.year}`}
+            style={{
+              display: "inline-block",
+              width: "50%",
+              padding: "0 10px 30px",
+              boxSizing: "border-box"
+            }}
+          >
+            <div>
+              {monthNamesShort[calendar.month]} {calendar.year}
+            </div>
+            {weekdayNamesShort.map(weekday => (
+              <div
+                key={`${calendar.month}${calendar.year}${weekday}`}
+                style={{
+                  display: "inline-block",
+                  width: "calc(100% / 7)",
+                  border: "none",
+                  background: "transparent"
+                }}
+              >
+                {weekday}
+              </div>
+            ))}
+            {calendar.weeks.map((week, weekIndex) =>
+              week.map((dateObj, index) => {
+                let key = `${calendar.month}${
+                  calendar.year
+                }${weekIndex}${index}`;
+                if (!dateObj) {
+                  return (
+                    <div
+                      key={key}
+                      style={{
+                        display: "inline-block",
+                        width: "calc(100% / 7)",
+                        border: "none",
+                        background: "transparent"
+                      }}
+                    />
+                  );
+                }
+                let { date, selected, selectable, today } = dateObj;
+                let background = today ? "cornflowerblue" : "";
+                background = selected ? "purple" : background;
+                background = !selectable ? "teal" : background;
+                return (
+                  <button
+                    style={{
+                      display: "inline-block",
+                      width: "calc(100% / 7)",
+                      border: "none",
+                      background
+                    }}
+                    key={key}
+                    {...getDateProps({ dateObj })}
+                  >
+                    {selectable ? date.getDate() : "X"}
+                  </button>
+                );
+              })
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  }
+  return null;
+}
+
+/*----------- Render Prop -----------*/
 
 class Datepicker extends React.Component {
   render() {
@@ -101,95 +189,21 @@ class Datepicker extends React.Component {
       <Dayzed
         onDateSelected={this.props.onDateSelected}
         selected={this.props.selected}
-        render={({
-          calendars,
-          getBackProps,
-          getForwardProps,
-          getDateProps
-        }) => {
-          if (calendars.length) {
-            return (
-              <div
-                style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}
-              >
-                <div>
-                  <button {...getBackProps({ calendars })}>Back</button>
-                  <button {...getForwardProps({ calendars })}>Next</button>
-                </div>
-                {calendars.map(calendar => (
-                  <div
-                    key={`${calendar.month}${calendar.year}`}
-                    style={{
-                      display: 'inline-block',
-                      width: '50%',
-                      padding: '0 10px 30px',
-                      boxSizing: 'border-box'
-                    }}
-                  >
-                    <div>
-                      {monthNamesShort[calendar.month]} {calendar.year}
-                    </div>
-                    {weekdayNamesShort.map(weekday => (
-                      <div
-                        key={`${calendar.month}${calendar.year}${weekday}`}
-                        style={{
-                          display: 'inline-block',
-                          width: 'calc(100% / 7)',
-                          border: 'none',
-                          background: 'transparent'
-                        }}
-                      >
-                        {weekday}
-                      </div>
-                    ))}
-                    {calendar.weeks.map((week, weekIndex) =>
-                      week.map((dateObj, index) => {
-                        let key = `${calendar.month}${
-                          calendar.year
-                        }${weekIndex}${index}`;
-                        if (!dateObj) {
-                          return (
-                            <div
-                              key={key}
-                              style={{
-                                display: 'inline-block',
-                                width: 'calc(100% / 7)',
-                                border: 'none',
-                                background: 'transparent'
-                              }}
-                            />
-                          );
-                        }
-                        let { date, selected, selectable, today } = dateObj;
-                        let background = today ? 'cornflowerblue' : '';
-                        background = selected ? 'purple' : background;
-                        background = !selectable ? 'teal' : background;
-                        return (
-                          <button
-                            style={{
-                              display: 'inline-block',
-                              width: 'calc(100% / 7)',
-                              border: 'none',
-                              background
-                            }}
-                            key={key}
-                            {...getDateProps({ dateObj })}
-                          >
-                            {selectable ? date.getDate() : 'X'}
-                          </button>
-                        );
-                      })
-                    )}
-                  </div>
-                ))}
-              </div>
-            );
-          }
-          return null;
-        }}
+        render={(dayzedData) => <Calendar {...dayzedData}
       />
     );
   }
+}
+
+///////////////////////////////////////
+// OR
+///////////////////////////////////////
+
+/*----------- Custom Hook -----------*/
+
+function Datepicker(props) {
+  let dayzedData = useDayzed(props);
+  return <Calendar {...dayzedData} />
 }
 
 class Single extends React.Component {
@@ -208,7 +222,7 @@ class Single extends React.Component {
           onDateSelected={this._handleOnDateSelected}
         />
         {this.state.selectedDate && (
-          <div style={{ paddingTop: 20, textAlign: 'center' }}>
+          <div style={{ paddingTop: 20, textAlign: "center" }}>
             <p>Selected:</p>
             <p>{`${selectedDate.toLocaleDateString()}`}</p>
           </div>
@@ -307,6 +321,19 @@ However, if more control is needed, you can pass `offset` as a prop (as indicate
 > can learn about that from this the ["Controlled Components"
 > lecture][controlled-components-lecture]
 
+## Custom Hook
+
+You can either use the custom `useDayzed` hook or the render prop function (described in the section below) to return the things needed to render your calendars. The custom Hook has a benefit over the render prop function as it does not unnecessarily add an additional child into the render tree. Example:
+
+```jsx
+function Datepicker(props) {
+  let { calendars, getBackProps, getForwardProps, getDateProp } = useDayzed(
+    props
+  );
+  return <div>{/* calendar elements */}</div>;
+}
+```
+
 ## Render Prop Function
 
 This is where you render whatever you want to based on the state of `dayzed`.
@@ -314,6 +341,8 @@ It's a regular prop called `render`: `<Dayzed render={/* right here*/} />`.
 
 > You can also pass it as the children prop if you prefer to do things that way
 > `<Dayzed>{/* right here*/}</Dayzed>`
+
+Fun fact, the `Dazyed` render prop component actually uses the `useDayzed` custom Hook under the hood.
 
 The properties of this object can be split into two categories as indicated
 below:
@@ -418,3 +447,4 @@ MIT
 [size-badge]: http://img.badgesize.io/https://unpkg.com/dayzed/dist/dayzed.umd.min.js?label=size&style=flat-square
 [unpkg-dist]: https://unpkg.com/dayzed/dist/
 [module-formats-badge]: https://img.shields.io/badge/module%20formats-umd%2C%20cjs%2C%20es-green.svg?style=flat-square
+[react-hooks]: https://reactjs.org/docs/hooks-intro.html
