@@ -77,34 +77,29 @@ yarn add dayzed
 ## Usage
 
 ```jsx
-import React from "react";
-import Dayzed, { useDayzed } from "dayzed";
+import React from 'react';
+import Dayzed, { useDayzed } from 'dayzed';
 
 const monthNamesShort = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec"
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
 ];
-const weekdayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const weekdayNamesShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-function Calendar({
-  calendars,
-  getBackProps,
-  getForwardProps,
-  getDateProps
-}) {
+function Calendar({ calendars, getBackProps, getForwardProps, getDateProps }) {
   if (calendars.length) {
     return (
-      <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
+      <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
         <div>
           <button {...getBackProps({ calendars })}>Back</button>
           <button {...getForwardProps({ calendars })}>Next</button>
@@ -113,10 +108,10 @@ function Calendar({
           <div
             key={`${calendar.month}${calendar.year}`}
             style={{
-              display: "inline-block",
-              width: "50%",
-              padding: "0 10px 30px",
-              boxSizing: "border-box"
+              display: 'inline-block',
+              width: '50%',
+              padding: '0 10px 30px',
+              boxSizing: 'border-box'
             }}
           >
             <div>
@@ -126,10 +121,10 @@ function Calendar({
               <div
                 key={`${calendar.month}${calendar.year}${weekday}`}
                 style={{
-                  display: "inline-block",
-                  width: "calc(100% / 7)",
-                  border: "none",
-                  background: "transparent"
+                  display: 'inline-block',
+                  width: 'calc(100% / 7)',
+                  border: 'none',
+                  background: 'transparent'
                 }}
               >
                 {weekday}
@@ -145,30 +140,30 @@ function Calendar({
                     <div
                       key={key}
                       style={{
-                        display: "inline-block",
-                        width: "calc(100% / 7)",
-                        border: "none",
-                        background: "transparent"
+                        display: 'inline-block',
+                        width: 'calc(100% / 7)',
+                        border: 'none',
+                        background: 'transparent'
                       }}
                     />
                   );
                 }
                 let { date, selected, selectable, today } = dateObj;
-                let background = today ? "cornflowerblue" : "";
-                background = selected ? "purple" : background;
-                background = !selectable ? "teal" : background;
+                let background = today ? 'cornflowerblue' : '';
+                background = selected ? 'purple' : background;
+                background = !selectable ? 'teal' : background;
                 return (
                   <button
                     style={{
-                      display: "inline-block",
-                      width: "calc(100% / 7)",
-                      border: "none",
+                      display: 'inline-block',
+                      width: 'calc(100% / 7)',
+                      border: 'none',
                       background
                     }}
                     key={key}
                     {...getDateProps({ dateObj })}
                   >
-                    {selectable ? date.getDate() : "X"}
+                    {selectable ? date.getDate() : 'X'}
                   </button>
                 );
               })
@@ -189,7 +184,7 @@ class Datepicker extends React.Component {
       <Dayzed
         onDateSelected={this.props.onDateSelected}
         selected={this.props.selected}
-        render={(dayzedData) => <Calendar {...dayzedData}
+        render={dayzedData => <Calendar {...dayzedData} />}
       />
     );
   }
@@ -203,7 +198,7 @@ class Datepicker extends React.Component {
 
 function Datepicker(props) {
   let dayzedData = useDayzed(props);
-  return <Calendar {...dayzedData} />
+  return <Calendar {...dayzedData} />;
 }
 
 class Single extends React.Component {
@@ -222,7 +217,7 @@ class Single extends React.Component {
           onDateSelected={this._handleOnDateSelected}
         />
         {this.state.selectedDate && (
-          <div style={{ paddingTop: 20, textAlign: "center" }}>
+          <div style={{ paddingTop: 20, textAlign: 'center' }}>
             <p>Selected:</p>
             <p>{`${selectedDate.toLocaleDateString()}`}</p>
           </div>
