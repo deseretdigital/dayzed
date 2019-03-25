@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "contributors:add": "all-contributors add",
-    "build": "yarn install; kcd-scripts build --bundle --p-react",
+    "build": "yarn install; kcd-scripts build --bundle --p-react; node buildHooksForPreact.js",
     "lint": "kcd-scripts lint",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
@@ -39,10 +39,11 @@
     "glamorous": "^4.9.7",
     "kcd-scripts": "^0.37.0",
     "npm-run-all": "^4.1.2",
-    "preact": "^8.2.5",
+    "preact": "^10.0.0-alpha.0",
     "prop-types": "^15.6.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
+    "replace-in-file": "^3.4.3",
     "serve": "^10.0.2"
   },
   "dependencies": {},
@@ -54,7 +55,8 @@
     "cypress",
     "docs/components",
     "dist",
-    "preact"
+    "preact",
+    "buildHooksForPreact.js"
   ],
   "repository": {
     "type": "git",
