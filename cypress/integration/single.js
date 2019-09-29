@@ -1,4 +1,4 @@
-import { monthNamesFull } from '../../stories/examples/calendarUtils';
+import { monthNamesFull } from '../../docs/components/calendarUtils';
 
 describe('Single', () => {
   before(() => {
