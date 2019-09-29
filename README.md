@@ -67,10 +67,10 @@ Or, you can install this module through the [yarn][yarn] package manager.
 yarn add dayzed
 ```
 
-> This package also depends on `react@>=16.8.0`, `prop-types`, and `date-fns`. Please make sure you
+> This package also depends on `react@>=16.8.0` and `prop-types`. Please make sure you
 > have those installed as well.
 
-> Note also this library supports `preact@>=9` out of the box. If you are using
+> Note also this library supports `preact@>=10` out of the box. If you are using
 > `preact` then use the corresponding module in the `preact/dist` folder. You
 > can even `import Dayzed from 'dayzed/preact'` or `import { useDayzed } from 'dayzed/preact'`
 
