@@ -9,15 +9,19 @@
   "license": "MIT",
   "scripts": {
     "contributors:add": "all-contributors add",
-    "build": "yarn install; kcd-scripts build --bundle --p-react; node buildHooksForPreact.js",
+    "build": "kcd-scripts build --bundle --p-react --no-clean --size-snapshot && node buildHooksForPreact.js",
     "lint": "kcd-scripts lint",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test:cypress": "npm run docz:build; npm-run-all --parallel --race docz:serve cypress:run",
-    "precommit": "kcd-scripts precommit",
     "docz:serve": "serve ./.docz/dist -p 9001",
     "docz:dev": "docz dev",
     "docz:build": "docz build"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "kcd-scripts pre-commit"
+    }
   },
   "files": [
     "dist",
@@ -35,7 +39,7 @@
     "docz-theme-default": "^1.2.0",
     "glamor": "^2.20.40",
     "glamorous": "^4.9.7",
-    "kcd-scripts": "^0.37.0",
+    "kcd-scripts": "^1.7.0",
     "npm-run-all": "^4.1.2",
     "preact": "^10.0.0-alpha.0",
     "prop-types": "^15.6.0",
@@ -45,6 +49,7 @@
     "serve": "^10.0.2"
   },
   "dependencies": {
+    "@babel/runtime": "^7.6.2",
     "date-fns": "^2.0.0"
   },
   "eslintConfig": {
