@@ -1,13 +1,13 @@
-describe("Months To Display", () => {
+describe('Months To Display', () => {
   before(() => {
-    cy.visitStory("Display Multiple Months");
+    cy.visitStory('multi-months');
   });
 
-  it("Toggling Multiple Months Works", () => {
-    cy.getInStory("[aria-label='Tue May 01 2018']").should("exist");
-    cy.getInStory("[aria-label='Fri Jun 01 2018']").should("exist");
-    cy.getInStoryByTestId("monthsToDisplay").click();
-    cy.getInStory("[aria-label='Tue May 01 2018']").should("exist");
-    cy.getInStory("[aria-label='Fri Jun 01 2018']").should("not.exist");
+  it('Toggling Multiple Months Works', () => {
+    cy.get("[aria-label='Tue May 01 2018']").should('exist');
+    cy.get("[aria-label='Fri Jun 01 2018']").should('exist');
+    cy.getByTestId('monthsToDisplay').click();
+    cy.get("[aria-label='Tue May 01 2018']").should('exist');
+    cy.get("[aria-label='Fri Jun 01 2018']").should('not.exist');
   });
 });

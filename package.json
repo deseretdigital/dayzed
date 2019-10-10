@@ -1,8 +1,7 @@
 {
   "name": "dayzed",
-  "version": "2.2.0",
-  "description":
-    "Primitives to build simple, flexible, WAI-ARIA compliant React datepicker components.",
+  "version": "3.0.0",
+  "description": "Primitives to build simple, flexible, WAI-ARIA compliant React datepicker components.",
   "main": "dist/dayzed.cjs.js",
   "jsnext:main": "dist/dayzed.esm.js",
   "module": "dist/dayzed.esm.js",
@@ -10,47 +9,59 @@
   "license": "MIT",
   "scripts": {
     "contributors:add": "all-contributors add",
-    "build": "yarn install; kcd-scripts build --bundle --p-react",
+    "build": "kcd-scripts build --bundle --p-react --no-clean --size-snapshot && node buildHooksForPreact.js",
     "lint": "kcd-scripts lint",
-    "storybook": "start-storybook -p 9001 -c stories",
-    "build-storybook": "build-storybook -c stories -o storybook-static",
-    "storybook:serve": "serve ./storybook-static -p 9001",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test:cypress":
-      "npm run build-storybook; npm-run-all --parallel --race storybook:serve cypress:run",
-    "precommit": "kcd-scripts precommit"
+    "test:cypress": "npm run docz:build; npm-run-all --parallel --race docz:serve cypress:run",
+    "docz:serve": "serve ./.docz/dist -p 9001",
+    "docz:dev": "docz dev",
+    "docz:build": "docz build"
   },
-  "files": ["dist", "preact"],
+  "husky": {
+    "hooks": {
+      "pre-commit": "kcd-scripts pre-commit"
+    }
+  },
+  "files": [
+    "dist",
+    "preact"
+  ],
   "peerDependencies": {
-    "date-fns": ">=1",
-    "prop-types": ">=15",
-    "react": ">=15"
+    "prop-types": "^15",
+    "react": "^16.8"
   },
   "devDependencies": {
-    "@storybook/react": "^3.2.12",
     "all-contributors-cli": "^4.11.1",
-    "cypress": "^2.1.0",
-    "date-fns": "^1.29.0",
-    "kcd-scripts": "^0.37.0",
+    "arrow-keys-react": "^1.0.6",
+    "cypress": "^3.1.5",
+    "docz": "^1.3.2",
+    "docz-theme-default": "^1.2.0",
+    "glamor": "^2.20.40",
+    "glamorous": "^4.9.7",
+    "kcd-scripts": "^1.7.0",
     "npm-run-all": "^4.1.2",
-    "preact": "^8.2.5",
+    "preact": "^10.0.0-alpha.0",
     "prop-types": "^15.6.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "replace-in-file": "^3.4.3",
     "serve": "^10.0.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@babel/runtime": "^7.6.2",
+    "date-fns": "^2.0.0"
+  },
   "eslintConfig": {
     "extends": "./node_modules/kcd-scripts/eslint.js"
   },
   "eslintIgnore": [
     "node_modules",
     "cypress",
-    "stories",
-    "storybook-static",
+    "docs/components",
     "dist",
-    "preact"
+    "preact",
+    "buildHooksForPreact.js"
   ],
   "repository": {
     "type": "git",

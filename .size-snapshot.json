@@ -1,0 +1,60 @@
+{
+  "dist/dayzed.cjs.js": {
+    "bundled": 32064,
+    "minified": 9192,
+    "gzipped": 2856
+  },
+  "dist/dayzed.umd.js": {
+    "bundled": 33760,
+    "minified": 7806,
+    "gzipped": 2642
+  },
+  "dist/dayzed.umd.min.js": {
+    "bundled": 33760,
+    "minified": 7806,
+    "gzipped": 2642
+  },
+  "preact/dist/dayzed.cjs.js": {
+    "bundled": 32067,
+    "minified": 9195,
+    "gzipped": 2857
+  },
+  "preact/dist/dayzed.umd.js": {
+    "bundled": 33765,
+    "minified": 7809,
+    "gzipped": 2639
+  },
+  "preact/dist/dayzed.umd.min.js": {
+    "bundled": 33765,
+    "minified": 7809,
+    "gzipped": 2639
+  },
+  "dist/dayzed.esm.js": {
+    "bundled": 31503,
+    "minified": 8802,
+    "gzipped": 2741,
+    "treeshaked": {
+      "rollup": {
+        "code": 7453,
+        "import_statements": 59
+      },
+      "webpack": {
+        "code": 8506
+      }
+    }
+  },
+  "preact/dist/dayzed.esm.js": {
+    "bundled": 31504,
+    "minified": 8803,
+    "gzipped": 2741,
+    "treeshaked": {
+      "rollup": {
+        "code": 7454,
+        "import_statements": 60
+      },
+      "webpack": {
+        "code": 8507
+      }
+    }
+  }
+}

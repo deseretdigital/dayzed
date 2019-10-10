@@ -1,8 +1,8 @@
-import addDays from 'date-fns/add_days';
-import isBefore from 'date-fns/is_before';
-import isToday from 'date-fns/is_today';
-import startOfDay from 'date-fns/start_of_day';
-import differenceInCalendarMonths from 'date-fns/difference_in_calendar_months';
+import addDays from 'date-fns/addDays';
+import isBefore from 'date-fns/isBefore';
+import isToday from 'date-fns/isToday';
+import startOfDay from 'date-fns/startOfDay';
+import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
 
 /**
  * This is intended to be used to compose event handlers
