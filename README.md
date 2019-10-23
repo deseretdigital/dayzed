@@ -132,9 +132,7 @@ function Calendar({ calendars, getBackProps, getForwardProps, getDateProps }) {
             ))}
             {calendar.weeks.map((week, weekIndex) =>
               week.map((dateObj, index) => {
-                let key = `${calendar.month}${
-                  calendar.year
-                }${weekIndex}${index}`;
+                let key = `${calendar.month}${calendar.year}${weekIndex}${index}`;
                 if (!dateObj) {
                   return (
                     <div
@@ -276,11 +274,12 @@ An array of `Date`s or a single `Date` that has been selected.
 
 ### onDateSelected
 
-> `function(selectedDate: date)` | _required_
+> `function(selectedDate: Date, event: Event)` | _required_
 
 Called when the user selects a date.
 
 - `selectedDate`: The date that was just selected.
+- `event`: The event fired when the date was selected.
 
 ### render
 

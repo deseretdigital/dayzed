@@ -25,8 +25,8 @@ function getDateProps(
   { onClick, dateObj = requiredProp('getDateProps', 'dateObj'), ...rest } = {}
 ) {
   return {
-    onClick: composeEventHandlers(onClick, () => {
-      onDateSelected(dateObj);
+    onClick: composeEventHandlers(onClick, event => {
+      onDateSelected(dateObj, event);
     }),
     disabled: !dateObj.selectable,
     'aria-label': dateObj.date.toDateString(),
