@@ -1,59 +1,59 @@
 {
   "dist/dayzed.cjs.js": {
-    "bundled": 32064,
-    "minified": 9192,
-    "gzipped": 2856
+    "bundled": 32076,
+    "minified": 9195,
+    "gzipped": 2858
   },
   "dist/dayzed.umd.js": {
-    "bundled": 33760,
-    "minified": 7806,
-    "gzipped": 2642
+    "bundled": 33772,
+    "minified": 7809,
+    "gzipped": 2644
   },
   "dist/dayzed.umd.min.js": {
-    "bundled": 33760,
-    "minified": 7806,
-    "gzipped": 2642
+    "bundled": 33772,
+    "minified": 7809,
+    "gzipped": 2644
   },
   "preact/dist/dayzed.cjs.js": {
-    "bundled": 32067,
-    "minified": 9195,
-    "gzipped": 2857
+    "bundled": 32079,
+    "minified": 9198,
+    "gzipped": 2858
   },
   "preact/dist/dayzed.umd.js": {
-    "bundled": 33765,
-    "minified": 7809,
-    "gzipped": 2639
+    "bundled": 33777,
+    "minified": 7812,
+    "gzipped": 2641
   },
   "preact/dist/dayzed.umd.min.js": {
-    "bundled": 33765,
-    "minified": 7809,
-    "gzipped": 2639
+    "bundled": 33777,
+    "minified": 7812,
+    "gzipped": 2641
   },
   "dist/dayzed.esm.js": {
-    "bundled": 31503,
-    "minified": 8802,
-    "gzipped": 2741,
+    "bundled": 31515,
+    "minified": 8805,
+    "gzipped": 2742,
     "treeshaked": {
       "rollup": {
-        "code": 7453,
+        "code": 7456,
         "import_statements": 59
       },
       "webpack": {
-        "code": 8506
+        "code": 8509
       }
     }
   },
   "preact/dist/dayzed.esm.js": {
-    "bundled": 31504,
-    "minified": 8803,
-    "gzipped": 2741,
+    "bundled": 31516,
+    "minified": 8806,
+    "gzipped": 2742,
     "treeshaked": {
       "rollup": {
-        "code": 7454,
+        "code": 7457,
         "import_statements": 60
       },
       "webpack": {
-        "code": 8507
+        "code": 8510
       }
     }
   }

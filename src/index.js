@@ -1,1 +1,2 @@
-export { default, useDayzed } from './dayzed';
+export { default } from './dayzed';
+export { useDayzed } from './dayzed';
