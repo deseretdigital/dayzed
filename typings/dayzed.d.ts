@@ -1,11 +1,4 @@
-// Type definitions for dayzed 3.1
-// Project: https://github.com/deseretdigital/dayzed
-// Definitions by: Sam A. Horvath-Hunt <https://github.com/samhh>
-//                 Dan Fields <https://github.com/hustonf>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// Minimum TypeScript Version: 3.5
-
-import { Component, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 export interface DateObj {
   date: Date;
@@ -58,6 +51,4 @@ export function useDayzed(
   props: Omit<Props, 'children' | 'render'>
 ): RenderProps;
 
-declare class Dayzed extends Component<Props> {}
-
-export default Dayzed;
+export default function Dayzed(props: Props): ReactNode;
