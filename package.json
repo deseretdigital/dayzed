@@ -5,6 +5,7 @@
   "main": "dist/dayzed.cjs.js",
   "jsnext:main": "dist/dayzed.esm.js",
   "module": "dist/dayzed.esm.js",
+  "types": "typings/dayzed.d.ts",
   "author": "Morgan Kartchner",
   "license": "MIT",
   "scripts": {
@@ -25,7 +26,8 @@
   },
   "files": [
     "dist",
-    "preact"
+    "preact",
+    "typings"
   ],
   "peerDependencies": {
     "prop-types": "^15",
@@ -49,7 +51,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.2",
-    "date-fns": "^2.0.0"
+    "date-fns": "^2.0.0",
+    "typescript": "^3.9.7"
   },
   "eslintConfig": {
     "extends": "./node_modules/kcd-scripts/eslint.js"
