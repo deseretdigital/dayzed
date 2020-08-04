@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, ReactElement, PropsWithChildren } from 'react';
 
 export interface DateObj {
   date: Date;
@@ -51,4 +51,4 @@ export function useDayzed(
   props: Omit<Props, 'children' | 'render'>
 ): RenderProps;
 
-export default function Dayzed(props: Props): ReactNode;
+export default function Dayzed(props: PropsWithChildren<Props>): ReactElement;
