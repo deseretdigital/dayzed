@@ -15,6 +15,7 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test:cypress": "npm run docz:build; npm-run-all --parallel --race docz:serve cypress:run",
+    "test:types": "npx tsc -p tsconfig.json",
     "docz:serve": "serve ./.docz/dist -p 9001",
     "docz:dev": "docz dev",
     "docz:build": "docz build"
@@ -27,7 +28,7 @@
   "files": [
     "dist",
     "preact",
-    "typings"
+    "typings/*.d.ts"
   ],
   "peerDependencies": {
     "prop-types": "^15",
@@ -51,6 +52,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.2",
+    "@types/react-dom": "^16.9.8",
     "date-fns": "^2.0.0",
     "typescript": "^3.9.7"
   },
