@@ -1,25 +1,35 @@
 # dayzed
 
-Primitives to build simple, flexible, WAI-ARIA compliant React date-picker components.
+Primitives to build simple, flexible, WAI-ARIA compliant React date-picker
+components.
 
-[![version][version-badge]][package]
-[![MIT License][license-badge]][license]
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors)
+[![version][version-badge]][package] [![MIT License][license-badge]][license]
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors)
 
 [![Supports React and Preact][react-badge]][react]
-[![size][size-badge]][unpkg-dist]
-[![gzip size][gzip-badge]][unpkg-dist]
+[![size][size-badge]][unpkg-dist] [![gzip size][gzip-badge]][unpkg-dist]
 [![module formats: umd, cjs, and es][module-formats-badge]][unpkg-dist]
 
 ## The problem
 
-You need a date-picker in your application that is accessible, can fit a number of use cases (single date, multi date, range), and has styling and layout that can be easily extended.
+You need a date-picker in your application that is accessible, can fit a number
+of use cases (single date, multi date, range), and has styling and layout that
+can be easily extended.
 
 ## This solution
 
-This is a component that focuses on controlling user interactions so you can focus on creating beautiful, accessible, and useful date-pickers. It uses a custom [Hook][react-hooks] or a [render function as children][render-function-as-children]. This means you are responsible for rendering everything, but props are provided by the Hook or render function, through a pattern called [prop getters][prop-getters], which can be used to help enhance what you are rendering.
+This is a component that focuses on controlling user interactions so you can
+focus on creating beautiful, accessible, and useful date-pickers. It uses a
+custom [Hook][react-hooks] or a [render function as
+children][render-function-as-children]. This means you are responsible for
+rendering everything, but props are provided by the Hook or render function,
+through a pattern called [prop getters][prop-getters], which can be used to help
+enhance what you are rendering.
 
-This differs from other solutions which render things for their use case and then expose many options to allow for extensibility resulting in a bigger API that is less flexible as well as making the implementation more complicated and harder to contribute to.
+This differs from other solutions which render things for their use case and
+then expose many options to allow for extensibility resulting in a bigger API
+that is less flexible as well as making the implementation more complicated and
+harder to contribute to.
 
 ## Table of Contents
 
@@ -67,12 +77,13 @@ Or, you can install this module through the [yarn][yarn] package manager.
 yarn add dayzed
 ```
 
-> This package also depends on `react@>=16.8.0` and `prop-types`. Please make sure you
-> have those installed as well.
+> This package also depends on `react@>=16.8.0` and `prop-types`. Please make
+> sure you have those installed as well.
 
 > Note also this library supports `preact@>=10` out of the box. If you are using
 > `preact` then use the corresponding module in the `preact/dist` folder. You
-> can even `import Dayzed from 'dayzed/preact'` or `import { useDayzed } from 'dayzed/preact'`
+> can even `import Dayzed from 'dayzed/preact'` or
+> `import { useDayzed } from 'dayzed/preact'`
 
 ## Usage
 
@@ -258,7 +269,8 @@ Number of months returned, based off the `date` and `offset` props.
 
 > `number` | defaults to `0`
 
-First day of the week with possible values 0-6 (Sunday to Saturday). Defaults to Sunday.
+First day of the week with possible values 0-6 (Sunday to Saturday). Defaults to
+Sunday.
 
 ### showOutsideDays
 
@@ -297,18 +309,29 @@ Number off months to offset from the `date` prop.
 
 ### onOffsetChanged
 
-> `function(offset: number)` | **control prop** (read more about this in the "Control Props"
-> section below)
+> `function(offset: number)` | **control prop** (read more about this in the
+> "Control Props" section below)
 
-Called when the user selects to go forward or back. This function is **required** if `offset` is being provided as a prop.
+Called when the user selects to go forward or back. This function is
+**required** if `offset` is being provided as a prop.
 
 - `offset`: The number of months offset.
 
 ## Control Props
 
-dayzed manages its own `offset` state internally and calls your `onOffsetChanged` handler when the offset changes. Your render prop function (read more below) can be used to manipulate this state from within the render function and can likely support many of your use cases.
+dayzed manages its own `offset` state internally and calls your
+`onOffsetChanged` handler when the offset changes. Your render prop function
+(read more below) can be used to manipulate this state from within the render
+function and can likely support many of your use cases.
 
-However, if more control is needed, you can pass `offset` as a prop (as indicated above) and that state becomes controlled. As soon as `this.props.offset !== undefined`, internally, `dayzed` will determine its state based on your prop's value rather than its own internal state. You will be required to keep the state up to date (this is where the `onOffsetChanged` handler comes in really handy), but you can also control the state from anywhere, be that state from other components, `redux`, `react-router`, or anywhere else.
+However, if more control is needed, you can pass `offset` as a prop (as
+indicated above) and that state becomes controlled. As soon as
+`this.props.offset !== undefined`, internally, `dayzed` will determine its state
+based on your prop's value rather than its own internal state. You will be
+required to keep the state up to date (this is where the `onOffsetChanged`
+handler comes in really handy), but you can also control the state from
+anywhere, be that state from other components, `redux`, `react-router`, or
+anywhere else.
 
 > Note: This is very similar to how normal controlled components work elsewhere
 > in react (like `<input />`). If you want to learn more about this concept, you
@@ -317,7 +340,10 @@ However, if more control is needed, you can pass `offset` as a prop (as indicate
 
 ## Custom Hook
 
-You can either use the custom `useDayzed` hook or the render prop function (described in the section below) to return the things needed to render your calendars. The custom Hook has a benefit over the render prop function as it does not unnecessarily add an additional child into the render tree. Example:
+You can either use the custom `useDayzed` hook or the render prop function
+(described in the section below) to return the things needed to render your
+calendars. The custom Hook has a benefit over the render prop function as it
+does not unnecessarily add an additional child into the render tree. Example:
 
 ```jsx
 function Datepicker(props) {
@@ -336,21 +362,22 @@ It's a regular prop called `render`: `<Dayzed render={/* right here*/} />`.
 > You can also pass it as the children prop if you prefer to do things that way
 > `<Dayzed>{/* right here*/}</Dayzed>`
 
-Fun fact, the `Dazyed` render prop component actually uses the `useDayzed` custom Hook under the hood.
+Fun fact, the `Dazyed` render prop component actually uses the `useDayzed`
+custom Hook under the hood.
 
 The properties of this object can be split into two categories as indicated
 below:
 
 ### prop getters
 
-> See
-> [the blog post about prop getters][prop-getters]
+> See [the blog post about prop getters][prop-getters]
 
 These functions are used to apply props to the elements that you render. This
 gives you maximum flexibility to render what, when, and wherever you like. You
-call these on the element in question (for example: `<button {...getDateProps()}`)). It's advisable to pass all your props to that function
-rather than applying them on the element yourself to avoid your props being
-overridden (or overriding the props returned). For example:
+call these on the element in question (for example:
+`<button {...getDateProps()}`)). It's advisable to pass all your props to that
+function rather than applying them on the element yourself to avoid your props
+being overridden (or overriding the props returned). For example:
 `getDateProps({onClick(event) {console.log(event)}})`.
 
 | property          | type           | description                                                                    |
@@ -383,7 +410,8 @@ These are values that represent the current state of the dayzed component.
 - [Jen Luker][jenluker]
   - For help with naming and reviewing this library.
 - [Kent C. Dodds][kentcdodds]
-  - This library borrows **heavily** from his awesome [downshift][downshift] library!
+  - This library borrows **heavily** from his awesome [downshift][downshift]
+    library!
 - [Michael Jackson][michaeljackson] & [Ryan Florence][ryanflorence]
   - For teaching the use of the [render prop pattern][render-prop-pattern].
 
@@ -400,10 +428,9 @@ Here are some other great daypicker solutions:
 Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-
 <!-- prettier-ignore -->
-| [<img src="https://avatars2.githubusercontent.com/u/3399907?v=4" width="100px;"/><br /><sub><b>Morgan Kartchner</b></sub>](https://github.com/mkartchner994)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Code") [📖](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Documentation") [💡](#example-mkartchner994 "Examples") [🤔](#ideas-mkartchner994 "Ideas, Planning, & Feedback") [👀](#review-mkartchner994 "Reviewed Pull Requests") [⚠️](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Tests") | [<img src="https://avatars2.githubusercontent.com/u/1584489?v=4" width="100px;"/><br /><sub><b>Jen Luker</b></sub>](http://jenluker.com)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=knitcodemonkey "Code") [💡](#example-knitcodemonkey "Examples") [🤔](#ideas-knitcodemonkey "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/10711493?v=4" width="100px;"/><br /><sub><b>Sam Gale</b></sub>](https://github.com/sjgale)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=sjgale "Code") [🤔](#ideas-sjgale "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/13774309?v=4" width="100px;"/><br /><sub><b>Arthur Denner</b></sub>](https://github.com/arthurdenner)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=arthurdenner "Code") [🤔](#ideas-arthurdenner "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/410792?v=4" width="100px;"/><br /><sub><b>Dony Sukardi</b></sub>](http://dsds.io)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=donysukardi "Code") [💡](#example-donysukardi "Examples") [⚠️](https://github.com/mkartchner994/dayzed/commits?author=donysukardi "Tests") | [<img src="https://avatars3.githubusercontent.com/u/3483526?v=4" width="100px;"/><br /><sub><b>Amit Solanki</b></sub>](http://solankiamit.com)<br />[📖](https://github.com/mkartchner994/dayzed/commits?author=iamsolankiamit "Documentation") |
-| :---: | :---: | :---: | :---: | :---: | :---: |
+| [<img src="https://avatars2.githubusercontent.com/u/3399907?v=4" width="100px;"/><br /><sub><b>Morgan Kartchner</b></sub>](https://github.com/mkartchner994)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Code") [📖](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Documentation") [💡](#example-mkartchner994 "Examples") [🤔](#ideas-mkartchner994 "Ideas, Planning, & Feedback") [👀](#review-mkartchner994 "Reviewed Pull Requests") [⚠️](https://github.com/mkartchner994/dayzed/commits?author=mkartchner994 "Tests") | [<img src="https://avatars2.githubusercontent.com/u/1584489?v=4" width="100px;"/><br /><sub><b>Jen Luker</b></sub>](http://jenluker.com)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=knitcodemonkey "Code") [💡](#example-knitcodemonkey "Examples") [🤔](#ideas-knitcodemonkey "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/10711493?v=4" width="100px;"/><br /><sub><b>Sam Gale</b></sub>](https://github.com/sjgale)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=sjgale "Code") [🤔](#ideas-sjgale "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/13774309?v=4" width="100px;"/><br /><sub><b>Arthur Denner</b></sub>](https://github.com/arthurdenner)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=arthurdenner "Code") [🤔](#ideas-arthurdenner "Ideas, Planning, & Feedback") | [<img src="https://avatars0.githubusercontent.com/u/410792?v=4" width="100px;"/><br /><sub><b>Dony Sukardi</b></sub>](http://dsds.io)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=donysukardi "Code") [💡](#example-donysukardi "Examples") [⚠️](https://github.com/mkartchner994/dayzed/commits?author=donysukardi "Tests") | [<img src="https://avatars3.githubusercontent.com/u/3483526?v=4" width="100px;"/><br /><sub><b>Amit Solanki</b></sub>](http://solankiamit.com)<br />[📖](https://github.com/mkartchner994/dayzed/commits?author=iamsolankiamit "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/3090112?v=4" width="100px;"/><br /><sub><b>Nathanael CHERRIER</b></sub>](https://nathanaelcherrier.com)<br />[💻](https://github.com/mkartchner994/dayzed/commits?author=mindsers "Code") [🤔](#ideas-mindsers "Ideas, Planning, & Feedback") [⚠️](https://github.com/mkartchner994/dayzed/commits?author=mindsers "Tests") |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
@@ -414,18 +441,22 @@ Contributions of any kind welcome!
 
 MIT
 
-[render-function-as-children]: https://medium.com/merrickchristensen/function-as-child-components-5f3920a9ace9
-[prop-getters]: https://blog.kentcdodds.com/how-to-give-rendering-control-to-users-with-prop-getters-549eaef76acf
+[render-function-as-children]:
+  https://medium.com/merrickchristensen/function-as-child-components-5f3920a9ace9
+[prop-getters]:
+  https://blog.kentcdodds.com/how-to-give-rendering-control-to-users-with-prop-getters-549eaef76acf
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
 [yarn]: https://yarnpkg.com
-[controlled-components-lecture]: https://courses.reacttraining.com/courses/advanced-react/lectures/3172720
+[controlled-components-lecture]:
+  https://courses.reacttraining.com/courses/advanced-react/lectures/3172720
 [downshift]: https://github.com/paypal/downshift
 [jenluker]: https://github.com/knitcodemonkey
 [kentcdodds]: https://github.com/kentcdodds
 [michaeljackson]: https://github.com/mjackson
 [ryanflorence]: https://github.com/ryanflorence
-[render-prop-pattern]: https://cdb.reacttraining.com/use-a-render-prop-50de598f11ce
+[render-prop-pattern]:
+  https://cdb.reacttraining.com/use-a-render-prop-50de598f11ce
 [react-dates]: https://github.com/airbnb/react-dates
 [react-calendar]: https://github.com/wojtekmaj/react-calendar
 [react-day-picker]: https://github.com/gpbl/react-day-picker
@@ -435,10 +466,14 @@ MIT
 [license]: https://github.com/deseretdigital/dayzed/blob/master/LICENSE
 [version-badge]: https://img.shields.io/npm/v/dayzed.svg?style=flat-square
 [package]: https://www.npmjs.com/package/dayzed
-[react-badge]: https://img.shields.io/badge/%E2%9A%9B%EF%B8%8F-(p)react-00d8ff.svg?style=flat-square
+[react-badge]:
+  https://img.shields.io/badge/%E2%9A%9B%EF%B8%8F-(p)react-00d8ff.svg?style=flat-square
 [react]: https://facebook.github.io/react/
-[gzip-badge]: http://img.badgesize.io/https://unpkg.com/dayzed/dist/dayzed.umd.min.js?compression=gzip&label=gzip%20size&style=flat-square
-[size-badge]: http://img.badgesize.io/https://unpkg.com/dayzed/dist/dayzed.umd.min.js?label=size&style=flat-square
+[gzip-badge]:
+  http://img.badgesize.io/https://unpkg.com/dayzed/dist/dayzed.umd.min.js?compression=gzip&label=gzip%20size&style=flat-square
+[size-badge]:
+  http://img.badgesize.io/https://unpkg.com/dayzed/dist/dayzed.umd.min.js?label=size&style=flat-square
 [unpkg-dist]: https://unpkg.com/dayzed/dist/
-[module-formats-badge]: https://img.shields.io/badge/module%20formats-umd%2C%20cjs%2C%20es-green.svg?style=flat-square
+[module-formats-badge]:
+  https://img.shields.io/badge/module%20formats-umd%2C%20cjs%2C%20es-green.svg?style=flat-square
 [react-hooks]: https://reactjs.org/docs/hooks-intro.html
