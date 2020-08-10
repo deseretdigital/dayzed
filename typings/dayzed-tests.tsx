@@ -24,26 +24,29 @@ class App extends React.Component<{}, State> {
         offset={this.state.monthOffset}
         onDateSelected={this.handleSetDate}
       >
-        {({ calendars, ...rp }) =>
-          calendars.map(cal => (
-            <div>
-              Calendar:
-              {cal.weeks.map(week => (
-                <div>
-                  Week:
-                  {week.map(
-                    day =>
-                      day && (
-                        <span {...rp.getDateProps({ dateObj: day })}>
-                          Day({day.date.getDate()}):
-                        </span>
-                      )
-                  )}
-                </div>
-              ))}
-            </div>
-          ))
-        }
+        {({ calendars, getDateProps, getBackProps, getForwardProps }) =>
+          (<>
+            <button {...getBackProps({ calendars, offset: 6, style: { backgroundColor: "blue" } })}></button>
+            <button {...getForwardProps({ calendars, offset: 6, style: { backgroundColor: "blue" } })}></button>
+            {calendars.map(cal => (
+              <div>
+                Calendar:
+                {cal.weeks.map(week => (
+                  <div>
+                    Week:
+                    {week.map(
+                      day =>
+                        day && (
+                          <span {...getDateProps({ dateObj: day, style: { backgroundColor: "blue" } })}>
+                            Day({day.date.getDate()}):
+                          </span>
+                        )
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </>)}
       </Dayzed>
     );
   }
@@ -51,12 +54,14 @@ class App extends React.Component<{}, State> {
 
 const HookApp = () => {
   const selectedDate = new Date();
-  const { calendars, getDateProps } = useDayzed({
+  const { calendars, getDateProps, getBackProps, getForwardProps } = useDayzed({
     date: selectedDate,
-    onDateSelected: () => {}
+    onDateSelected: () => { }
   });
   return (
     <>
+      <button {...getBackProps({ calendars, offset: 6, style: { backgroundColor: "blue" } })}></button>
+      <button {...getForwardProps({ calendars, offset: 6, style: { backgroundColor: "blue" } })}></button>
       {calendars.map(calendar => (
         <div>
           {calendar.weeks.map((week, windex) =>
@@ -69,7 +74,8 @@ const HookApp = () => {
                 <button
                   key={key}
                   {...getDateProps({
-                    dateObj
+                    dateObj,
+                    style: { backgroundColor: "blue" }
                   })}
                 >
                   {date.getDate()}

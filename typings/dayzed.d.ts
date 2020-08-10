@@ -1,4 +1,4 @@
-import { ReactNode, ReactElement, PropsWithChildren } from 'react';
+import { ReactNode, ReactElement, PropsWithChildren, HTMLProps } from 'react';
 
 export interface DateObj {
   date: Date;
@@ -17,17 +17,20 @@ export interface Calendar {
   year: number;
 }
 
+export interface GetBackForwardPropsOptions extends HTMLProps<HTMLButtonElement> {
+  calendars: Calendar[];
+  offset?: number;
+}
+
+export interface GetDatePropsOptions extends HTMLProps<HTMLButtonElement> {
+  dateObj: DateObj;
+}
+
 export interface RenderProps {
   calendars: Calendar[];
-  getBackProps: (data: {
-    calendars: Calendar[];
-    offset?: number;
-  }) => Record<string, any>;
-  getForwardProps: (data: {
-    calendars: Calendar[];
-    offset?: number;
-  }) => Record<string, any>;
-  getDateProps: (data: { dateObj: DateObj }) => Record<string, any>;
+  getBackProps: (data: GetBackForwardPropsOptions) => Record<string, any>;
+  getForwardProps: (data: GetBackForwardPropsOptions) => Record<string, any>;
+  getDateProps: (data: GetDatePropsOptions) => Record<string, any>;
 }
 
 export type RenderFn = (renderProps: RenderProps) => ReactNode;
