@@ -1,6 +1,6 @@
 {
   "name": "dayzed",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Primitives to build simple, flexible, WAI-ARIA compliant React datepicker components.",
   "main": "dist/dayzed.cjs.js",
   "jsnext:main": "dist/dayzed.esm.js",
@@ -10,7 +10,7 @@
   "license": "MIT",
   "scripts": {
     "contributors:add": "all-contributors add",
-    "build": "kcd-scripts build --bundle --p-react --no-clean --size-snapshot && node buildHooksForPreact.js",
+    "build": "npm run test:types && kcd-scripts build --bundle --p-react --no-clean --size-snapshot && node buildHooksForPreact.js",
     "lint": "kcd-scripts lint",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
