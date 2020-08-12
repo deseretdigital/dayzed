@@ -5,6 +5,7 @@
   "main": "dist/dayzed.cjs.js",
   "jsnext:main": "dist/dayzed.esm.js",
   "module": "dist/dayzed.esm.js",
+  "types": "typings/dayzed.d.ts",
   "author": "Morgan Kartchner",
   "license": "MIT",
   "scripts": {
@@ -14,6 +15,7 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test:cypress": "npm run docz:build; npm-run-all --parallel --race docz:serve cypress:run",
+    "test:types": "npx tsc -p tsconfig.json",
     "docz:serve": "serve ./.docz/dist -p 9001",
     "docz:dev": "docz dev",
     "docz:build": "docz build"
@@ -25,13 +27,15 @@
   },
   "files": [
     "dist",
-    "preact"
+    "preact",
+    "typings/*.d.ts"
   ],
   "peerDependencies": {
     "prop-types": "^15",
     "react": "^16.8"
   },
   "devDependencies": {
+    "@types/react-dom": "^16.9.8",
     "all-contributors-cli": "^4.11.1",
     "arrow-keys-react": "^1.0.6",
     "cypress": "^3.1.5",
@@ -45,7 +49,8 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "replace-in-file": "^3.4.3",
-    "serve": "^10.0.2"
+    "serve": "^10.0.2",
+    "typescript": "^3.9.7"
   },
   "dependencies": {
     "@babel/runtime": "^7.6.2",
