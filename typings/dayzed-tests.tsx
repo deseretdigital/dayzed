@@ -13,7 +13,7 @@ class App extends React.Component<{}, State> {
     monthOffset: 0
   };
 
-  handleSetDate = (dateObj: DateObj) => {
+  handleSetDate = (dateObj: DateObj, _: React.SyntheticEvent) => {
     this.setState({ selectedDate: dateObj.date });
   };
 
@@ -24,10 +24,22 @@ class App extends React.Component<{}, State> {
         offset={this.state.monthOffset}
         onDateSelected={this.handleSetDate}
       >
-        {({ calendars, getDateProps, getBackProps, getForwardProps }) =>
-          (<>
-            <button {...getBackProps({ calendars, offset: 6, style: { backgroundColor: "blue" } })}></button>
-            <button {...getForwardProps({ calendars, offset: 6, style: { backgroundColor: "blue" } })}></button>
+        {({ calendars, getDateProps, getBackProps, getForwardProps }) => (
+          <>
+            <button
+              {...getBackProps({
+                calendars,
+                offset: 6,
+                style: { backgroundColor: 'blue' }
+              })}
+            ></button>
+            <button
+              {...getForwardProps({
+                calendars,
+                offset: 6,
+                style: { backgroundColor: 'blue' }
+              })}
+            ></button>
             {calendars.map(cal => (
               <div>
                 Calendar:
@@ -37,7 +49,12 @@ class App extends React.Component<{}, State> {
                     {week.map(
                       day =>
                         day && (
-                          <span {...getDateProps({ dateObj: day, style: { backgroundColor: "blue" } })}>
+                          <span
+                            {...getDateProps({
+                              dateObj: day,
+                              style: { backgroundColor: 'blue' }
+                            })}
+                          >
                             Day({day.date.getDate()}):
                           </span>
                         )
@@ -46,7 +63,8 @@ class App extends React.Component<{}, State> {
                 ))}
               </div>
             ))}
-          </>)}
+          </>
+        )}
       </Dayzed>
     );
   }
@@ -56,12 +74,24 @@ const HookApp = () => {
   const selectedDate = new Date();
   const { calendars, getDateProps, getBackProps, getForwardProps } = useDayzed({
     date: selectedDate,
-    onDateSelected: () => { }
+    onDateSelected: () => {}
   });
   return (
     <>
-      <button {...getBackProps({ calendars, offset: 6, style: { backgroundColor: "blue" } })}></button>
-      <button {...getForwardProps({ calendars, offset: 6, style: { backgroundColor: "blue" } })}></button>
+      <button
+        {...getBackProps({
+          calendars,
+          offset: 6,
+          style: { backgroundColor: 'blue' }
+        })}
+      ></button>
+      <button
+        {...getForwardProps({
+          calendars,
+          offset: 6,
+          style: { backgroundColor: 'blue' }
+        })}
+      ></button>
       {calendars.map(calendar => (
         <div>
           {calendar.weeks.map((week, windex) =>
@@ -75,7 +105,7 @@ const HookApp = () => {
                   key={key}
                   {...getDateProps({
                     dateObj,
-                    style: { backgroundColor: "blue" }
+                    style: { backgroundColor: 'blue' }
                   })}
                 >
                   {date.getDate()}

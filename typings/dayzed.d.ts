@@ -17,7 +17,8 @@ export interface Calendar {
   year: number;
 }
 
-export interface GetBackForwardPropsOptions extends HTMLProps<HTMLButtonElement> {
+export interface GetBackForwardPropsOptions
+  extends HTMLProps<HTMLButtonElement> {
   calendars: Calendar[];
   offset?: number;
 }
@@ -47,7 +48,7 @@ export interface Props {
   render?: RenderFn;
   offset?: number;
   onOffsetChanged?(offset: number): void;
-  onDateSelected(selectedDate: DateObj): void;
+  onDateSelected(selectedDate: DateObj, event: React.SyntheticEvent): void;
 }
 
 export function useDayzed(
