@@ -71,10 +71,12 @@ class App extends React.Component<{}, State> {
 }
 
 const HookApp = () => {
-  const selectedDate = new Date();
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
   const { calendars, getDateProps, getBackProps, getForwardProps } = useDayzed({
     date: selectedDate,
-    onDateSelected: () => {}
+    onDateSelected: (dateObj: DateObj, _: React.SyntheticEvent) => {
+      setSelectedDate(dateObj.date);
+    }
   });
   return (
     <>

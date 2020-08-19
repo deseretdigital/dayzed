@@ -1,4 +1,10 @@
-import { ReactNode, ReactElement, PropsWithChildren, HTMLProps } from 'react';
+import {
+  ReactNode,
+  ReactElement,
+  PropsWithChildren,
+  HTMLProps,
+  SyntheticEvent
+} from 'react';
 
 export interface DateObj {
   date: Date;
@@ -48,7 +54,7 @@ export interface Props {
   render?: RenderFn;
   offset?: number;
   onOffsetChanged?(offset: number): void;
-  onDateSelected(selectedDate: DateObj, event: React.SyntheticEvent): void;
+  onDateSelected(selectedDate: DateObj, event: SyntheticEvent): void;
 }
 
 export function useDayzed(
