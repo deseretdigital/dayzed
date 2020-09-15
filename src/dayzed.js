@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -79,7 +79,7 @@ function getForwardProps(
 }
 
 export function useDayzed({
-  date = new Date(),
+  date,
   maxDate,
   minDate,
   monthsToDisplay = 1,
@@ -87,42 +87,70 @@ export function useDayzed({
   showOutsideDays = false,
   offset,
   onDateSelected,
-  onOffsetChanged = () => {},
+  onOffsetChanged,
   selected
-}) {
+} = {}) {
   const [stateOffset, setStateOffset] = useState(0);
   const offsetMonth = getOffset(offset, stateOffset);
 
-  function handleOffsetChanged(newOffset) {
-    if (!isOffsetControlled(offset)) {
-      setStateOffset(newOffset);
-    }
-    onOffsetChanged(newOffset);
-  }
+  const handleOffsetChanged = useCallback(
+    newOffset => {
+      if (!isOffsetControlled(offset)) {
+        setStateOffset(newOffset);
+      }
 
-  const calendars = getCalendars({
-    date,
-    selected,
-    monthsToDisplay,
-    minDate,
-    maxDate,
-    offset: offsetMonth,
-    firstDayOfWeek,
-    showOutsideDays
-  });
-  return {
-    calendars,
-    getDateProps: getDateProps.bind(null, onDateSelected),
-    getBackProps: getBackProps.bind(null, {
+      if (onOffsetChanged) {
+        onOffsetChanged(newOffset);
+      }
+    },
+    [offset, onOffsetChanged]
+  );
+
+  const calendars = useMemo(
+    () =>
+      getCalendars({
+        date,
+        selected,
+        monthsToDisplay,
+        minDate,
+        maxDate,
+        offset: offsetMonth,
+        firstDayOfWeek,
+        showOutsideDays
+      }),
+    [
+      date,
+      selected,
+      monthsToDisplay,
       minDate,
-      offsetMonth,
-      handleOffsetChanged
-    }),
-    getForwardProps: getForwardProps.bind(null, {
       maxDate,
       offsetMonth,
-      handleOffsetChanged
-    })
+      firstDayOfWeek,
+      showOutsideDays
+    ]
+  );
+
+  const _getDateProps = useCallback(
+    props => getDateProps(onDateSelected, props),
+    [onDateSelected]
+  );
+
+  const _getBackProps = useCallback(
+    props => getBackProps({ minDate, offsetMonth, handleOffsetChanged }, props),
+    [minDate, offsetMonth, handleOffsetChanged]
+  );
+
+  const _getForwardProps = useCallback(
+    props =>
+      getForwardProps({ maxDate, offsetMonth, handleOffsetChanged }, props),
+    [maxDate, offsetMonth, handleOffsetChanged]
+  );
+
+  return {
+    calendars,
+    getDateProps: _getDateProps,
+    getBackProps: _getBackProps,
+    getForwardProps: _getForwardProps
   };
 }
 

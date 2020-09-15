@@ -15,7 +15,7 @@ import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
 export function composeEventHandlers(...fns) {
   return (event, ...args) =>
     fns.some(fn => {
-      fn && fn(event, ...args);
+      if (fn) fn(event, ...args);
       return event.defaultPrevented;
     });
 }
@@ -137,7 +137,7 @@ export function isForwardDisabled({ calendars, maxDate }) {
  * @returns {Array.<Object>} An array of objects with month data
  */
 export function getCalendars({
-  date,
+  date = new Date(),
   selected,
   monthsToDisplay,
   offset,
