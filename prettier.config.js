@@ -1,4 +1,4 @@
-const { prettier: prettierConfig } = require('kcd-scripts/config');
+const prettierConfig = require('kcd-scripts/prettier');
 
 module.exports = Object.assign(prettierConfig, {
   semi: true,
