@@ -1,8 +1,8 @@
-import addDays from 'date-fns/addDays';
-import isBefore from 'date-fns/isBefore';
-import isToday from 'date-fns/isToday';
-import startOfDay from 'date-fns/startOfDay';
-import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
+import { addDays } from 'date-fns/addDays';
+import { isBefore } from 'date-fns/isBefore';
+import { isToday } from 'date-fns/isToday';
+import { startOfDay } from 'date-fns/startOfDay';
+import { differenceInCalendarMonths } from 'date-fns/differenceInCalendarMonths';
 
 /**
  * This is intended to be used to compose event handlers
@@ -15,7 +15,9 @@ import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
 export function composeEventHandlers(...fns) {
   return (event, ...args) =>
     fns.some(fn => {
-      fn && fn(event, ...args);
+      if (fn) {
+        fn(event, ...args);
+      }
       return event.defaultPrevented;
     });
 }
