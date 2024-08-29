@@ -5,6 +5,19 @@ import startOfDay from 'date-fns/startOfDay';
 import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
 
 /**
+ * Create dates with support between the years 0 and 99
+ * @see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#interpretation_of_two-digit_years
+ * @param {*} year
+ * @param  {...any} args
+ * @returns {Date}
+ */
+export function createDate(year, ...args) {
+  const date = new Date(year, ...args);
+  date.setFullYear(year);
+  return date;
+}
+
+/**
  * This is intended to be used to compose event handlers
  * They are executed in order until one of them calls
  * `event.preventDefault()`. Not sure this is the best
@@ -15,7 +28,9 @@ import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
 export function composeEventHandlers(...fns) {
   return (event, ...args) =>
     fns.some(fn => {
-      fn && fn(event, ...args);
+      if (fn) {
+        fn(event, ...args);
+      }
       return event.defaultPrevented;
     });
 }
@@ -220,7 +235,7 @@ function getMonths({
   // Fill out the dates for the month.
   const dates = [];
   for (let day = 1; day <= daysInMonth; day++) {
-    const date = new Date(year, month, day);
+    const date = createDate(year, month, day);
     const dateObj = {
       date,
       selected: isSelected(selectedDates, date),
@@ -232,8 +247,8 @@ function getMonths({
     dates.push(dateObj);
   }
 
-  const firstDayOfMonth = new Date(year, month, 1);
-  const lastDayOfMonth = new Date(year, month, daysInMonth);
+  const firstDayOfMonth = createDate(year, month, 1);
+  const lastDayOfMonth = createDate(year, month, daysInMonth);
 
   const frontWeekBuffer = fillFrontWeek({
     firstDayOfMonth,
@@ -302,7 +317,7 @@ function fillFrontWeek({
     // preceding month with dates from previous month.
     let counter = 0;
     while (counter < firstDay) {
-      const date = new Date(prevDateYear, prevDateMonth, prevDate - counter);
+      const date = createDate(prevDateYear, prevDateMonth, prevDate - counter);
       const dateObj = {
         date,
         selected: isSelected(selectedDates, date),
@@ -358,7 +373,7 @@ function fillBackWeek({
     // following month with dates from next month.
     let counter = 0;
     while (counter < 6 - lastDay) {
-      const date = new Date(nextDateYear, nextDateMonth, 1 + counter);
+      const date = createDate(nextDateYear, nextDateMonth, 1 + counter);
       const dateObj = {
         date,
         selected: isSelected(selectedDates, date),
@@ -397,13 +412,13 @@ function getNumDaysMonthYear(month, year) {
 
   // Let Date handle the overflow of the month,
   // which should return the normalized month and year.
-  const normalizedMonthYear = new Date(year, month, 1);
+  const normalizedMonthYear = createDate(year, month, 1);
   month = normalizedMonthYear.getMonth();
   year = normalizedMonthYear.getFullYear();
   // Overflow the date to the next month, then subtract the difference
   // to get the number of days in the previous month.
   // This will also account for leap years!
-  const daysInMonth = 32 - new Date(year, month, 32).getDate();
+  const daysInMonth = 32 - createDate(year, month, 32).getDate();
   return { daysInMonth, month, year };
 }
 
