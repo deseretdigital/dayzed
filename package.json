@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.2",
-    "date-fns": "^2.0.0"
+    "date-fns": "^3.6.0"
   },
   "eslintConfig": {
     "extends": "./node_modules/kcd-scripts/eslint.js"
